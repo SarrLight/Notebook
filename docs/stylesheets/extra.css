@@ -1,0 +1,18 @@
+[data-md-color-scheme="slate"] {
+    --md-primary-fg-color: #6392ab;
+    --md-primary-bg-color: #bfc1c5;
+    --md-code-bg-color: #222222;
+    --md-header-bg-color:        #1f1f1f;
+    --md-default-bg-color: #262626;
+}
+
+[data-md-color-scheme="slate"] .md-header {
+  background-color: var(--md-header-bg-color) !important; 
+  /* !important 用于确保样式优先级，覆盖默认样式 */
+}
+
+[data-md-color-scheme="slate"] .md-tabs {
+  background-color: var(--md-header-bg-color) !important; 
+  /* !important 用于确保样式优先级，覆盖默认样式 */
+}
+

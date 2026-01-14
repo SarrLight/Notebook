@@ -1,3 +1,67 @@
-site_name: My Docs
+#官方配置文档：https://squidfunk.github.io/mkdocs-material/setup
+site_name: SarrLight's Notebook
 theme:
   name: material
+
+  icon:
+    logo: material/star
+  language: zh
+
+  palette: 
+    # Palette toggle for light mode
+    - scheme: default
+      primary: indigo
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    # The primary color is used for the header, the sidebar, 
+    # text links and several other components. 
+    # In order to change the primary color, 
+    # set the following value in mkdocs.yml to a valid color name:
+    
+    - scheme: slate
+      primary: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  features:
+    - navigation.top  #返回顶部的按钮
+    - navigation.tabs #顶部标签
+    - search.highlight #搜索结果高亮显示
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  # - nl2br
+  # - pymdownx.extra  # 增强Markdown解析（含块级元素、段落处理）
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.arithmatex:
+      generic: true
+
+
+
+extra_javascript:
+  # - javascripts/mathjax-fix.js
+  - javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+
+#版权声明
+copyright: 
+
+nav:
+  - 课内学习:
+    - 计算机组成: 课内学习\计算机组成.md
+    - 高级数据结构: 课内学习\高级数据结构.md
+  - 游戏开发:
+    - GAMES101:
+      - L3-L4:Transform: 游戏开发\GAMES101\03-04 Transform.md
+
+plugins:
+  - obsidian-support
