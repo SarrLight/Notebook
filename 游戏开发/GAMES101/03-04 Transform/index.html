@@ -328,34 +328,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../课内学习/高级数据结构.md" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    高级数据结构
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -1643,13 +1615,13 @@ x_{-\hat g}&amp;y_{-\hat g}&amp;z_{-\hat g}&amp;0\\
 </div>
 <p>由上述计算可知，透视变换中z值的变换不是线性的，这会导致后续我们进行插值运算（用屏幕坐标插值求三维坐标）时很不方便。既然z值的变换不是线性的，那透视变换中有没有什么关于z的属性是线性变换的呢？</p>
 <p>变成长方体后，只需在执行一次正交投影变换即可，因此我们的透视投影变换矩阵为：</p>
-<p><span class="arithmatex">\(\mathbf{P}_{persp}=\mathbf{P}_{ortho}\mathbf{T}=\begin{bmatrix} \frac{2}{r-l} &amp;0 &amp;0 &amp; -\frac{r+l}{r-l}\\ 0 &amp;\frac{2}{t-b} &amp;0 &amp; -\frac{t+b}{t-b}\\ 0 &amp;0 &amp;\frac{2}{n-f} &amp; -\frac{n+f}{n-f}\\ 0 &amp;0 &amp;0 &amp;1 \end{bmatrix}\begin{bmatrix} n &amp; 0 &amp; 0 &amp; 0\\ 0 &amp; n &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; n+f &amp; -nf \\0&amp;0&amp;1&amp;0\end{bmatrix} = \begin{bmatrix} \frac{2n}{r-l} &amp;0 &amp; -\frac{r+l}{r-l} &amp; 0 \\ 0 &amp;\frac{2n}{t-b} &amp; -\frac{t+b}{t-b} &amp;0 \\ 0 &amp;0 &amp;\frac{n+f}{n-f} &amp; \frac{-2nf}{n-f} \\ 0 &amp;0 &amp;1 &amp;0 \end{bmatrix}\)</span></p>
+<div class="arithmatex">\[\mathbf{P}_{persp}=\mathbf{P}_{ortho}\mathbf{T}=\begin{bmatrix} \frac{2}{r-l} &amp;0 &amp;0 &amp; -\frac{r+l}{r-l}\\ 0 &amp;\frac{2}{t-b} &amp;0 &amp; -\frac{t+b}{t-b}\\ 0 &amp;0 &amp;\frac{2}{n-f} &amp; -\frac{n+f}{n-f}\\ 0 &amp;0 &amp;0 &amp;1 \end{bmatrix}\begin{bmatrix} n &amp; 0 &amp; 0 &amp; 0\\ 0 &amp; n &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; n+f &amp; -nf \\0&amp;0&amp;1&amp;0\end{bmatrix} = \begin{bmatrix} \frac{2n}{r-l} &amp;0 &amp; -\frac{r+l}{r-l} &amp; 0 \\ 0 &amp;\frac{2n}{t-b} &amp; -\frac{t+b}{t-b} &amp;0 \\ 0 &amp;0 &amp;\frac{n+f}{n-f} &amp; \frac{-2nf}{n-f} \\ 0 &amp;0 &amp;1 &amp;0 \end{bmatrix}\]</div>
 <h4 id="323">3.2.3 对称视锥体</h4>
 <p>对称视锥体，即为N为Near clip plane的中心点，F为Far clip plane的中心点，因此我们可得：</p>
 <div class="arithmatex">\[\left\{\begin{matrix} r=-l\\ t=-b \end{matrix}\right.\]</div>
 <p>那么正交投影矩阵就可以简化为：</p>
-<p><span class="arithmatex">\(\mathbf{P}_{ortho}=\mathbf{S}\mathbf{M}=\begin{bmatrix} \frac{2}{r-l} &amp; 0 &amp;0 &amp;0 \\ 0&amp; \frac{2}{t-b} &amp;0 &amp;0 \\ 0&amp; 0 &amp; \frac{2}{n-f} &amp;0 \\ 0&amp;0 &amp; 0 &amp; 1 \end{bmatrix} \begin{bmatrix} 1 &amp;0 &amp;0 &amp; 0\\ 0 &amp;1 &amp;0 &amp; 0\\ 0 &amp;0 &amp;1 &amp; -\frac{n+f}{2}\\ 0 &amp;0 &amp;0 &amp;1 \end{bmatrix}= \begin{bmatrix} \frac{2}{r-l} &amp;0 &amp;0 &amp; 0\\ 0 &amp;\frac{2}{t-b} &amp;0 &amp; 0\\ 0 &amp;0 &amp;\frac{2}{n-f} &amp; -\frac{n+f}{n-f}\\ 0 &amp;0 &amp;0 &amp;1 \end{bmatrix}\)</span></p>
-<p><span class="arithmatex">\(\mathbf{P}_{persp}=\mathbf{P}_{ortho}\mathbf{T}=\begin{bmatrix} \frac{2}{r-l} &amp;0 &amp;0 &amp; 0\\ 0 &amp;\frac{2}{t-b} &amp;0 &amp; 0\\ 0 &amp;0 &amp;\frac{2}{n-f} &amp; -\frac{n+f}{n-f}\\ 0 &amp;0 &amp;0 &amp;1 \end{bmatrix}\begin{bmatrix} n &amp; 0 &amp; 0 &amp; 0\\ 0 &amp; n &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; n+f &amp; -nf \\0&amp;0&amp;1&amp;0\end{bmatrix} = \begin{bmatrix} \frac{2n}{r-l} &amp;0 &amp; 0 &amp; 0 \\ 0 &amp;\frac{2n}{t-b} &amp; 0 &amp;0 \\ 0 &amp;0 &amp;\frac{n+f}{n-f} &amp; \frac{-2nf}{n-f} \\ 0 &amp;0 &amp;1 &amp;0 \end{bmatrix}\)</span></p>
+<div class="arithmatex">\[\mathbf{P}_{ortho}=\mathbf{S}\mathbf{M}=\begin{bmatrix} \frac{2}{r-l} &amp; 0 &amp;0 &amp;0 \\ 0&amp; \frac{2}{t-b} &amp;0 &amp;0 \\ 0&amp; 0 &amp; \frac{2}{n-f} &amp;0 \\ 0&amp;0 &amp; 0 &amp; 1 \end{bmatrix} \begin{bmatrix} 1 &amp;0 &amp;0 &amp; 0\\ 0 &amp;1 &amp;0 &amp; 0\\ 0 &amp;0 &amp;1 &amp; -\frac{n+f}{2}\\ 0 &amp;0 &amp;0 &amp;1 \end{bmatrix}= \begin{bmatrix} \frac{2}{r-l} &amp;0 &amp;0 &amp; 0\\ 0 &amp;\frac{2}{t-b} &amp;0 &amp; 0\\ 0 &amp;0 &amp;\frac{2}{n-f} &amp; -\frac{n+f}{n-f}\\ 0 &amp;0 &amp;0 &amp;1 \end{bmatrix}\]</div>
+<div class="arithmatex">\[\mathbf{P}_{persp}=\mathbf{P}_{ortho}\mathbf{T}=\begin{bmatrix} \frac{2}{r-l} &amp;0 &amp;0 &amp; 0\\ 0 &amp;\frac{2}{t-b} &amp;0 &amp; 0\\ 0 &amp;0 &amp;\frac{2}{n-f} &amp; -\frac{n+f}{n-f}\\ 0 &amp;0 &amp;0 &amp;1 \end{bmatrix}\begin{bmatrix} n &amp; 0 &amp; 0 &amp; 0\\ 0 &amp; n &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; n+f &amp; -nf \\0&amp;0&amp;1&amp;0\end{bmatrix} = \begin{bmatrix} \frac{2n}{r-l} &amp;0 &amp; 0 &amp; 0 \\ 0 &amp;\frac{2n}{t-b} &amp; 0 &amp;0 \\ 0 &amp;0 &amp;\frac{n+f}{n-f} &amp; \frac{-2nf}{n-f} \\ 0 &amp;0 &amp;1 &amp;0 \end{bmatrix}\]</div>
 <h4 id="324-fovaspect-ratio">3.2.4 使用FOV和Aspect ratio表示投影矩阵</h4>
 <figure><br />
 <img alt="Pasted image 20251021190651.jpg" src="../Pasted%20image%2020251021190651.jpg" width="400" /><br />
