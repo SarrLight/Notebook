@@ -1,0 +1,2103 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../%E4%BD%9C%E4%B8%9A2-Rasterization/">
+      
+      
+        <link rel="next" href="../%E4%BD%9C%E4%B8%9A4-Bazier%20Curve/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>作业3-Shading - SarrLight's Notebook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="SarrLight&#39;s Notebook" class="md-header__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SarrLight's Notebook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              作业3-Shading
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" class="md-tabs__link">
+          
+  
+  
+  课内学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../03-04%20Transform/" class="md-tabs__link">
+          
+  
+  
+  游戏开发
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="SarrLight&#39;s Notebook" class="md-nav__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+
+    </a>
+    SarrLight's Notebook
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课内学习
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    课内学习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    计算机组成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../课内学习/高级数据结构.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    高级数据结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    游戏开发
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    游戏开发
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GAMES101
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    GAMES101
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-04%20Transform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L3-L4:Transform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-06%20Rasterization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L5-L6:Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-09%20Shading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L7-L9:Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-12%20Geometry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L10-L12:Geometry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-16%20Ray%20Tracing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L13-L16:Ray Tracing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A1-%E7%94%BB%E4%B8%89%E8%A7%92%E5%BD%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业1-画三角形
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A2-Rasterization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业2-Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业3-Shading
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业3-Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 任务
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 项目解读
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 项目解读">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 运行项目
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-texture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Texture类
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-rasterizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Rasterizer类
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 法线向量的变换
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 法线向量的变换">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#241" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.1 公式推导
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 映射到屏幕坐标
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 我的实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 我的实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-normal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 normal模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-phong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 phong模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 添加纹理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-bumpmapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 实现Bumpmapping
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-displacement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 实现displacement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 第三方库
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4 第三方库">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-opencv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 OpenCV
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 OpenCV">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411-cvmat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1.1 cv:Mat 图像/矩阵容器
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1.1 cv:Mat 图像/矩阵容器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心属性（描述数据基本信息）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常用创建方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        像素访问（最常用两种方式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内存管理（避坑关键）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        高频操作
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-obj_loaderh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 OBJ_Loader.h
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 OBJ_Loader.h">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#421-vertex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.1 顶点Vertex的数据结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#422-mesh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.2 面Mesh的数据结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-eigen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Eigen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Eigen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431-acwiseproduct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.1 a.cwiseProduct()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#432-matrix4f" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.2 矩阵Matrix4f
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-cpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 Cpp特性
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5 Cpp特性">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-push_back" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 push_back()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-stdfunction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 std::function
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-stdtransform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 std::transform
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-stdoptionaltexture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 std::optional&lt;Texture&gt;
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A4-Bazier%20Curve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业4-BazierCurve
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 任务
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 项目解读
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 项目解读">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 运行项目
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-texture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Texture类
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-rasterizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Rasterizer类
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 法线向量的变换
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 法线向量的变换">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#241" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.1 公式推导
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 映射到屏幕坐标
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 我的实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 我的实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-normal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 normal模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-phong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 phong模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 添加纹理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-bumpmapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 实现Bumpmapping
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-displacement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 实现displacement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 第三方库
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4 第三方库">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-opencv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 OpenCV
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 OpenCV">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411-cvmat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1.1 cv:Mat 图像/矩阵容器
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1.1 cv:Mat 图像/矩阵容器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心属性（描述数据基本信息）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常用创建方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        像素访问（最常用两种方式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内存管理（避坑关键）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        高频操作
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-obj_loaderh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 OBJ_Loader.h
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 OBJ_Loader.h">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#421-vertex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.1 顶点Vertex的数据结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#422-mesh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.2 面Mesh的数据结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-eigen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Eigen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Eigen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431-acwiseproduct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.1 a.cwiseProduct()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#432-matrix4f" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.2 矩阵Matrix4f
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-cpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 Cpp特性
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5 Cpp特性">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-push_back" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 push_back()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-stdfunction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 std::function
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-stdtransform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 std::transform
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-stdoptionaltexture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 std::optional&lt;Texture&gt;
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>作业3-Shading</h1>
+
+<h2 id="1">1 任务</h2>
+<ol>
+<li>修改函数rasterize_triangle(const Triangle&amp; t) in rasterizer.cpp: 在此处实现与作业2类似的插值算法，实现法向量、颜色、纹理颜色的插值。 </li>
+<li>修改函数get_projection_matrix() in main.cpp: 将你自己在之前的实验中 实现的投影矩阵填到此处，此时你可以运行./Rasterizer output.png normal 来观察法向量实现结果。 <br />
+    <figure markdown="span"><br />
+<img alt="Pasted image 20251029141934.png" src="../Pasted%20image%2020251029141934.png" width="400" /></li>
+</ol>
+<p></figure markdown><br />
+3. 修改函数phong_fragment_shader() in main.cpp: 实现 Blinn-Phong 模型计算Fragment Color. </p>
+<figure><br />
+<img alt="Pasted image 20251029142013.png" src="../Pasted%20image%2020251029142013.png" width="400" /><br />
+<br />
+</figure>
+<ol>
+<li>修改函数 texture_fragment_shader() in main.cpp: 在实现 Blinn-Phong 的基础上，将纹理颜色视为公式中的 kd，实现 Texture Shading Fragment Shader.<br />
+    <figure markdown="span"><br />
+<img alt="Pasted image 20251029142033.png" src="../Pasted%20image%2020251029142033.png" width="400" /></li>
+</ol>
+<p></figure markdown><br />
+5. 修改函数 bump_fragment_shader() in main.cpp: 在实现 Blinn-Phong 的 基础上，仔细阅读该函数中的注释，实现Bumpmapping. <br />
+    <figure markdown="span"><br />
+<img alt="Pasted image 20251029142053.png" src="../Pasted%20image%2020251029142053.png" width="400" /></p>
+<p></figure markdown><br />
+6. 修改函数 displacement_fragment_shader() in main.cpp: 在实现 Bump mapping 的基础上，实现displacement mapping<br />
+    <figure markdown="span"><br />
+<img alt="Pasted image 20251029142118.png" src="../Pasted%20image%2020251029142118.png" width="400" /></p>
+</figure markdown>
+<h2 id="2">2 项目解读</h2>
+<h3 id="21">2.1 运行项目</h3>
+<p><div class="highlight"><pre><span></span><code>build/rasterizer.exe output.png normal
+</code></pre></div><br />
+- 第一项即要运行的程序名<br />
+- 第二项为输出图像的路径和名称<br />
+- 第三项为渲染模式，分为texture,normal,phong,bump,displacement五种模式</p>
+<h3 id="22-texture">2.2 Texture类</h3>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Texture</span><span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="w"> </span><span class="n">image_data</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">Texture</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">image_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cv</span><span class="o">::</span><span class="n">imread</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+<span class="w">        </span><span class="n">cv</span><span class="o">::</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">image_data</span><span class="p">,</span><span class="w"> </span><span class="n">image_data</span><span class="p">,</span><span class="w"> </span><span class="n">cv</span><span class="o">::</span><span class="n">COLOR_RGB2BGR</span><span class="p">);</span>
+<span class="w">        </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">image_data</span><span class="p">.</span><span class="n">cols</span><span class="p">;</span>
+<span class="w">        </span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">image_data</span><span class="p">.</span><span class="n">rows</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="w"> </span><span class="nf">getColor</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">v</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">u_img</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">width</span><span class="p">;</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">v_img</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">height</span><span class="p">;</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">image_data</span><span class="p">.</span><span class="n">at</span><span class="o">&lt;</span><span class="n">cv</span><span class="o">::</span><span class="n">Vec3b</span><span class="o">&gt;</span><span class="p">(</span><span class="n">v_img</span><span class="p">,</span><span class="w"> </span><span class="n">u_img</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="p">(</span><span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="p">};</span>
+</code></pre></div>
+<h3 id="23-rasterizer">2.3 Rasterizer类</h3>
+<p>本项目中纹理Texture是存储在Rasterizer类里面的。<br />
+可通过<code>r.set_texture(Texture(texture_name))</code>来设置Rasterrizer里面的纹理</p>
+<h3 id="24">2.4 法线向量的变换</h3>
+<p>作业项目rasterizer.cpp的draw()函数里面，对三角形顶点坐标分别进行了mv变换和mvp变换，于此同时也要对法线进行相应的变换。代码如下，下面将解读为什么变换公式是这样的。<br />
+<div class="highlight"><pre><span></span><code><span class="c1">//前面顶点坐标已经进行了mv变换到摄像机空间</span>
+<span class="c1">//与之相应的，法向量也需要变换到摄像机空间</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix4f</span><span class="w"> </span><span class="n">inv_trans</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">view</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">model</span><span class="p">).</span><span class="n">inverse</span><span class="p">().</span><span class="n">transpose</span><span class="p">();</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector4f</span><span class="w"> </span><span class="n">n</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">inv_trans</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">to_vec4</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">normal</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">),</span>
+<span class="w">        </span><span class="n">inv_trans</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">to_vec4</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">normal</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">),</span>
+<span class="w">        </span><span class="n">inv_trans</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">to_vec4</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">normal</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">)</span>
+<span class="p">};</span>
+</code></pre></div></p>
+<h4 id="241">2.4.1 公式推导</h4>
+<p>在三维空间中，表面的法线向量与切线向量存在核心几何关系：<br />
+设表面切线向量为 <span class="arithmatex">\(\mathbf{t}\)</span>（方向向量），法线向量为 <span class="arithmatex">\(\mathbf{n}\)</span>（方向向量）；<br />
+二者必须满足垂直关系（点积为 0）：</p>
+<div class="arithmatex">\[
+\mathbf{n} \cdot \mathbf{t} = 0 
+\]</div>
+<p>当对表面应用顶点变换矩阵 <span class="arithmatex">\(M\)</span>（如模型视图矩阵 view * model）时：<br />
+切线向量作为方向向量，直接通过 <span class="arithmatex">\(M\)</span> 变换为新切线 <span class="arithmatex">\(\mathbf{t}'\)</span>：</p>
+<div class="arithmatex">\[\mathbf{t}' = M \cdot \mathbf{t}\]</div>
+<p>设法线的变换矩阵为 <span class="arithmatex">\(N\)</span>，变换后法线为 <span class="arithmatex">\(\mathbf{n}'\)</span>：</p>
+<div class="arithmatex">\[\mathbf{n}' = N \cdot \mathbf{n}\]</div>
+<p>为保证变换后法线仍与切线垂直，需满足：</p>
+<div class="arithmatex">\[\mathbf{n}' \cdot \mathbf{t}' = 0\]</div>
+<p>将切线变换和法线变换代入垂直条件：</p>
+<div class="arithmatex">\[(N \cdot \mathbf{n}) \cdot (M \cdot \mathbf{t}) = 0\]</div>
+<p>根据向量点积与转置的关系 <span class="arithmatex">\(\mathbf{a} \cdot \mathbf{b} = \mathbf{a}^T \cdot \mathbf{b}\)</span>，上式可改写为：</p>
+<div class="arithmatex">\[(N \cdot \mathbf{n})^T \cdot (M \cdot \mathbf{t}) = 0\]</div>
+<p>根据矩阵转置性质 <span class="arithmatex">\((A \cdot B)^T = B^T \cdot A^T\)</span>，展开左侧：</p>
+<div class="arithmatex">\[\mathbf{n}^T \cdot N^T \cdot M \cdot \mathbf{t} = 0\]</div>
+<p>由原垂直条件 <span class="arithmatex">\(\mathbf{n} \cdot \mathbf{t} = \mathbf{n}^T \cdot \mathbf{t} = 0\)</span>，要使上式对任意垂直的 <span class="arithmatex">\(\mathbf{n}\)</span> 和 <span class="arithmatex">\(\mathbf{t}\)</span> 恒成立，需满足</p>
+<div class="arithmatex">\[N^T \cdot M = I\]</div>
+<p>（其中 <span class="arithmatex">\(I\)</span> 为单位矩阵，因 <span class="arithmatex">\(\mathbf{n}^T \cdot I \cdot \mathbf{t} = \mathbf{n}^T \cdot \mathbf{t} = 0\)</span>）<br />
+对上式两侧同时左乘 <span class="arithmatex">\(M^{-1}\)</span>（<span class="arithmatex">\(M\)</span> 的逆矩阵），得：</p>
+<div class="arithmatex">\[N^T = M^{-1}\]</div>
+<p>两侧同时转置，最终得到法线变换矩阵：</p>
+<div class="arithmatex">\[N = (M^{-1})^T\]</div>
+<p><strong>综上：</strong> 对于如果顶点坐标进行<span class="arithmatex">\(M\)</span>变换的话，法线向量要进行的变换矩阵为<span class="arithmatex">\((M^{-1})^{T}\)</span></p>
+<div class="admonition note">
+<p class="admonition-title">正交矩阵</p>
+<p>对于一个 n 阶实矩阵 <span class="arithmatex">\(A\)</span>，如果它的转置矩阵 <span class="arithmatex">\(Aᵀ\)</span>与自身的乘积等于单位矩阵 <span class="arithmatex">\(E\)</span>，同时自身与转置矩阵的乘积也等于单位矩阵 <span class="arithmatex">\(E\)</span>，那么 <span class="arithmatex">\(A\)</span> 就是正交矩阵。其数学表达式为：<span class="arithmatex">\(Aᵀ A = A Aᵀ = E\)</span></p>
+<p>因此，如果顶点坐标的变换矩阵<span class="arithmatex">\(M\)</span>是正交矩阵的话，其实法线向量的变换矩阵也可以直接使用<span class="arithmatex">\(M\)</span></p>
+</div>
+<h3 id="25">2.5 映射到屏幕坐标</h3>
+<p>这部分代码来自rasterizer.cpp的draw()函数，会把经过mvp变换之后坐标转化为屏幕坐标。<br />
+<div class="highlight"><pre><span></span><code><span class="kt">float</span><span class="w"> </span><span class="n">f1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">50</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.1</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2.0</span><span class="p">;</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">f2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">50</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.1</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2.0</span><span class="p">;</span>
+
+<span class="c1">//Viewport transformation</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">vert</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">v</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">vert</span><span class="p">.</span><span class="n">x</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="o">*</span><span class="n">width</span><span class="o">*</span><span class="p">(</span><span class="n">vert</span><span class="p">.</span><span class="n">x</span><span class="p">()</span><span class="o">+</span><span class="mf">1.0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">vert</span><span class="p">.</span><span class="n">y</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="o">*</span><span class="n">height</span><span class="o">*</span><span class="p">(</span><span class="n">vert</span><span class="p">.</span><span class="n">y</span><span class="p">()</span><span class="o">+</span><span class="mf">1.0</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">//把z坐标从[-1,1]映射到[-0.1, -50]</span>
+<span class="w">    </span><span class="n">vert</span><span class="p">.</span><span class="n">z</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vert</span><span class="p">.</span><span class="n">z</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="o">-</span><span class="n">f1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">f2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h2 id="3">3 我的实现</h2>
+<h3 id="31-normal">3.1 normal模式</h3>
+<ul>
+<li>修改函数rasterize_triangle(const Triangle&amp; t) in rasterizer.cpp: 在此处实现与作业2类似的插值算法，实现法向量、颜色、纹理颜色的插值。 </li>
+<li>修改函数get_projection_matrix() in main.cpp: 将你自己在之前的实验中 实现的投影矩阵填到此处，此时你可以运行./Rasterizer output.png normal 来观察法向量实现结果。</li>
+</ul>
+<figure><br />
+<img alt="output.png" src="../output.png" width="400" /><br />
+<br />
+</figure>
+<h3 id="32-phong">3.2 phong模型</h3>
+<p>修改函数phong_fragment_shader() in main.cpp: 实现 Blinn-Phong 模型计算Fragment Color. <br />
+phong模型的概念请见[[07-09 Shading#1 布林-冯反射模型 Blinn-Phong Reflectance model|布林冯反射模型]]</p>
+<p>添加的核心代码如下<br />
+<div class="highlight"><pre><span></span><code><span class="k">auto</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eye_pos</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">point</span><span class="p">;</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">position</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">point</span><span class="p">;</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">).</span><span class="n">normalized</span><span class="p">();</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">r_2pow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">l</span><span class="p">);</span>
+
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="w"> </span><span class="n">ambent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ka</span><span class="p">.</span><span class="n">cwiseProduct</span><span class="p">(</span><span class="n">amb_light_intensity</span><span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kd</span><span class="p">.</span><span class="n">cwiseProduct</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">intensity</span><span class="o">/</span><span class="n">r_2pow</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="n">normal</span><span class="p">.</span><span class="n">normalized</span><span class="p">().</span><span class="n">dot</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">normalized</span><span class="p">()));</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="w"> </span><span class="n">specular</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ks</span><span class="p">.</span><span class="n">cwiseProduct</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">intensity</span><span class="o">/</span><span class="n">r_2pow</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">pow</span><span class="p">(</span><span class="n">normal</span><span class="p">.</span><span class="n">normalized</span><span class="p">().</span><span class="n">dot</span><span class="p">(</span><span class="n">h</span><span class="p">),</span><span class="w"> </span><span class="n">p</span><span class="p">));</span>
+
+<span class="n">result_color</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">ambent</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">specular</span><span class="p">;</span>
+</code></pre></div></p>
+<div class="admonition bug">
+<p class="admonition-title">BUG</p>
+<p>这里max和pow的顺序有问题，导致当p为偶数，点乘结果为负数的时候出现问题。具体请见[[作业3-Shading#3.5 实现displacement]]</p>
+</div>
+<figure><br />
+<img alt="output_phong.png" src="../output_phong.png" width="400" /><br />
+<br />
+</figure>
+<h3 id="33">3.3 添加纹理</h3>
+<p>只需要在phong模型的基础上上修改初始颜色为纹理颜色即可。</p>
+<figure><br />
+<img alt="output_texture.png" src="../output_texture.png" width="400" /><br />
+<br />
+</figure>
+<div class="admonition warning">
+<p class="admonition-title">遇到的warning </p>
+<p>libpng warning: iCCP: known incorrect sRGB profile</p>
+</div>
+<h3 id="34-bumpmapping">3.4 实现Bumpmapping</h3>
+<p>修改函数 bump_fragment_shader() in main.cpp: 在实现 Blinn-Phong 的 基础上，仔细阅读该函数中的注释，实现Bumpmapping. </p>
+<p>因为uv坐标值可能大于1，导致根据uv坐标读取texture中的像素值时发生段错误。</p>
+<div class="admonition tip">
+<p class="admonition-title">技巧</p>
+<p>用vscode调试的时候可以通过查看调用栈来定位出错的具体位置。<br />
+为了实现传参的调试，参见[[GAMES101/UTILITIES#2 cmake vscode 传参调试|vscode传参调试]]</p>
+</div>
+<p>解决方法是修改getColor函数<br />
+<div class="highlight"><pre><span></span><code><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="w"> </span><span class="nf">getColor</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">v</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">floor</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+<span class="w">    </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">floor</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">u_img</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">width</span><span class="p">;</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">v_img</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">height</span><span class="p">;</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">image_data</span><span class="p">.</span><span class="n">at</span><span class="o">&lt;</span><span class="n">cv</span><span class="o">::</span><span class="n">Vec3b</span><span class="o">&gt;</span><span class="p">(</span><span class="n">v_img</span><span class="p">,</span><span class="w"> </span><span class="n">u_img</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="p">(</span><span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+<span class="p">}</span>
+</code></pre></div><br />
+Bumpmapping主要是实现从高度贴图中求出切向空间的法线向量，之后通过TBN矩阵转化到世界空间。具体公式请见 [[07-09 Shading<strong class="hash">5</strong>.2.5 法线贴图(Normal Mapping)|法线贴图的应用]]</p>
+<p>bump mapping需要的是高度贴图，但是这个作业中给的是法线贴图。高度贴图一般都是灰度图，而法线贴图一般是RGB图。<br />
+如果从法线贴图得到高度呢，如果用RGB平均值作为高度的话,得到的结果如下图所示</p>
+<figure><br />
+<img alt="output_bump.png" src="../output_bump.png" width="400" /><br />
+<br />
+</figure>
+<p>如果使用<span class="arithmatex">\(\sqrt{R^2+G^2+B^2}\)</span> 作为高度的话(代码中使用<code>.norm()</code>实现)，得到的结果如下：</p>
+<figure><br />
+<img alt="output_bump00.png" src="../output_bump00.png" width="400" /><br />
+<br />
+</figure>
+<p>但是，这两张都与作业任务中图片不同，这是因为我在返回<code>result_color</code>之前进行了映射，防止颜色的值为负数<br />
+<div class="highlight"><pre><span></span><code><span class="n">result_color</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="n">normal</span><span class="p">.</span><span class="n">normalized</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2.f</span><span class="p">;</span>
+</code></pre></div><br />
+如果不添加这里的映射的话，得到的结果如下图所示：</p>
+<figure><br />
+<img alt="output_bump1.png" src="../output_bump1.png" width="400" /><br />
+<br />
+</figure>
+<h3 id="35-displacement">3.5 实现displacement</h3>
+<p><strong>点的位置需要移动（沿哪个方向移动，移动多少）</strong><br />
+displacement的含义是“置换”，即模型的顶点需要沿着法线方向，根据bump texture中的高度信息移动对应的长度，之后根据高度图的梯度信息，修改法线方向。</p>
+<p>需要注意的是模型应该沿修改之前的法线移动，移动的长度由高度图中的数值决定。另外，因为高度图的范围是<code>[0,255]</code>。需要根据实际情况将它的范围进行映射。<br />
+在代码中使用了一个系数<code>kn=0.1</code>对高度图映射到了更小的范围上。并且因为高度图的值都是正数，顶点只沿法线正向移动。如果需要顶点也能负向移动的话，需要修改这里的映射逻辑。</p>
+<p><strong>发现之前实现phong模型出现的问题</strong><br />
+实现displacement之后，运行程序发现模型表面出现一些白色亮点。<br />
+解决bug之前</p>
+<figure><br />
+<img alt="output_displace0.png" src="../output_displace0.png" width="400" /><br />
+<br />
+</figure>
+<p>仔细观察发现，亮点都大多出现在高光处。因此推测是高光的计算出了问题。<br />
+排查代码发现，是求最大值的位置出现错误。<br />
+<div class="highlight"><pre><span></span><code><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="w"> </span><span class="n">specular</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ks</span><span class="p">.</span><span class="n">cwiseProduct</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">intensity</span><span class="o">/</span><span class="n">r_2pow</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">pow</span><span class="p">(</span><span class="n">normal</span><span class="p">.</span><span class="n">normalized</span><span class="p">().</span><span class="n">dot</span><span class="p">(</span><span class="n">h</span><span class="p">),</span><span class="w"> </span><span class="n">p</span><span class="p">));</span>
+</code></pre></div><br />
+程序中p是偶数，所以如果点乘结果为负数，也会因为pow变成正数。这不是我们期望的。<br />
+我们期望的是当点乘结果为负数时，就归零。</p>
+<p>所以应该在max的外面使用pow。修改后的代码如下：<br />
+<div class="highlight"><pre><span></span><code><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="w"> </span><span class="n">specular</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ks</span><span class="p">.</span><span class="n">cwiseProduct</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">intensity</span><span class="o">/</span><span class="n">r_2pow</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">pow</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="n">normal</span><span class="p">.</span><span class="n">normalized</span><span class="p">().</span><span class="n">dot</span><span class="p">(</span><span class="n">h</span><span class="p">)),</span><span class="w"> </span><span class="n">p</span><span class="p">);</span>
+</code></pre></div><br />
+现在结果正常了：</p>
+<figure><br />
+<img alt="output_displace.png" src="../output_displace.png" width="400" /><br />
+<br />
+</figure>
+<h2 id="4">4 第三方库</h2>
+<h3 id="41-opencv">4.1 OpenCV</h3>
+<h4 id="411-cvmat">4.1.1 cv:Mat 图像/矩阵容器</h4>
+<p><code>cv::Mat</code> 是 OpenCV 中最核心的图像 / 矩阵容器，以下是开发中最常用的信息：</p>
+<h5 id="_1">核心属性（描述数据基本信息）</h5>
+<ul>
+<li><code>rows</code>：行数（图像高度，单位像素）；<code>cols</code>：列数（图像宽度）。</li>
+<li><code>size()</code>：返回 <code>cv::Size(cols, rows)</code>，快速获取宽高。</li>
+<li><code>channels()</code>：通道数（如灰度图 1，BGR 彩色图 3）。</li>
+<li><code>type()</code>：数据类型（含深度 + 通道，如 <code>CV_8UC3</code> 表示 8 位无符号、3 通道，最常用）。</li>
+</ul>
+<h5 id="_2">常用创建方式</h5>
+<ul>
+<li>读取图像：<code>cv::Mat img = cv::imread("path.jpg");</code>（直接得到图像 Mat）。</li>
+<li>手动创建：<code>cv::Mat mat(rows, cols, type);</code>（如 <code>cv::Mat(480, 640, CV_8UC3)</code> 创建 640x480 的 3 通道图）。</li>
+<li>初始化值：<code>cv::Mat::zeros(rows, cols, type)</code>（全 0）、<code>cv::Mat::ones(...)</code>（全 1）、<code>cv::Mat::eye(...)</code>（单位矩阵）。</li>
+</ul>
+<h5 id="_3">像素访问（最常用两种方式）</h5>
+<ul>
+<li><strong><code>at&lt;&gt;()</code> 方法</strong>（简单直观，适合单次访问）：<br />
+    彩色图（3 通道）：<code>img.at&lt;cv::Vec3b&gt;(i,j)[0]</code>（B 通道）、<code>[1]</code>（G）、<code>[2]</code>（R）。<br />
+    灰度图（1 通道）：<code>gray.at&lt;uchar&gt;(i,j)</code>。</li>
+</ul>
+<h5 id="_4">内存管理（避坑关键）</h5>
+<ul>
+<li><strong>浅拷贝</strong>：<code>cv::Mat b = a;</code> 仅复制头部，共享数据（改 b 会影响 a）。</li>
+<li><strong>深拷贝</strong>：<code>cv::Mat c = a.clone();</code> 或 <code>a.copyTo(c);</code>，数据独立（安全）。</li>
+</ul>
+<h5 id="_5">高频操作</h5>
+<ul>
+<li>通道分离 / 合并：<code>cv::split(img, channels);</code>、<code>cv::merge(channels, img);</code>。</li>
+<li>类型转换：<code>cv::cvtColor(img, gray, cv::COLOR_BGR2GRAY);</code>（彩色转灰度）。</li>
+<li>裁剪 ROI：<code>cv::Mat roi = img(cv::Rect(x,y,w,h));</code>（提取子区域，浅拷贝）。</li>
+</ul>
+<h3 id="42-obj_loaderh">4.2 OBJ_Loader.h</h3>
+<h4 id="421-vertex">4.2.1 顶点Vertex的数据结构</h4>
+<p>包含这个点的位置Position，法向Normal，纹理坐标TextureCoordinate<br />
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">Vertex</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Position Vector</span>
+<span class="w">        </span><span class="n">Vector3</span><span class="w"> </span><span class="n">Position</span><span class="p">;</span>
+<span class="w">        </span><span class="c1">// Normal Vector</span>
+<span class="w">        </span><span class="n">Vector3</span><span class="w"> </span><span class="n">Normal</span><span class="p">;</span>
+<span class="w">        </span><span class="c1">// Texture Coordinate Vector</span>
+<span class="w">        </span><span class="n">Vector2</span><span class="w"> </span><span class="n">TextureCoordinate</span><span class="p">;</span>
+<span class="w">    </span><span class="p">};</span>
+</code></pre></div></p>
+<h4 id="422-mesh">4.2.2 面Mesh的数据结构</h4>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">Mesh</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Default Constructor</span>
+<span class="w">        </span><span class="n">Mesh</span><span class="p">()</span>
+<span class="w">        </span><span class="p">{</span>
+
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// Variable Set Constructor</span>
+<span class="w">        </span><span class="n">Mesh</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Vertex</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">_Vertices</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">_Indices</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Vertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_Vertices</span><span class="p">;</span>
+<span class="w">            </span><span class="n">Indices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_Indices</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// Mesh Name</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">MeshName</span><span class="p">;</span>
+<span class="w">        </span><span class="c1">// Vertex List</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Vertex</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Vertices</span><span class="p">;</span>
+<span class="w">        </span><span class="c1">// Index List</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Indices</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Material</span>
+<span class="w">        </span><span class="n">Material</span><span class="w"> </span><span class="n">MeshMaterial</span><span class="p">;</span>
+<span class="w">    </span><span class="p">};</span>
+</code></pre></div>
+<h3 id="43-eigen">4.3 Eigen</h3>
+<h4 id="431-acwiseproduct">4.3.1 <code>a.cwiseProduct()</code></h4>
+<p>Eigen 是 C++ 中常用的线性代数库，<code>cwiseProduct()</code> 是其矩阵 / 向量类的成员函数，用于逐元素相乘（区别于矩阵乘法 <code>*</code> 运算符，后者是线性代数中的矩阵乘积）。<br />
+<div class="highlight"><pre><span></span><code><span class="n">Matrix2d</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="n">a</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">     </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+
+<span class="n">Matrix2d</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="n">b</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span>
+<span class="w">     </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span>
+
+<span class="c1">// 逐元素相乘</span>
+<span class="n">Matrix2d</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">cwiseProduct</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+</code></pre></div><br />
+对于Vector3f之类的类型，cwiseProduct同样表示逐元素相乘。</p>
+<h4 id="432-matrix4f">4.3.2 矩阵Matrix4f</h4>
+<p>在 Eigen 库中，将三个 3 维向量<code>t</code>、<code>b</code>、<code>normal</code>拼接为 3x3 的<code>TBN</code>矩阵（通常以这三个向量为列向量），正确的做法是通过矩阵的列操作来赋值。直接用<code>{t, b, normal}</code>初始化矩阵在 Eigen 中不支持，需要显式指定每一列。<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// 声明3x3矩阵</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3f</span><span class="w"> </span><span class="n">TBN</span><span class="p">;</span>
+
+<span class="c1">// 分别将t、b、normal设为矩阵的第0、1、2列（TBN矩阵的列向量）</span>
+<span class="n">TBN</span><span class="p">.</span><span class="n">col</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="w">   </span><span class="c1">// 第一列是t</span>
+<span class="n">TBN</span><span class="p">.</span><span class="n">col</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w">   </span><span class="c1">// 第二列是b</span>
+<span class="n">TBN</span><span class="p">.</span><span class="n">col</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normal</span><span class="p">;</span><span class="w">  </span><span class="c1">// 第三列是normal</span>
+</code></pre></div></p>
+<h2 id="5-cpp">5 Cpp特性</h2>
+<h3 id="51-push_back">5.1 push_back()</h3>
+<ol>
+<li><strong>功能定位</strong>：C++ 标准库容器（如 <code>vector</code>、<code>list</code>、<code>deque</code> 等）的成员函数，用于在容器<strong>末尾</strong>添加一个新元素。</li>
+<li><strong>操作逻辑</strong>：<ul>
+<li>对 <code>vector</code>：若当前容量不足，会先自动扩容（分配更大内存、拷贝旧元素、释放旧内存），再在末尾插入新元素；</li>
+<li>对 <code>list</code>/<code>deque</code>：无需扩容，直接在尾部节点后新增元素，效率更稳定。</li>
+</ul>
+</li>
+<li><strong>参数要求</strong>：需传入与容器元素类型匹配的值（可直接传值，或通过 <code>std::move</code> 传右值以提升效率）。</li>
+<li><strong>常见用途</strong>：动态向容器中添加元素，是日常开发中填充 <code>vector</code> 等序列容器的常用操作。</li>
+<li><strong>注意点</strong>：<code>vector</code> 使用 <code>push_back</code> 可能因扩容导致迭代器失效，需避免在迭代过程中调用；若需在容器中间插入元素，应使用 <code>insert</code> 函数。<br />
+push_back的功能和emplace_back差不多，但emplace_back能够减少一次复制，因此性能稍好一点</li>
+</ol>
+<h3 id="52-stdfunction">5.2 std::function</h3>
+<p><div class="highlight"><pre><span></span><code>std::function&lt;Eigen::Vector3f(fragment_shader_payload)&gt; active_shader = phong_fragment_shader;
+</code></pre></div><br />
+1. <strong>定义对象</strong>：声明名为<code>active_shader</code>的变量，其类型为<code>std::function</code>（C++ 标准库的通用函数包装器）。<br />
+2. <strong>函数类型约束</strong>：<code>std::function</code>指定了包装的函数需满足：<br />
+    - 输入参数：1 个，类型为<code>fragment_shader_payload</code>（片段着色器有效载荷，通常含纹理、法向量等渲染数据）。<br />
+    - 返回值：类型为<code>Eigen::Vector3f</code>（Eigen 库的 3 元素浮点向量，常表示颜色、坐标等 3D 数据）。<br />
+3. <strong>赋值绑定</strong>：将<code>active_shader</code>绑定到具体函数<code>phong_fragment_shader</code>（即冯氏光照模型的片段着色器函数），后续可通过<code>active_shader</code>调用该光照计算逻辑。</p>
+<h3 id="53-stdtransform">5.3 std::transform</h3>
+<p><div class="highlight"><pre><span></span><code><span class="c1">//把mm复制进数组viewspace_pos</span>
+<span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span><span class="n">mm</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">mm</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">viewspace_pos</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="p">[](</span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="k">template</span><span class="w"> </span><span class="n">head</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="p">});</span>
+</code></pre></div><br />
+- <code>std::transform</code>是 STL 中的算法，用于对一个范围的元素执行转换操作，并将结果存储到另一个范围。这里的源范围是<code>mm</code>（从<code>mm.begin()</code>到<code>mm.end()</code>），目标范围从<code>viewspace_pos.begin()</code>开始。<br />
+- 转换逻辑由 lambda 表达式定义：对<code>mm</code>中的每个元素<code>v</code>，调用其<code>head&lt;3&gt;()</code>成员函数（通过<code>template</code>关键字显式指定模板成员，避免依赖类型解析歧义），提取<code>v</code>的前 3 个元素（或前 3 个分量），作为转换后的值存入<code>viewspace_pos</code>。</p>
+<p>假设<code>v</code>的类型是一个<strong>依赖类型</strong>（即其类型依赖于某个模板参数，比如<code>v</code>的类型是<code>T</code>，而<code>T</code>是当前上下文的模板参数）。此时，当我们写<code>v.head&lt;3&gt;()</code>时，编译器会面临一个歧义：</p>
+<ul>
+<li>编译器不知道<code>head</code>是<code>v</code>的一个<strong>模板成员函数</strong>，还是一个普通成员变量。</li>
+<li>如果<code>head</code>被误认为是普通成员变量，那么<code>&lt;</code>会被解析为 “小于号”（比较运算符），而不是 “模板参数列表的开始”。比如，编译器可能错误地将<code>v.head&lt;3&gt;()</code>理解为<code>(v.head) &lt; 3 &gt; ()</code>（这显然是语法错误）。</li>
+</ul>
+<p><code>template</code>关键字的作用</p>
+<p><code>template</code>关键字在这里的作用是<strong>显式告诉编译器</strong>：<code>head</code>是<code>v</code>的一个模板成员函数，后面的<code>&lt;3&gt;</code>是模板参数列表，而不是比较运算符。其语法格式为：<br />
+<code>对象. template 模板成员&lt;模板参数&gt;(...)</code></p>
+<h3 id="54-stdoptionaltexture">5.4 <code>std::optional&lt;Texture&gt;</code></h3>
+<p>核心定义</p>
+<p><code>std::optional&lt;Texture&gt;</code>是 C++17 引入的<strong>可选值容器</strong>，用于存储 “可能存在或不存在” 的 <code>Texture</code>（纹理，通常用于图形编程）对象，本质是对 “值存在性” 的类型安全封装。<br />
+核心特性与作用<br />
+1. <strong>解决 “空值问题”</strong>：替代 <code>nullptr</code>（仅适用于指针）或自定义标记（如 <code>bool is_valid</code>），避免野指针风险和额外状态管理，类型安全更高。<br />
+2. <strong>值的存在性判断</strong>：通过 <code>has_value()</code> 成员函数判断是否存储了有效 <code>Texture</code>，或直接用 <code>if (opt_texture)</code> 简化判断。<br />
+3. <strong>安全访问值</strong>：<br />
+    - 存在值时：用 <code>value()</code> 获取 <code>Texture</code> 引用（无值时抛 <code>std::bad_optional_access</code> 异常）；<br />
+    - 无值时：用 <code>value_or(default_texture)</code> 获取默认 <code>Texture</code>，避免崩溃。<br />
+4. <strong>零额外开销（通常）</strong>：编译器优化后，内存占用与 <code>Texture</code> 本身接近（仅可能增加 1 字节 “存在性标记”），无动态内存分配。<br />
+典型使用场景<br />
+- 图形编程中：加载纹理（如 <code>load_texture("path.png")</code>）可能失败（文件不存在、格式错误），返回 <code>std::optional&lt;Texture&gt;</code> 直接体现 “加载成功 / 失败”。<br />
+- 避免默认构造：当 <code>Texture</code> 无默认构造函数，或默认构造成本高时，用 <code>std::optional&lt;Texture&gt;</code> 延迟初始化有效对象。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.top", "navigation.tabs", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

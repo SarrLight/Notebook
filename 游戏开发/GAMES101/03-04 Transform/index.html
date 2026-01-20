@@ -1,0 +1,1755 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../../%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/">
+      
+      
+        <link rel="next" href="../05-06%20Rasterization/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>L3-L4:Transform - SarrLight's Notebook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-2d-transformation" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="SarrLight&#39;s Notebook" class="md-header__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SarrLight's Notebook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              L3-L4:Transform
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" class="md-tabs__link">
+          
+  
+  
+  课内学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  游戏开发
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="SarrLight&#39;s Notebook" class="md-nav__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+
+    </a>
+    SarrLight's Notebook
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课内学习
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    课内学习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    计算机组成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../课内学习/高级数据结构.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    高级数据结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    游戏开发
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    游戏开发
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GAMES101
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    GAMES101
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L3-L4:Transform
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L3-L4:Transform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-2d-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 2D Transformation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 2D Transformation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-affine-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Affine Transformation(仿射变换)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1 Affine Transformation(仿射变换)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scale-transformationreflection-tranformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        缩放变换（Scale Transformation)与反射变换(Reflection Tranformation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shear-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        切变变换(Shear Transformation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#111-rotate-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.1 旋转变换(Rotate Transformation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 逆变换
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 变换顺序
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 三维模型变换
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 三维模型变换">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 平移变换
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 缩放变换与反射变换
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 旋转变换
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 旋转变换">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#231" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.1 绕坐标轴旋转
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#232" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.2 欧拉角旋转公式
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 视角变换
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 视角变换">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-view-camera-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 视图变换（相机变换）（View / Camera Transformation）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-projection-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 投影变换(projection transformation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 投影变换(projection transformation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#321-orthographic-projection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2.1 正交投影(Orthographic Projection)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#322-perspective-projection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2.2 透视投影(Perspective Projection)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#323" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2.3 对称视锥体
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#324-fovaspect-ratio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2.4 使用FOV和Aspect ratio表示投影矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-clip-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 裁剪空间（Clip Space)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-06%20Rasterization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L5-L6:Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-09%20Shading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L7-L9:Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-12%20Geometry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L10-L12:Geometry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-16%20Ray%20Tracing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L13-L16:Ray Tracing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A1-%E7%94%BB%E4%B8%89%E8%A7%92%E5%BD%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业1-画三角形
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A2-Rasterization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业2-Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A3-Shading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业3-Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A4-Bazier%20Curve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业4-BazierCurve
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-2d-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 2D Transformation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 2D Transformation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-affine-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Affine Transformation(仿射变换)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1 Affine Transformation(仿射变换)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scale-transformationreflection-tranformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        缩放变换（Scale Transformation)与反射变换(Reflection Tranformation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shear-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        切变变换(Shear Transformation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#111-rotate-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.1 旋转变换(Rotate Transformation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 逆变换
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 变换顺序
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 三维模型变换
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 三维模型变换">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 平移变换
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 缩放变换与反射变换
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 旋转变换
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 旋转变换">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#231" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.1 绕坐标轴旋转
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#232" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.2 欧拉角旋转公式
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 视角变换
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 视角变换">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-view-camera-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 视图变换（相机变换）（View / Camera Transformation）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-projection-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 投影变换(projection transformation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 投影变换(projection transformation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#321-orthographic-projection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2.1 正交投影(Orthographic Projection)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#322-perspective-projection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2.2 透视投影(Perspective Projection)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#323" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2.3 对称视锥体
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#324-fovaspect-ratio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2.4 使用FOV和Aspect ratio表示投影矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-clip-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 裁剪空间（Clip Space)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>L3-L4:Transform</h1>
+
+<p><a href="https://tanyuu.github.io/2024.01-07/GAMES101%E7%AC%94%E8%AE%B0/">GAMES101（现代计算机图形学入门）笔记 - Yu_Tang</a></p>
+<h2 id="1-2d-transformation">1 2D Transformation</h2>
+<h3 id="11-affine-transformation">1.1 Affine Transformation(仿射变换)</h3>
+<div class="arithmatex">\[
+\begin{bmatrix} x' \\ y' \end{bmatrix} = \begin{bmatrix} a &amp; b \\ c &amp; d \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix} + \begin{bmatrix} e \\ f \end{bmatrix} 
+\]</div>
+<p>仿射变换并不能像其他变换一样用单纯的用矩阵乘法进行表示。为了方便表示，我们引入了齐次坐标</p>
+<div class="arithmatex">\[
+\begin{bmatrix}
+x\\y\\ \omega
+\end{bmatrix}
+\]</div>
+<p>若<span class="arithmatex">\(\omega\)</span>为0，则说明其表示的是向量，否则则为点。<br />
+若齐次坐标表示点时</p>
+<div class="arithmatex">\[
+\begin{bmatrix}
+x\\y\\ \omega
+\end{bmatrix}
+等价于
+\begin{bmatrix}
+\frac{x}{\omega}\\\frac{y}{\omega} \\1
+\end{bmatrix}
+表示点(\frac{x}{\omega},\frac{y}{\omega})
+\]</div>
+<p>齐次坐标表示下，平移变换即可用矩阵乘法表示为：</p>
+<div class="arithmatex">\[
+\begin{bmatrix} x' \\ y' \\ \omega' \end{bmatrix} = \begin{bmatrix} 1 &amp; 0 &amp; t_x \\ 0 &amp; 1 &amp; t_y \\ 0 &amp; 0 &amp; 1 \end{bmatrix} \begin{bmatrix} x \\ y \\ \omega \end{bmatrix} = \begin{bmatrix} x + \omega t_x \\ y + \omega t_y \\ \omega \end{bmatrix}
+\]</div>
+<h4 id="scale-transformationreflection-tranformation">缩放变换（Scale Transformation)与反射变换(Reflection Tranformation)</h4>
+<p>横轴缩放<span class="arithmatex">\(S_x\)</span>倍，纵轴缩放<span class="arithmatex">\(S_y\)</span>倍的缩放变换 <span class="arithmatex">\(S(s_x,s_y)\)</span> 表示为：</p>
+<div class="arithmatex">\[
+\begin{bmatrix} x' \\ y' \\ \omega' \end{bmatrix} = \begin{bmatrix} s_x &amp; 0 &amp; 0 \\ 0 &amp; s_y &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{bmatrix} \begin{bmatrix} x \\ y \\ \omega \end{bmatrix} = \begin{bmatrix} x s_x \\ y s_y \\ \omega \end{bmatrix}
+\]</div>
+<p>若 <span class="arithmatex">\(s_∗&lt;0\)</span> 则认为是反射变换；</p>
+<h4 id="shear-transformation">切变变换(Shear Transformation)</h4>
+<p>切变变换的核心是图形沿某一坐标轴方向移动，移动距离与该点到另一坐标轴的距离成正比，且平行于该坐标轴的线段长度不变。<br />
+例如沿x轴方向切变需要保证y坐标不变，变换效果就是 x 坐标随 y 坐标线性变化，y 坐标保持不变。<br />
+设坐标变换前原向量为<span class="arithmatex">\((x,y)\)</span>, 变换后向量<span class="arithmatex">\((x',y')\)</span>满足</p>
+<div class="arithmatex">\[
+\begin{cases}
+x' = x + ky\quad \\
+ y' = y
+\end{cases}
+\]</div>
+<p>将上述切变拓展到xy两个轴上同时进行，得到下列公式</p>
+<figure><br />
+<img alt="Pasted image 20251021102432.png" src="../Pasted%20image%2020251021102432.png" width="300" /><br />
+<br />
+</figure>
+<p>符合<span class="arithmatex">\(x'=x+a_xy,y'=y+a_yx\)</span>的切变变换表示为：</p>
+<div class="arithmatex">\[\begin{bmatrix} x'\\y'\\\omega' \end{bmatrix} = \begin{bmatrix} 1&amp;a_x&amp;0\\ a_y&amp;1&amp;0\\ 0&amp;0&amp;1 \end{bmatrix} \begin{bmatrix} x\\y\\\omega \end{bmatrix}=\begin{bmatrix} x+a_xy\\y+a_yx\\\omega \end{bmatrix}
+\]</div>
+<h4 id="111-rotate-transformation">1.1.1 旋转变换(Rotate Transformation)</h4>
+<p>旋转变换默认绕<span class="arithmatex">\((0,0)\)</span>进行，以<span class="arithmatex">\(x^+\)</span>为起始，逆时针为正</p>
+<figure><br />
+<img alt="Pasted image 20251021102847.png" src="../Pasted%20image%2020251021102847.png" width="300" /><br />
+<br />
+</figure>
+<p>旋转<span class="arithmatex">\(\theta\)</span>的旋转变换<span class="arithmatex">\(R_\theta\)</span>表示为：</p>
+<div class="arithmatex">\[\begin{bmatrix}
+x'\\y'\\\omega'
+\end{bmatrix}=
+\begin{bmatrix}
+\cos\theta&amp;-\sin\theta&amp;0\\
+\sin\theta&amp;\cos\theta&amp;0\\
+0&amp;0&amp;1
+\end{bmatrix}
+\begin{bmatrix}
+x\\y\\\omega
+\end{bmatrix}\]</div>
+<p>怎么记忆这个公式呢<br />
+可以通过欧拉公式来记忆</p>
+<div class="arithmatex">\[e^{ix}=\cos(x)+i\sin(x)\]</div>
+<div class="arithmatex">\[
+\begin{align}
+e^{i\theta}\cdot (x+iy)&amp;=
+(\cos\theta+i\sin\theta)\cdot(x+iy) \\
+&amp;=x\cos\theta-y\sin\theta + i(x\sin\theta +y\cos\theta) 
+\end{align}
+\]</div>
+<h3 id="12">1.2 逆变换</h3>
+<p>若<span class="arithmatex">\(A'=MA\)</span>，即<span class="arithmatex">\(A\)</span>可由<span class="arithmatex">\(A'\)</span>进行变换得到 <span class="arithmatex">\(A=M^{-1}A'\)</span></p>
+<h3 id="13">1.3 变换顺序</h3>
+<p>若先进行<span class="arithmatex">\(R{(45\degree)}\)</span>，再进行<span class="arithmatex">\(T{(1,0)}\)</span>，则过程表示为：</p>
+<div class="arithmatex">\[
+A\xrightarrow{R{(45\degree)}}R{(45\degree)}A\xrightarrow{T{(1,0)}}T{(1,0)}R{(45\degree)}A
+\]</div>
+<p>由于矩阵乘法具有结合律，可以先计算<span class="arithmatex">\(T{(1,0)}R{(45\degree)}\)</span> ，再右乘上<span class="arithmatex">\(A\)</span>；</p>
+<h2 id="2">2 三维模型变换</h2>
+<h3 id="21">2.1 平移变换</h3>
+<div class="arithmatex">\[T{(t_x,t_y,t_z)}=
+\begin{bmatrix}
+1&amp;0&amp;0&amp;t_x\\
+0&amp;1&amp;0&amp;t_y\\
+0&amp;0&amp;1&amp;t_z\\
+0&amp;0&amp;0&amp;1
+\end{bmatrix}\]</div>
+<h3 id="22">2.2 缩放变换与反射变换</h3>
+<div class="arithmatex">\[
+S{(s_x,s_y,s_z)}=
+\begin{bmatrix}
+s_x&amp;0&amp;0&amp;0\\
+0&amp;s_y&amp;0&amp;0\\
+0&amp;0&amp;s_z&amp;0\\
+0&amp;0&amp;0&amp;1
+\end{bmatrix}
+\]</div>
+<h3 id="23">2.3 旋转变换</h3>
+<h4 id="231">2.3.1 绕坐标轴旋转</h4>
+<div class="arithmatex">\[
+R_x(\alpha)=
+\begin{bmatrix}
+1&amp;0&amp;0&amp;0\\
+0&amp;\cos\alpha&amp;-\sin\alpha&amp;0\\
+0&amp;\sin\alpha&amp;\cos\alpha&amp;0\\
+0&amp;0&amp;0&amp;1
+\end{bmatrix}\\
+\]</div>
+<div class="arithmatex">\[
+R_y(\alpha)=
+\begin{bmatrix}
+\cos\alpha&amp;0&amp;\sin\alpha&amp;0\\
+0&amp;1&amp;0&amp;0\\
+-\sin\alpha&amp;0&amp;\cos\alpha&amp;0\\
+0&amp;0&amp;0&amp;1
+\end{bmatrix}\\
+\]</div>
+<div class="arithmatex">\[
+R_z(\alpha)=
+\begin{bmatrix}
+\cos\alpha&amp;-\sin\alpha&amp;0&amp;0\\
+\sin\alpha&amp;\cos\alpha&amp;0&amp;0\\
+0&amp;0&amp;1&amp;0\\
+0&amp;0&amp;0&amp;1
+\end{bmatrix}\\
+\]</div>
+<h4 id="232">2.3.2 欧拉角旋转公式</h4>
+<p>将任意旋转分解为<span class="arithmatex">\(x,y,z\)</span>轴上的旋转，分别进行变换</p>
+<div class="arithmatex">\[R_{xyz}(\alpha,\beta,\gamma)=R_x(\alpha)R_y(\beta)R_z(\gamma)\]</div>
+<h2 id="3">3 视角变换</h2>
+<h3 id="31-view-camera-transformation">3.1 视图变换（相机变换）（View / Camera Transformation）</h3>
+<p>相机有一下几个方位属性<br />
+- 位置（Position）<span class="arithmatex">\(\vec e\)</span><br />
+- 视线方向 <span class="arithmatex">\(\hat g\)</span><br />
+- 向上方向 <span class="arithmatex">\(\hat t\)</span><br />
+我们将原坐标系变换为相机坐标系，并符合如下规则：<br />
+- 相机在原点<br />
+- 向上方向为 <span class="arithmatex">\(y^+\)</span><br />
+- 视线方向为 <span class="arithmatex">\(z^-\)</span><br />
+<img alt="Pasted image 20251021150645.png" src="../Pasted%20image%2020251021150645.png" /><br />
+假设变换矩阵为<span class="arithmatex">\(M_{view}\)</span> ，考虑其的形式（<span class="arithmatex">\(M_{view}=R_{view}T_{view}\)</span>）:<br />
+- 首先将相机点移到原点(<span class="arithmatex">\(T_{view}=T_{(-\vec e)}\)</span>)<br />
+- 再进行坐标轴旋转<span class="arithmatex">\(R_{view}\)</span><br />
+平移变换比较简单:</p>
+<div class="arithmatex">\[
+T_{view}=
+\begin{bmatrix}
+1&amp;0&amp;0&amp;-x_e\\
+0&amp;1&amp;0&amp;-y_e\\
+0&amp;0&amp;1&amp;-z_e\\
+0&amp;0&amp;0&amp;1
+\end{bmatrix}\\
+\]</div>
+<p>要想求旋转变换<span class="arithmatex">\(R_{view}\)</span>，需要先考虑<span class="arithmatex">\(R_{view}^{-1}\)</span>，即相机坐标系变换回原坐标系</p>
+<div class="arithmatex">\[R_{view}^{-1}=
+\begin{bmatrix}
+x_{\hat g\times\hat t}&amp;x_{\hat t}&amp;x_{-\hat g}&amp;0\\
+y_{\hat g\times\hat t}&amp;y_{\hat t}&amp;y_{-\hat g}&amp;0\\
+z_{\hat g\times\hat t}&amp;z_{\hat t}&amp;z_{-\hat g}&amp;0\\
+0&amp;0&amp;0&amp;1
+\end{bmatrix}\]</div>
+<p>为什么是这样呢？稍微计算一下就知道了，它可以把初始的x，y，z轴旋转到摄像机的对应轴上,例如：</p>
+<div class="arithmatex">\[R_{view}^{-1}\vec{x}=
+\begin{bmatrix}
+x_{\hat g\times\hat t}&amp;x_{\hat t}&amp;x_{-\hat g}&amp;0\\
+y_{\hat g\times\hat t}&amp;y_{\hat t}&amp;y_{-\hat g}&amp;0\\
+z_{\hat g\times\hat t}&amp;z_{\hat t}&amp;z_{-\hat g}&amp;0\\
+0&amp;0&amp;0&amp;1
+\end{bmatrix}
+\cdot 
+\begin{bmatrix}
+1\\
+0\\
+0\\
+1
+\end{bmatrix}
+=
+\begin{bmatrix}
+\hat g\times\hat t \\
+1
+\end{bmatrix}
+\]</div>
+<p>旋转变换<span class="arithmatex">\(R_{view}\)</span>是正交矩阵，因此它的逆矩阵就是它的转置</p>
+<div class="arithmatex">\[R_{view}=
+\begin{bmatrix}
+x_{\hat g\times\hat t}&amp;y_{\hat g\times\hat t}&amp;z_{\hat g\times\hat t}&amp;0\\
+x_{\hat t}&amp;y_{\hat t}&amp;z_{\hat t}&amp;0\\
+x_{-\hat g}&amp;y_{-\hat g}&amp;z_{-\hat g}&amp;0\\
+0&amp;0&amp;0&amp;1
+\end{bmatrix}\]</div>
+<p>把两个变换合成一下，就得到了视图变换/相机变换矩阵</p>
+<div class="arithmatex">\[
+M_{view}=R_{view}T_{view}
+=
+\begin{bmatrix}
+x_{\hat g\times\hat t}&amp;y_{\hat g\times\hat t}&amp;z_{\hat g\times\hat t}&amp;0\\
+x_{\hat t}&amp;y_{\hat t}&amp;z_{\hat t}&amp;0\\
+x_{-\hat g}&amp;y_{-\hat g}&amp;z_{-\hat g}&amp;0\\
+0&amp;0&amp;0&amp;1
+\end{bmatrix}
+\cdot 
+\begin{bmatrix}
+1&amp;0&amp;0&amp;-x_e\\
+0&amp;1&amp;0&amp;-y_e\\
+0&amp;0&amp;1&amp;-z_e\\
+0&amp;0&amp;0&amp;1
+\end{bmatrix}\\
+\]</div>
+<h3 id="32-projection-transformation">3.2 投影变换(projection transformation)</h3>
+<h4 id="321-orthographic-projection">3.2.1 正交投影(Orthographic Projection)</h4>
+<p><a href="https://zhuanlan.zhihu.com/p/362713511">视图变换和投影变换矩阵的原理及推导- 知乎</a><br />
+进行相机变换之后,我们可以进行正交投影<br />
+我们的做法是：将z坐标写为0, <span class="arithmatex">\(x,y\)</span>坐标的<span class="arithmatex">\((-\infty,+\infty)^2\)</span>映射到<span class="arithmatex">\([-1,1]^2\)</span><br />
+具体步骤如下<br />
+<img alt="Pasted image 20251021155913.png" src="../Pasted%20image%2020251021155913.png" /><br />
+首先看相机变换后空间，我们定义其中存在视景体如上图所示。<br />
+视景体（即图中的长方体）有一下几个属性</p>
+<ul>
+<li>具有在<span class="arithmatex">\(x\)</span>轴上的左右<span class="arithmatex">\([l,r]\)</span>，即left和right</li>
+<li>在<span class="arithmatex">\(y\)</span>轴上的上下<span class="arithmatex">\([b,t]\)</span>，即bottom和top</li>
+<li>在<span class="arithmatex">\(z\)</span>轴上的远近 <span class="arithmatex">\([f,n]\)</span>，即far和near</li>
+</ul>
+<p>接下来我们要将视景体变换成一个<strong>标准立方体</strong>（<strong>canonical cube</strong>）。<br />
+何为标准立方体？即以原点为中心，边长为2的立方体，也就是立方形在x，y，z三个轴上都是从-1到1。这个变换过程就是我们的<strong>正交投影变换</strong>，它具体分为两步<br />
+1. 平移变换，将长方体S平移到原点。<br />
+2. 缩放变换，将长方体S的长宽高缩放到2</p>
+<p>首先是移到原点的平移变换，即把长方体S的中心点移动到原点</p>
+<div class="arithmatex">\[
+\mathbf{M}=\begin{bmatrix} 1 &amp;0 &amp;0 &amp; -\frac{r+l}{2}\\ 0 &amp;1 &amp;0 &amp; -\frac{t+b}{2}\\ 0 &amp;0 &amp;1 &amp; -\frac{n+f}{2}\\ 0 &amp;0 &amp;0 &amp;1 \end{bmatrix}
+\]</div>
+<p>之后是缩放变换</p>
+<div class="arithmatex">\[\mathbf{S}=\begin{bmatrix} \frac{2}{r-l} &amp; 0 &amp;0 &amp;0 \\ 0&amp; \frac{2}{t-b} &amp;0 &amp;0 \\ 0&amp; 0 &amp; \frac{2}{n-f} &amp;0 \\ 0&amp;0 &amp; 0 &amp; 1 \end{bmatrix}\]</div>
+<p>最终的正交投影变换矩阵为</p>
+<div class="arithmatex">\[\mathbf{P}_{ortho}=\mathbf{S}\mathbf{M}=\begin{bmatrix} \frac{2}{r-l} &amp; 0 &amp;0 &amp;0 \\ 0&amp; \frac{2}{t-b} &amp;0 &amp;0 \\ 0&amp; 0 &amp; \frac{2}{n-f} &amp;0 \\ 0&amp;0 &amp; 0 &amp; 1 \end{bmatrix} \begin{bmatrix} 1 &amp;0 &amp;0 &amp; -\frac{r+l}{2}\\ 0 &amp;1 &amp;0 &amp; -\frac{t+b}{2}\\ 0 &amp;0 &amp;1 &amp; -\frac{n+f}{2}\\ 0 &amp;0 &amp;0 &amp;1 \end{bmatrix}= \begin{bmatrix} \frac{2}{r-l} &amp;0 &amp;0 &amp; -\frac{r+l}{r-l}\\ 0 &amp;\frac{2}{t-b} &amp;0 &amp; -\frac{t+b}{t-b}\\ 0 &amp;0 &amp;\frac{2}{n-f} &amp; -\frac{n+f}{n-f}\\ 0 &amp;0 &amp;0 &amp;1 \end{bmatrix}\]</div>
+<p>注：该变化会导致物体的被拉伸（因为长方体变成了立方体），在后续的<strong>视口变换</strong>过程中会再对此进行处理。</p>
+<h4 id="322-perspective-projection">3.2.2 透视投影(Perspective Projection)</h4>
+<p><img alt="Pasted image 20251021161509.jpg" src="../Pasted%20image%2020251021161509.jpg" /><br />
+投影变换是把相机观测的空间压缩成一个标准立方体。在透视投影中，我们摄像机所观测的区域不再是一个长方体，而是变成了一个四棱台（即四棱锥去掉顶部），也就是我们常说的<strong>视锥体</strong>（Frustum）。<br />
+对于这个视锥体我们应该如何把它压缩成标准立方体呢？思路是这样的<br />
+1. 我们先通过某种变换把这个视锥体压缩成一个长方体<br />
+2. 再把长方体移到原点上压缩成标准立方体，即等于执行正交投影变换</p>
+<p>那么我们只需要计算出第一步的变换矩阵（设为<span class="arithmatex">\(\mathbf{T}\)</span>），然后将它乘以正交投影变换矩阵，即可得到我们的透视投影变换矩阵（设为<span class="arithmatex">\(\mathbf{P}_{persp}\)</span>）了。</p>
+<p>要使视锥体变为长方体<br />
+首先我们要使<span class="arithmatex">\(T_1T_2\)</span>变为<span class="arithmatex">\(y=|T_1N|\)</span>的直线,<span class="arithmatex">\(B_1B_2\)</span>变为<span class="arithmatex">\(y=-|B_1N|\)</span>的直线，<span class="arithmatex">\(L_1L_2\)</span>变为<span class="arithmatex">\(x=-|L_1N|\)</span>的直线，<span class="arithmatex">\(R_1R_2\)</span>变为<span class="arithmatex">\(x=|R_1N|\)</span>的直线。</p>
+<p>首先我们来看看如何使<span class="arithmatex">\(T_1T_2\)</span>变为<span class="arithmatex">\(y=|T_1N|\)</span>的直线，我们可以从x轴方向看向yz平面，来观察这个视锥体<br />
+<img alt="Pasted image 20251021164029.jpg" src="../Pasted%20image%2020251021164029.jpg" /><br />
+对于点<span class="arithmatex">\(T_2\)</span>(它的z坐标值为<span class="arithmatex">\(f\)</span>)利用相似三角形，<span class="arithmatex">\(|T_2F|\cdot \frac{n}{f} = |T_1N|\)</span><br />
+在<span class="arithmatex">\(T_1T_2\)</span>直线上的任意一点，设(x,y,z)，其y值只需乘以<span class="arithmatex">\(\frac{n}{z}\)</span>即可与<span class="arithmatex">\(T_1\)</span>点的y值相等<br />
+进一步拓展：对应视锥体里的任意一点 (x,y,z)，我们只需要将其x和y的值乘以<span class="arithmatex">\(\frac{n}{z}\)</span>即可使该视锥体变为长方体。</p>
+<div class="arithmatex">\[\begin{bmatrix} \frac{n}{z} &amp; 0 &amp; 0\\ 0 &amp; \frac{n}{z} &amp; 0\\ ? &amp; ? &amp; ? \end{bmatrix}\begin{bmatrix} x\\ y\\ z \end{bmatrix}=\begin{bmatrix} x\frac{n}{z}\\ y\frac{n}{z}\\ ? \end{bmatrix}\]</div>
+<p><strong>矩阵中的z是一个变量，导致该矩阵并不是一个常量</strong><br />
+根据之前提到的齐次坐标的概念,我们可以把上面的矩阵修改为下面这样。</p>
+<div class="arithmatex">\[\begin{bmatrix} n &amp; 0 &amp; 0 &amp; 0\\ 0 &amp; n &amp; 0 &amp; 0\\ ? &amp; ? &amp; ? &amp; ? \\0&amp;0&amp;1&amp;0\end{bmatrix}\begin{bmatrix} x\\ y\\ z\\1\end{bmatrix}=\begin{bmatrix} xn\\ yn\\ ? \\z \end{bmatrix}\]</div>
+<p>这样相当于是利用多出来的维度可以读取点的z轴坐标，并结合齐次坐标的性质实现除以z的操作<br />
+接下来我们要看看z值的变换，从图中我们可得知的信息为变为长方体后：<br />
+1.Near clip plane上的任意点，设为(i,j,n)，它的z值不变依旧为 n。<br />
+2.Far clip plane上的任意点，设为(k,l,f)，它的z值不变依旧为 f。</p>
+<div class="arithmatex">\[\left\{\begin{matrix} \begin{bmatrix} n &amp; 0 &amp; 0 &amp; 0\\ 0 &amp; n &amp; 0 &amp; 0\\ ? &amp; ? &amp; ? &amp; ? \\0&amp;0&amp;1&amp;0\end{bmatrix}\begin{bmatrix} i\\ j\\ n\\1\end{bmatrix}=\begin{bmatrix} in\\ jn\\ n^2 \\n \end{bmatrix}\\ \\ \\ \begin{bmatrix} n &amp; 0 &amp; 0 &amp; 0\\ 0 &amp; n &amp; 0 &amp; 0\\ ? &amp; ? &amp; ? &amp; ? \\0&amp;0&amp;1&amp;0\end{bmatrix}\begin{bmatrix} k\\ l\\ f\\1\end{bmatrix}=\begin{bmatrix} kf\\ lf\\ f^2 \\f \end{bmatrix} \end{matrix}\right.\]</div>
+<p>设我们矩阵中的四个未知数分别为A，B，C，D，</p>
+<div class="arithmatex">\[\left\{\begin{matrix} Ai+Bj+Cn+D=n^2\\ Ak+Bl+Cf+D=f^2 \end{matrix}\right.\]</div>
+<div class="arithmatex">\[\left\{\begin{matrix} Cn+D=n^2\\ Cf+D=f^2 \end{matrix}\right.\]</div>
+<p>即可算出，C=n+f，D=-nf，因此视锥体压缩为长方体的矩阵为：</p>
+<div class="arithmatex">\[
+\mathbf{T}=\begin{bmatrix} n &amp; 0 &amp; 0 &amp; 0\\ 0 &amp; n &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; n+f &amp; -nf \\0&amp;0&amp;1&amp;0\end{bmatrix}
+\]</div>
+<div class="admonition important">
+<p class="admonition-title">变换的副作用 </p>
+<p>在该变换过程中，任意点的z的值可能是会发生变化的<br />
+视锥体的中心点<span class="arithmatex">\((0,0,\frac{n+f}{2})\)</span>变换后为例</p>
+<div class="arithmatex">\[\begin{bmatrix} n &amp; 0 &amp; 0 &amp; 0\\ 0 &amp; n &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; n+f &amp; -nf \\0&amp;0&amp;1&amp;0\end{bmatrix}\begin{bmatrix} 0\\ 0\\ \frac{n+f}{2}\\ 1 \end{bmatrix} = \begin{bmatrix} 0\\ 0\\ \frac{(n+f)^2}{2}-nf\\ \frac{n+f}{2} \end{bmatrix}\Leftrightarrow \begin{bmatrix} 0\\ 0\\ \frac{n^2+f^2}{n+f}\\ 1 \end{bmatrix}\]</div>
+<p>比较一下大小<br />
+<span class="arithmatex">\(\frac{n+f}{2}-\frac{n^2+f^2}{n+f}=\frac{n^2+f^2+2nf-2n^2-2f^2}{2(n+f)}=\frac{-(n-f)^2}{2(n+f)}&gt;0（其中n和f都小于0）\)</span></p>
+<p>即<strong>视锥体的中心点在变换后离摄像机更远了</strong>。</p>
+</div>
+<p>由上述计算可知，透视变换中z值的变换不是线性的，这会导致后续我们进行插值运算（用屏幕坐标插值求三维坐标）时很不方便。既然z值的变换不是线性的，那透视变换中有没有什么关于z的属性是线性变换的呢？</p>
+<p>变成长方体后，只需在执行一次正交投影变换即可，因此我们的透视投影变换矩阵为：</p>
+<p><span class="arithmatex">\(\mathbf{P}_{persp}=\mathbf{P}_{ortho}\mathbf{T}=\begin{bmatrix} \frac{2}{r-l} &amp;0 &amp;0 &amp; -\frac{r+l}{r-l}\\ 0 &amp;\frac{2}{t-b} &amp;0 &amp; -\frac{t+b}{t-b}\\ 0 &amp;0 &amp;\frac{2}{n-f} &amp; -\frac{n+f}{n-f}\\ 0 &amp;0 &amp;0 &amp;1 \end{bmatrix}\begin{bmatrix} n &amp; 0 &amp; 0 &amp; 0\\ 0 &amp; n &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; n+f &amp; -nf \\0&amp;0&amp;1&amp;0\end{bmatrix} = \begin{bmatrix} \frac{2n}{r-l} &amp;0 &amp; -\frac{r+l}{r-l} &amp; 0 \\ 0 &amp;\frac{2n}{t-b} &amp; -\frac{t+b}{t-b} &amp;0 \\ 0 &amp;0 &amp;\frac{n+f}{n-f} &amp; \frac{-2nf}{n-f} \\ 0 &amp;0 &amp;1 &amp;0 \end{bmatrix}\)</span></p>
+<h4 id="323">3.2.3 对称视锥体</h4>
+<p>对称视锥体，即为N为Near clip plane的中心点，F为Far clip plane的中心点，因此我们可得：</p>
+<div class="arithmatex">\[\left\{\begin{matrix} r=-l\\ t=-b \end{matrix}\right.\]</div>
+<p>那么正交投影矩阵就可以简化为：</p>
+<p><span class="arithmatex">\(\mathbf{P}_{ortho}=\mathbf{S}\mathbf{M}=\begin{bmatrix} \frac{2}{r-l} &amp; 0 &amp;0 &amp;0 \\ 0&amp; \frac{2}{t-b} &amp;0 &amp;0 \\ 0&amp; 0 &amp; \frac{2}{n-f} &amp;0 \\ 0&amp;0 &amp; 0 &amp; 1 \end{bmatrix} \begin{bmatrix} 1 &amp;0 &amp;0 &amp; 0\\ 0 &amp;1 &amp;0 &amp; 0\\ 0 &amp;0 &amp;1 &amp; -\frac{n+f}{2}\\ 0 &amp;0 &amp;0 &amp;1 \end{bmatrix}= \begin{bmatrix} \frac{2}{r-l} &amp;0 &amp;0 &amp; 0\\ 0 &amp;\frac{2}{t-b} &amp;0 &amp; 0\\ 0 &amp;0 &amp;\frac{2}{n-f} &amp; -\frac{n+f}{n-f}\\ 0 &amp;0 &amp;0 &amp;1 \end{bmatrix}\)</span></p>
+<p><span class="arithmatex">\(\mathbf{P}_{persp}=\mathbf{P}_{ortho}\mathbf{T}=\begin{bmatrix} \frac{2}{r-l} &amp;0 &amp;0 &amp; 0\\ 0 &amp;\frac{2}{t-b} &amp;0 &amp; 0\\ 0 &amp;0 &amp;\frac{2}{n-f} &amp; -\frac{n+f}{n-f}\\ 0 &amp;0 &amp;0 &amp;1 \end{bmatrix}\begin{bmatrix} n &amp; 0 &amp; 0 &amp; 0\\ 0 &amp; n &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; n+f &amp; -nf \\0&amp;0&amp;1&amp;0\end{bmatrix} = \begin{bmatrix} \frac{2n}{r-l} &amp;0 &amp; 0 &amp; 0 \\ 0 &amp;\frac{2n}{t-b} &amp; 0 &amp;0 \\ 0 &amp;0 &amp;\frac{n+f}{n-f} &amp; \frac{-2nf}{n-f} \\ 0 &amp;0 &amp;1 &amp;0 \end{bmatrix}\)</span></p>
+<h4 id="324-fovaspect-ratio">3.2.4 使用FOV和Aspect ratio表示投影矩阵</h4>
+<figure><br />
+<img alt="Pasted image 20251021190651.jpg" src="../Pasted%20image%2020251021190651.jpg" width="400" /><br />
+<br />
+</figure>
+<p>在图中<span class="arithmatex">\(\angle T_1OB_1\)</span>我们称为Field of View(for Y/for Vertical), 也就是常说的FOV。自然而然<span class="arithmatex">\(\angle L_1OR_1\)</span>是x轴或者水平方向的FOV，我们只需要知道其中一个即可，通常用y轴的。我们设<span class="arithmatex">\(\angle T_1OB_1=\theta\)</span>。</p>
+<p><span class="arithmatex">\(L_1R_1\)</span>的长度（即为宽，设值为w）与<span class="arithmatex">\(T_1B_1\)</span>的长度（即为高，设值为h）比例我们称之为宽高比（<strong>Aspect ratio</strong>），我们假设为该值为 a，即<span class="arithmatex">\(a=\frac{w}{h}\)</span>。<br />
+同时得到：</p>
+<div class="arithmatex">\[\left\{\begin{matrix} w=r-l\\ h=t-b \end{matrix}\right.\]</div>
+<p>表示方式需要我们的视锥体为前面介绍的对称视锥体,因此我们直接将上面的式子带入对称视锥体对应的透视投影矩阵<span class="arithmatex">\(\mathbf{P}_{persp}\)</span>中，得：</p>
+<div class="arithmatex">\[P_{persp}=\begin{bmatrix} \frac{2n}{w} &amp;0 &amp; 0 &amp; 0 \\ 0 &amp;\frac{2n}{h} &amp;0 &amp;0 \\ 0 &amp;0 &amp;\frac{n+f}{n-f} &amp; \frac{-2nf}{n-f} \\ 0 &amp;0 &amp;1 &amp;0 \end{bmatrix}\]</div>
+<p>通过上面yz平面的侧面图：</p>
+<figure><br />
+<img alt="Pasted image 20251021193758.png" src="../Pasted%20image%2020251021193758.png" width="400" /><br />
+<br />
+</figure>
+<div class="arithmatex">\[
+\begin{align}
+&amp;可以发现\tan\frac{\theta}{2} = \frac{h}{2n},即\frac{2n}{h} = \frac{1}{\tan\frac{\theta}{2}}  \\
+&amp;又因为w=ah ,\frac{2n}{w}=\frac{2n}{ah} = \frac{1}{a \tan\frac{\theta}{2}}\\
+\end{align}
+\]</div>
+<p>所以可得，FOV为 <span class="arithmatex">\(θ\)</span> ，宽高比为 <span class="arithmatex">\(a\)</span> 时，透视投影矩阵为：</p>
+<div class="arithmatex">\[\mathbf{P}_{persp}=\begin{bmatrix} \frac{1}{a \tan\frac{\theta}{2}} &amp;0 &amp; 0 &amp; 0 \\ 0 &amp;\frac{1}{\tan\frac{\theta}{2}} &amp;0 &amp;0 \\ 0 &amp;0 &amp;\frac{n+f}{n-f} &amp; \frac{-2nf}{n-f} \\ 0 &amp;0 &amp;1 &amp;0 \end{bmatrix}\]</div>
+<h3 id="33-clip-space">3.3 裁剪空间（Clip Space)</h3>
+<p>假如在MV变换后，视图空间（View Space）下的某个点对应的齐次坐标为 (x,y,z,1)，那么经过透视投影变换后，其齐次坐标应为：</p>
+<div class="arithmatex">\[\begin{bmatrix} \frac{2n}{r-l} &amp;0 &amp; 0 &amp; 0 \\ 0 &amp;\frac{2n}{t-b} &amp; 0 &amp;0 \\ 0 &amp;0 &amp;\frac{n+f}{n-f} &amp; \frac{-2nf}{n-f} \\ 0 &amp;0 &amp;1 &amp;0 \end{bmatrix} \begin{bmatrix}x_{in}\\y_{in}\\z_{in}\\1\end{bmatrix} =\begin{bmatrix}x_{out}\\y_{out}\\z_{out}\\z_{in}\end{bmatrix}\]</div>
+<p>而投影变换后的坐标(x,y,z,w)所在的空间即为裁剪空间，也称为齐次裁剪空间。</p>
+<p>接着GPU会<strong>在裁剪空间下做裁剪</strong>，剔除掉不在视椎体范围内的顶点，怎么判断呢？<br />
+根据齐次坐标的定义我们知道 (x,y,z,w) 与 (x/w,y/w,z/w,1) 是等价的，即把裁剪空间下的(x,y,z,w)分别除以w，这一步我们称之为<strong>透视除法（Perspective Divide）</strong>。<br />
+在裁剪空间中任意顶点(x,y,z,w)如果不满足 (-w&lt;x&lt;w &amp;&amp; -w&lt;y&lt;w &amp;&amp; -w&lt;z&lt;w) 的条件即说明不在视椎体内，需要被裁剪。<br />
+裁剪后剩下的顶点，我们做一次透视除法，即可把它们从裁剪空间变换到NDC。</p>
+<div class="admonition important">
+<p class="admonition-title">标准化设备坐标（Normalized Device Coordinate，NDC）</p>
+<p>NDC也就是我们前面所提到的标准立方体，即该空间内的任意坐标(x,y,z)满足 (-1&lt;x&lt;1 &amp;&amp; -1&lt;y&lt;1 &amp;&amp; -1&lt;z&lt;1)的条件，也就是裁剪空间中做完裁剪后再做透视除法得到的坐标。NDC中的顶点最后都要输出到屏幕空间当中。</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.top", "navigation.tabs", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,27 @@
+[data-md-color-scheme="slate"] {
+    --md-primary-fg-color: #6392ab;
+    --md-primary-bg-color: #bfc1c5;
+    --md-code-bg-color: #222222;
+    --md-header-bg-color:        #1f1f1f;
+    --md-default-bg-color: #262626;
+}
+
+[data-md-color-scheme="slate"] .md-header {
+  background-color: var(--md-header-bg-color) !important; 
+  /* !important 用于确保样式优先级，覆盖默认样式 */
+}
+
+[data-md-color-scheme="slate"] .md-tabs {
+  background-color: var(--md-header-bg-color) !important; 
+  /* !important 用于确保样式优先级，覆盖默认样式 */
+}
+
+img {
+  /* 核心：转为块级元素（行内元素无法用margin:auto居中） */
+  display: block;
+  /* 水平居中：上下margin为0，左右自动分配（关键） */
+  margin: 0 auto;
+  /* 可选：限制图片最大宽度，避免超出容器（适配响应式） */
+  max-width: 80% !important;
+  
+}

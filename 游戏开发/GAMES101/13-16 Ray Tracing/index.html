@@ -1,0 +1,2017 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../10-12%20Geometry/">
+      
+      
+        <link rel="next" href="../%E4%BD%9C%E4%B8%9A1-%E7%94%BB%E4%B8%89%E8%A7%92%E5%BD%A2/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>L13-L16:Ray Tracing - SarrLight's Notebook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-whittedwhitted-style-ray-tracing" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="SarrLight&#39;s Notebook" class="md-header__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SarrLight's Notebook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              L13-L16:Ray Tracing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" class="md-tabs__link">
+          
+  
+  
+  课内学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../03-04%20Transform/" class="md-tabs__link">
+          
+  
+  
+  游戏开发
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="SarrLight&#39;s Notebook" class="md-nav__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+
+    </a>
+    SarrLight's Notebook
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课内学习
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    课内学习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    计算机组成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../课内学习/高级数据结构.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    高级数据结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    游戏开发
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    游戏开发
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GAMES101
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    GAMES101
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-04%20Transform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L3-L4:Transform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-06%20Rasterization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L5-L6:Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-09%20Shading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L7-L9:Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-12%20Geometry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L10-L12:Geometry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L13-L16:Ray Tracing
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L13-L16:Ray Tracing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-whittedwhitted-style-ray-tracing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 Whitted风格光线追踪（Whitted-Style Ray Tracing）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 Whitted风格光线追踪（Whitted-Style Ray Tracing）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-ray-surface-intersection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 射线-表面交点（Ray-surface Intersection）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1 射线-表面交点（Ray-surface Intersection）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.1 球
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-implicit-surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.2 隐式表面（Implicit Surface）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.3 平面
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.4 轴向平面
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.5 三角形网格
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 加速求交过程
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 加速求交过程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-bounding-volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.1 包围盒（Bounding Volumes）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-uniform-grids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.2 均匀网格(Uniform grids)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-spatial-partitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.3 空间划分(Spatial Partitions)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2.3 空间划分(Spatial Partitions)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oct-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        八叉树（Oct-Tree）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kd-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        KD-Tree
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bsp-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BSP-Tree
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#124-object-partitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.4 物体划分(Object Partitions)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2.4 物体划分(Object Partitions)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bvhbounding-volume-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BVH（Bounding Volume Hierarchy）树
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ray-tracing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 辐射度量学(Ray Tracing)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 辐射度量学(Ray Tracing)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 概念
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211-radiant-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.1 Radiant Energy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-radiant-fluxpower" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.2 Radiant Flux(Power)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#213-solid-angle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.3 立体角(Solid Angle)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#214-radiant-intensity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.4 Radiant Intensity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#215-irradiance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.5 Irradiance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#216-radiance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.6 Radiance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-bidirectional-reflectance-distribution-brdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 双向反射分布函数(Bidirectional Reflectance Distribution, BRDF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 蒙特卡洛积分与路径追踪
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 蒙特卡洛积分与路径追踪">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-monte-carlo-intergration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 蒙特卡洛积分(Monte Carlo Intergration)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-path-tracing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 路径追踪(Path Tracing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A1-%E7%94%BB%E4%B8%89%E8%A7%92%E5%BD%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业1-画三角形
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A2-Rasterization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业2-Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A3-Shading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业3-Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A4-Bazier%20Curve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业4-BazierCurve
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-whittedwhitted-style-ray-tracing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 Whitted风格光线追踪（Whitted-Style Ray Tracing）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 Whitted风格光线追踪（Whitted-Style Ray Tracing）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-ray-surface-intersection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 射线-表面交点（Ray-surface Intersection）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1 射线-表面交点（Ray-surface Intersection）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.1 球
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-implicit-surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.2 隐式表面（Implicit Surface）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.3 平面
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.4 轴向平面
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.5 三角形网格
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 加速求交过程
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 加速求交过程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-bounding-volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.1 包围盒（Bounding Volumes）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-uniform-grids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.2 均匀网格(Uniform grids)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-spatial-partitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.3 空间划分(Spatial Partitions)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2.3 空间划分(Spatial Partitions)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oct-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        八叉树（Oct-Tree）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kd-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        KD-Tree
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bsp-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BSP-Tree
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#124-object-partitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.4 物体划分(Object Partitions)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2.4 物体划分(Object Partitions)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bvhbounding-volume-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BVH（Bounding Volume Hierarchy）树
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ray-tracing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 辐射度量学(Ray Tracing)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 辐射度量学(Ray Tracing)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 概念
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211-radiant-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.1 Radiant Energy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-radiant-fluxpower" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.2 Radiant Flux(Power)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#213-solid-angle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.3 立体角(Solid Angle)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#214-radiant-intensity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.4 Radiant Intensity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#215-irradiance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.5 Irradiance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#216-radiance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.6 Radiance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-bidirectional-reflectance-distribution-brdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 双向反射分布函数(Bidirectional Reflectance Distribution, BRDF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 蒙特卡洛积分与路径追踪
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 蒙特卡洛积分与路径追踪">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-monte-carlo-intergration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 蒙特卡洛积分(Monte Carlo Intergration)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-path-tracing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 路径追踪(Path Tracing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>L13-L16:Ray Tracing</h1>
+
+<p>来源：<br />
+<a href="https://tanyuu.github.io/2024.01-07/GAMES101%E7%AC%94%E8%AE%B0/#lecture-16-ray-tracing-4%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA4-%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E7%A7%AF%E5%88%86%E5%92%8C%E8%B7%AF%E5%BE%84%E8%BF%BD%E8%B8%AA">GAMES101（现代计算机图形学入门）笔记 - Yu_Tang</a><br />
+光线追踪的不同于光栅化的一种成像方式，解决了光栅化对全局效果的问题（软阴影、Glossy 反射（金属反射）、间接光照）；光栅化可以认为是一种快速的、近似的成像方式；</p>
+<p>光线可以有如下假设：<br />
+1. 在均匀介质中直线传播，不考虑波动性；<br />
+2. 光线间不考虑碰撞；<br />
+3. 光线从光源发出，最终进入相机；也可以认为从相机发出光线，反向传播最终进入光源（光路可逆）；</p>
+<h2 id="1-whittedwhitted-style-ray-tracing">1 Whitted风格光线追踪（Whitted-Style Ray Tracing）</h2>
+<p>从相机出发，针对每个像素发出一条感知光线（camera ray / primary ray），直至与其相交的第一个三角面；在这个交点上判断对光源的可见性（阴影）（shadow ray），并考虑在此处发生的反射（和折射）；沿反射方向继续发出感知光线（secondary ray），重复此过程；</p>
+<figure><br />
+<img alt="Pasted image 20251105143520.png" src="../Pasted%20image%2020251105143520.png" width="500" /><br />
+<br />
+</figure>
+<p>在这个过程中，需要考虑求交、能量损失等若干技术问题；</p>
+<h3 id="11-ray-surface-intersection">1.1 射线-表面交点（Ray-surface Intersection）</h3>
+<p>光线认为是从起点 <span class="arithmatex">\(O\)</span> ，向方向 <span class="arithmatex">\(d\)</span> 传播的射线，有参数表示 <span class="arithmatex">\(r(t)=o+td\)</span>，<span class="arithmatex">\((0⩽t&lt;∞)\)</span> ；</p>
+<h4 id="111">1.1.1 球</h4>
+<p>c 为球心，半径 R 的球有定义</p>
+<div class="arithmatex">\[p:(p-c)^2-R^2=0\]</div>
+<p>与光线参数表示联立有</p>
+<div class="arithmatex">\[(o+td-c)^2-R^2=0\]</div>
+<p>只有 <span class="arithmatex">\(t\)</span> 为未知量，解得</p>
+<div class="arithmatex">\[
+\begin{align}
+a&amp;=d\cdot d\\
+b&amp;=2(o-c)\cdot d\\
+c&amp;=(o-c)\cdot(o-c)-R^2\\
+t&amp;={-b \pm \sqrt{b^2-4ac}\over 2a},t\in\mathbb{R},t\geqslant0
+\end{align}
+\]</div>
+<h4 id="112-implicit-surface">1.1.2 隐式表面（Implicit Surface）</h4>
+<p>隐式表面有定义 <span class="arithmatex">\(p:f(p)=0\)</span><br />
+光线参数表示代入有 <span class="arithmatex">\(f(o+td)=0\)</span><br />
+解出正实根即可；</p>
+<h4 id="113">1.1.3 平面</h4>
+<p>平面可以由法线 N 和平面上一点 <span class="arithmatex">\(p’\)</span> 定义，定义有 <span class="arithmatex">\(p:(p-p')\cdot N=0\)</span> ；<br />
+联立有</p>
+<div class="arithmatex">\[(o+td-p')\cdot N=0\\
+t={(p'-o)\cdot N \over d\cdot N}\]</div>
+<p>解出正实根即可；</p>
+<h4 id="114">1.1.4 轴向平面</h4>
+<p>轴向平面只需要用与其垂直的坐标轴的坐标值即可定义；<br />
+以与 x 轴垂直的平面为例，有</p>
+<div class="arithmatex">\[t={p'_x-o_x\over d_x}\]</div>
+<h4 id="115">1.1.5 三角形网格</h4>
+<p>光线与三角形的交点还可以判断光源是否在物体内；</p>
+<p>先判断光线和三角形所在平面求交，再判断点是否在三角形内；也可以通过重心坐标直接得到（Möller Trumbore Algorithm）；</p>
+<p>对于方程</p>
+<div class="arithmatex">\[O+tD=(1-b_1-b_2)P_0+b_1P_1+b_2P_2 \tag{1}\]</div>
+<p>定义</p>
+<div class="arithmatex">\[
+\begin{align}
+E_1=P_1-P_0\\
+E_2=P_2-P_0\\
+S=O-P_0\\
+S_1=D\times E_2\\
+S_2=S\times E_1\\
+\end{align}
+\]</div>
+<p>有解</p>
+<div class="arithmatex">\[\begin{bmatrix}
+t\\
+b_1\\
+b_2
+\end{bmatrix}
+={\frac 1{S_1\cdot E_1}}
+\begin{bmatrix}
+S_2\cdot E_2\\
+S_1\cdot S\\
+S_2\cdot D
+\end{bmatrix}\tag{2}\]</div>
+<p><strong>怎么得到这个解的呢?下面给出我的理解</strong><br />
+本质上看这其实就相当于三元的线性方程组,先进行变形<br />
+令</p>
+<div class="arithmatex">\[
+\begin{align}
+E_1=P_1-P_0\\
+E_2=P_2-P_0\\
+S=O-P_0\\
+\end{align}
+\]</div>
+<p>则原本的方程(1)可以变形为</p>
+<div class="arithmatex">\[
+tD-b_{1}E_{1}-b_2 E_2=S
+\]</div>
+<p>用矩阵表示就是</p>
+<div class="arithmatex">\[
+\begin{bmatrix}
+D&amp;-E_1&amp;-E_2
+\end{bmatrix}
+\begin{bmatrix}
+t\\ b_1\\ b_2
+\end{bmatrix}
+=S
+\]</div>
+<p>根据[[克莱姆法则|克莱姆法则]]，</p>
+<div class="arithmatex">\[
+t=
+\frac{
+\begin{vmatrix}
+S &amp; -E_1 &amp; -E_2 
+\end{vmatrix}
+}{
+\begin{vmatrix}
+D &amp; -E_1 &amp; -E_2 
+\end{vmatrix}
+}
+\]</div>
+<div class="arithmatex">\[
+b_1=
+\frac{
+\begin{vmatrix}
+D &amp; S &amp; -E_2 
+\end{vmatrix}
+}{
+\begin{vmatrix}
+D &amp; -E_1 &amp; -E_2 
+\end{vmatrix}
+}
+\]</div>
+<div class="arithmatex">\[
+b_2=
+\frac{
+\begin{vmatrix}
+D &amp; -E_1 &amp; S 
+\end{vmatrix}
+}{
+\begin{vmatrix}
+D &amp; -E_1 &amp; -E_2 
+\end{vmatrix}
+}
+\]</div>
+<p>因此</p>
+<div class="arithmatex">\[
+\begin{bmatrix}
+t\\
+b_1\\
+b_2
+\end{bmatrix}
+=\frac{1}{
+\begin{vmatrix}
+D &amp; -E_1 &amp; -E_2 
+\end{vmatrix}
+}\times
+\begin{bmatrix}
+\begin{vmatrix} S &amp; -E_1 &amp; -E_2 \end{vmatrix}\\
+\begin{vmatrix} D &amp; S &amp; -E_2 \end{vmatrix}\\
+\begin{vmatrix} D &amp; -E_1 &amp; S \end{vmatrix}
+\end{bmatrix}\tag{3}
+\]</div>
+<p>公式2其实和公式3是等价的<br />
+因为行列式</p>
+<div class="arithmatex">\[
+\begin{vmatrix}
+D &amp; -E_1 &amp; -E_2 
+\end{vmatrix}=(D\times E_1)\cdot E_2
+\]</div>
+<p>依次类推，其他的行列式也能用向量叉乘和点乘来计算，于是就能把(3)转化为(2)</p>
+<h3 id="12">1.2 加速求交过程</h3>
+<p>对于光线和一个模型（场景）求交，朴素想法即为枚举面片进行计算，取 t 最小非负值，此种方法消耗很大，考虑加速这一过程；</p>
+<p>加速结构的建立是在光线追踪之前；</p>
+<h4 id="121-bounding-volumes">1.2.1 包围盒（Bounding Volumes）</h4>
+<p>用简单集合体将模型包围，如果一个光线与包围盒没有交，那么其与包围盒内物体也没有交；<br />
+对于轴向对齐包围盒（AABB），可以认为其是三对平面所夹的空间；<br />
+考虑光线和包围盒求交过程；当光线与三组对面中的任何一个面均有交点时，认为光线进入包围盒，当光线穿过任何的两个平面时，认为光线离开包围盒；</p>
+<p>对于每一对面，分别计算 <span class="arithmatex">\(t_{min},t_{max}\)</span>（无论正负），光线关于包围盒的进入点有 <span class="arithmatex">\(t_{enter}=\max\{t_{min}\}\)</span> ，离开点有 <span class="arithmatex">\(t_{exit}=\min\{t_{max}\}\)</span> ；</p>
+<ul>
+<li>如果 <span class="arithmatex">\(t_{exit}&lt;0\)</span> ，我们认为包围盒在光线后，与光线没有交点；</li>
+<li>如果 <span class="arithmatex">\(t_{exit}\geqslant0,t_{enter}&lt;0\)</span> ，我们认为光源在包围盒中；<br />
+总地来说，如果 <span class="arithmatex">\(t_{enter}&lt;t_{exit}，t_{exit}\geqslant0\)</span> ，我们认为光线与包围盒有交点；</li>
+</ul>
+<h4 id="122-uniform-grids">1.2.2 均匀网格(Uniform grids)</h4>
+<p>对场景求出包围盒后，将包围盒分为若干均等的小格子，对于包含物体表面的格子进行标记；</p>
+<p>沿射线轨迹遍历网格，对于遍历到的每个格子，测试射线与格子内对象的相交性，如果相交即停止，意味着找到了第一个交点。<br />
+<figure markdown="span"><br />
+<img alt="Pasted image 20251105172341.png" src="../Pasted%20image%2020251105172341.png" width="400" /></p>
+<p></figure markdown><br />
+格子划分密度上有经验 <span class="arithmatex">\(\#cells = C * \#objs,\  C\approx27\text{ in 3D}\)</span><br />
+在几何体分布较为均匀的场景优化效果较好；否则容易出现"Teapot in a stadium(体育场里的茶壶)" problem；</p>
+<h4 id="123-spatial-partitions">1.2.3 空间划分(Spatial Partitions)</h4>
+<p>以 KD-Tree 为例详细说明；</p>
+<figure><br />
+<img alt="Pasted image 20251105172617.png" src="../Pasted%20image%2020251105172617.png" width="400" /><br />
+<br />
+</figure>
+<h5 id="oct-tree">八叉树（Oct-Tree）</h5>
+<p>对空间进行轴向划分，将每个节点进行八分割存储在子结点中，划分至子结点中有足够少的物体；</p>
+<h5 id="kd-tree">KD-Tree</h5>
+<p>不同于八叉树，每次只对节点进行一次轴向划分，不对于父子节点进行相同轴向的划分（三维上沿 x ，y ，z 方向上循环），同样直至子结点中有足够少的物体；</p>
+<p><strong>只需要在叶子节点存储模型；</strong><br />
+在判断时，先判断与根节点是否存在交点，如果有交点则判断与两子节点是否存在交点；直至叶子节点，如果仍有交点则判断其与节点内部模型是否有交点；<br />
+KD-Tree 的主要问题是难以判断格点与哪些模型相交；此外，如果一个物体与多个叶子节点相交，其会被存储多份；</p>
+<h5 id="bsp-tree">BSP-Tree</h5>
+<p>不同于KD-Tree进行轴向划分，对节点进行更自由的二分；</p>
+<h4 id="124-object-partitions">1.2.4 物体划分(Object Partitions)</h4>
+<h5 id="bvhbounding-volume-hierarchy">BVH（Bounding Volume Hierarchy）树</h5>
+<p>BVH树对物体进行划分，如图所示，直至划分至子结点中有足够少的三角形；</p>
+<figure><br />
+<img alt="Pasted image 20251105173115.png" src="../Pasted%20image%2020251105173115.png" width="500" /><br />
+<br />
+</figure>
+<p>BVH树解决了 KD-Tree 的两大问题；</p>
+<p>其存在的问题是节点包围盒可能相交，影响有限；实际上会保证重叠部分尽量少；</p>
+<p>关于如何划分节点：</p>
+<ol>
+<li>类似 KD-Tree ，可以循环使用不同的轴向；也可以选择包围盒最长的一条轴进行划分；</li>
+<li>对于如何划分两半，可以将三角形的重心按分割轴向排序，取中位三角形进行分隔，使得两部分三角形数量均匀，降低资源消耗；<br />
+    寻找中位数不需要排序，可以转化为top-k大数问题，通过快速选择算法在线性复杂度内解决；<br />
+在场景变化时，需要重新计算BVH树；</li>
+</ol>
+<p>与 KD-Tree 类似，在中间节点只存储包围盒和子节点指针，只在叶子节点存储分割后的模型；<br />
+光线求交过程也与 KD-Tree 类似，有伪代码<br />
+<div class="highlight"><pre><span></span><code><span class="n">Intersect</span><span class="w"> </span><span class="p">(</span><span class="n">Ray</span><span class="w"> </span><span class="n">ray</span><span class="p">,</span><span class="w"> </span><span class="n">BVH</span><span class="w"> </span><span class="n">node</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ray</span><span class="w"> </span><span class="n">misses</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">bbox</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w">  </span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">node</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">leaf</span><span class="w"> </span><span class="n">node</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="p">{</span><span class="w">  </span>
+<span class="w">    </span><span class="n">test</span><span class="w"> </span><span class="n">intersection</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">objs</span><span class="p">;</span><span class="w">  </span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">closest</span><span class="w"> </span><span class="n">intersection</span><span class="p">;</span><span class="w">  </span>
+<span class="w">    </span><span class="p">}</span><span class="w">  </span>
+
+<span class="w">    </span><span class="n">hit1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Intersect</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">child1</span><span class="p">);</span><span class="w">  </span>
+<span class="w">    </span><span class="n">hit2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Intersect</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">child2</span><span class="p">);</span><span class="w">  </span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">closer</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">hit1</span><span class="p">,</span><span class="w"> </span><span class="n">hit2</span><span class="p">;</span><span class="w">  </span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h2 id="2-ray-tracing">2 辐射度量学(Ray Tracing)</h2>
+<p>辐射度量学是一种精确定义光与物体表面作用的工具，是路径追踪的基础；</p>
+<p>辐射度量学同样着眼于光的几何属性，忽略波动性；</p>
+<p>辐射度量学通过辐射通量（Radiant flux）、强度（Intensity）、照度（Intensity）、亮度（Radiance）等属性描述光，下述均使用英文；</p>
+<h3 id="21">2.1 概念</h3>
+<h4 id="211-radiant-energy">2.1.1 Radiant Energy</h4>
+<p>Radiant Energy 是电磁辐射的能量，以焦耳（J）表示；</p>
+<div class="arithmatex">\[Q[\text{J=Joule}]\]</div>
+<h4 id="212-radiant-fluxpower">2.1.2 Radiant Flux(Power)</h4>
+<p>Radiant Flux 是电磁辐射的功率，单位时间的能量，也可以被度量为单位时间内辐射出的光子数量，以瓦特（W）或流明（lm）表示；</p>
+<div class="arithmatex">\[\Phi =\frac {\mathrm{d}\Phi}{\mathrm{d}t}[\text{W=Watt}][\text{lm=lumen}]\]</div>
+<p><em>现代11W LED灯约815lm，等价于60W白炽灯；</em></p>
+<h4 id="213-solid-angle">2.1.3 立体角(Solid Angle)</h4>
+<p>类比于角度 <span class="arithmatex">\(\theta =\frac lr\)</span> ，圆上有 <span class="arithmatex">\(2\pi\)</span> 角（radians）</p>
+<figure><br />
+<img alt="Pasted image 20251105183927.png" src="../Pasted%20image%2020251105183927.png" width="400" /><br />
+<br />
+</figure>
+<p>立体角是角度的三维延伸，<span class="arithmatex">\(\Omega=\frac A{r^2}\)</span> ，球上有 <span class="arithmatex">\(4\pi\)</span> 立体角（steradians）；</p>
+<figure><br />
+<img alt="Pasted image 20251105183952.png" src="../Pasted%20image%2020251105183952.png" width="400" /><br />
+<br />
+</figure>
+<h4 id="214-radiant-intensity">2.1.4 Radiant Intensity</h4>
+<p>(Radiant) Intensity 是对光源方向上功率的度量，每单位立体角的功率，以坎德拉（cd）表示；</p>
+<div class="arithmatex">\[I(\omega) =\frac {\mathrm{d}\Phi}{\mathrm{d}\omega}[\frac {\text{W}}{\text{sr}}][\frac {\text{lm}}{\text{sr}}\text{=cd=candela}]\]</div>
+<p>单位立体角可以由天顶角 <span class="arithmatex">\(\theta\)</span> （与 z 轴夹角）和方向角 <span class="arithmatex">\(\phi\)</span> （绕 z 轴旋转的角度）定义；</p>
+<figure><br />
+<img alt="Pasted image 20251105184558.png" src="../Pasted%20image%2020251105184558.png" width="400" /><br />
+<br />
+</figure>
+<div class="arithmatex">\[
+\begin{align}
+\mathrm{d}A&amp;=(r\mathrm{d}\theta)(r\sin\theta\mathrm{d}\phi)\\
+&amp;=r^2\sin\theta\text{ }\mathrm{d}\theta\mathrm{d}\phi\\
+\mathrm{d}\omega &amp;=\frac{\mathrm{d}A}{r^2}=\sin\theta\text{ }\mathrm{d}\theta\mathrm{d}\phi\\
+I&amp;=\frac {\Phi}{4\pi}
+\end{align}
+\]</div>
+<p><span class="arithmatex">\(\omega\)</span> 可以作为方向向量</p>
+<h4 id="215-irradiance">2.1.5 Irradiance</h4>
+<p>Irradiance 是对物体表面单位面积接收到光的功率的度量；</p>
+<div class="arithmatex">\[E(x)\equiv\frac{\mathrm{d}\Phi(x)}{\mathrm{d}A}[\frac W{m^2}][\frac{lm}{m^2}=\text{lux}]\]</div>
+<p>要求单位平面与光线垂直；</p>
+<h4 id="216-radiance">2.1.6 Radiance</h4>
+<p>Radiance 是对光线传播中的度量，是每单位立体角单位面积上的功率；</p>
+<div class="arithmatex">\[L(p,\omega)\equiv\frac{\mathrm{d^2}\Phi(p,\omega)}{\mathrm{d}\omega\mathrm{d}A\cos\theta}
+[\frac {\text{W}}{\text{sr }\text{m}^2}][\frac {\text{cd}}{\text{m}^2}=\frac {\text{lm}}{\text{sr }\text{m}^2}=\text{nit}]\]</div>
+<p><span class="arithmatex">\(\mathrm{d}A\cos\theta\)</span> 为单位面积在传播方向上的有效面积</p>
+<p>联系前面的两个量，有</p>
+<div class="arithmatex">\[
+\begin{align}
+L(p,\omega)=\frac{\mathrm{d}E(p)}{\mathrm{d}\omega\cos\theta}\\
+L(p,\omega)=\frac{\mathrm{d}I(p,\omega)}{\mathrm{d}A\cos\theta}
+\end{align}
+\]</div>
+<p>图形学上常用物理量为 Irradiance 和 Radiance ，Irradiance可以理解为单位面积吸收的总能量，Radiance 为单位面积从 <span class="arithmatex">\(\mathrm{d}\omega\)</span> 方向吸收的总能量，有</p>
+<div class="arithmatex">\[
+\begin{align}
+\mathrm{d}E(p,\omega)=L_i(p,\omega)\cos\theta\mathrm{d}\omega\\
+E(p)=\int_{H^2}L_i(p,\omega)\cos\theta\mathrm{d}\omega
+\end{align}
+\]</div>
+<figure><br />
+<img alt="Pasted image 20251105185218.png" src="../Pasted%20image%2020251105185218.png" width="400" /><br />
+<br />
+</figure>
+<h3 id="22-bidirectional-reflectance-distribution-brdf">2.2 双向反射分布函数(Bidirectional Reflectance Distribution, BRDF)</h3>
+<p>反射可以认为是从方向 <span class="arithmatex">\(\omega_i\)</span> 来的辐射转换为单位面积 <span class="arithmatex">\(\mathrm{d}A\)</span> 上的功率 <span class="arithmatex">\(E\)</span> ，这个功率会被反射到任意其他方向 <span class="arithmatex">\(\omega_r\)</span> ；</p>
+<figure><br />
+<img alt="Pasted image 20251105190136.png" src="../Pasted%20image%2020251105190136.png" width="400" /><br />
+<br />
+</figure>
+<p>BRDF描述了各个其他方向 <span class="arithmatex">\(\omega_r\)</span> 分配到了多少能量；</p>
+<div class="arithmatex">\[f_r(\omega_i\to\omega_r)={\mathrm{d}L_r(\omega_r)\over\mathrm{d}E_i(\omega_i)}={\mathrm{d}L_r(\omega_r)\over L_i(\omega_i)\cos\theta_i\mathrm{d}\omega_i}[\frac 1{\text{sr}}]\]</div>
+<p>那么某方向接收到的反射光即为</p>
+<div class="arithmatex">\[L_r(p,\omega_r)=\int_{H^2}f_r(p,\omega_i\to\omega_r)L_i(p,\omega_i)\cos\theta_i\mathrm{d}\omega_i\]</div>
+<figure><br />
+<img alt="Pasted image 20251105190923.png" src="../Pasted%20image%2020251105190923.png" width="400" /><br />
+<br />
+</figure>
+<p>如果物体自发光，那么就有了渲染方程</p>
+<div class="arithmatex">\[L_o(p,\omega_o)=L_e(p,\omega_o)+\int_{\Omega^+}f_r(p,\omega_i,\omega_o)L_i(p,\omega_i)(n\cdot\omega_i)\mathrm{d}\omega_i\]</div>
+<p><span class="arithmatex">\(L_e\)</span> 部分为自发光，积分部分为反射光；<span class="arithmatex">\(\omega_i\)</span>为指向光来向的向量；<span class="arithmatex">\(p\)</span> 可以认为是反射点表面的性质；</p>
+<p>记 E 为自发光，K为反射操作符，L 可以记为 <span class="arithmatex">\(L=E+KE+K^2E+...\)</span> ，即为光源直射+一次反射+二次反射+……；</p>
+<h2 id="3">3 蒙特卡洛积分与路径追踪</h2>
+<h3 id="31-monte-carlo-intergration">3.1 蒙特卡洛积分(Monte Carlo Intergration)</h3>
+<p>计算难以解析求解的函数定积分的一种数值方法；<br />
+若求定积分 </p>
+<div class="arithmatex">\[\int_a^bf(x)\mathrm{d}x\]</div>
+<p>定义随机变量 <span class="arithmatex">\(X_i\sim p(x)\)</span> ，有结果 </p>
+<div class="arithmatex">\[F_N=\frac 1N\sum_{i=1}^N\frac{f(X_i)}{p(X_i)}\]</div>
+<p>​其中概率密度函数（probability density function ，PDF）要求 </p>
+<div class="arithmatex">\[\int_a^bp(x)\mathrm{d}x=1\]</div>
+<p>如果随机变量均匀分布，则结果有 </p>
+<div class="arithmatex">\[F_N=\frac {b-a}N\sum_{i=1}^Nf(X_i)\]</div>
+<p>此时即为黎曼积分；<br />
+<span class="arithmatex">\(N\)</span> 越大，结果越准确；<br />
+在 <span class="arithmatex">\(p(x)\)</span> 与 <span class="arithmatex">\(f(x)\)</span> 形状一致时，误差最小；</p>
+<p>具体证明请看 [[蒙特卡洛积分(Monte Carlo Integration)|蒙特卡洛积分的理解]]</p>
+<h3 id="32-path-tracing">3.2 路径追踪(Path Tracing)</h3>
+<p>Whitted风格光线追踪总是进行镜面反射 / 折射，停止在漫反射表面，存在难以处理金属反射（glossy reflection）质感、无漫反射等问题；<br />
+对于渲染方程，我们需要递归地通过蒙特卡洛解半球上的积分；</p>
+<p>我们的概率密度函数可以取 <span class="arithmatex">\(p(\omega_i)=\frac 1 {2\pi}\)</span> ，有</p>
+<div class="arithmatex">\[L_o(p,\omega_o)\approx L_e(p,\omega_o)+\frac {2\pi}N\sum_{i=1}^N{f_r(p,\omega_i,\omega_o)L_i(p,\omega_i)(n\cdot\omega_i)}\]</div>
+<p><div class="highlight"><pre><span></span><code><span class="n">shade</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">wo</span><span class="p">)</span><span class="w"> </span><span class="c1">//忽略自发光  </span>
+<span class="w">    </span><span class="n">Randomly</span><span class="w"> </span><span class="n">choose</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="n">directions</span><span class="w"> </span><span class="n">wi</span><span class="o">~</span><span class="n">PDF</span><span class="w">  </span>
+<span class="w">    </span><span class="n">Lo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="w">  </span>
+<span class="w">    </span><span class="n">For</span><span class="w"> </span><span class="n">each</span><span class="w"> </span><span class="n">wi</span><span class="w">  </span>
+<span class="w">        </span><span class="n">Trace</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">ray</span><span class="w"> </span><span class="n">r</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">wi</span><span class="p">)</span><span class="w">  </span>
+<span class="w">        </span><span class="n">If</span><span class="w"> </span><span class="n">ray</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="n">hit</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">light</span><span class="w">  </span>
+<span class="w">            </span><span class="n">Lo</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">L_i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">f_r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cosine</span><span class="w">  </span>
+<span class="w">        </span><span class="n">Else</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">ray</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="n">hit</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">object</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">q</span><span class="w">  </span>
+<span class="w">            </span><span class="n">Lo</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">shade</span><span class="p">(</span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">wi</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">f_r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cosine</span><span class="w">  </span>
+<span class="w">    </span><span class="n">Return</span><span class="w"> </span><span class="n">Lo</span>
+</code></pre></div><br />
+上面的伪代码复杂度不可接受，<span class="arithmatex">\(N\)</span> 表示在每个点发射出的探测光线的个数。若使 <span class="arithmatex">\(N=1\)</span> 则有<br />
+<div class="highlight"><pre><span></span><code>shade (p,wo) //忽略自发光  
+    Randomly choose 1 direction wi~PDF  
+    Lo = 0.0  
+    Trace a ray r(p, wi)  
+    If ray r hit the light  
+        Return ( 2 * pi ) * L_i * f_r * cosine  
+    Else If ray r hit an object at q  
+        Return ( 2 * pi ) * shade(q, -wi) * f_r * cosine
+</code></pre></div><br />
+<span class="arithmatex">\(N\ne 1\)</span>时即为分布式光线追踪（Distributed Ray Tracing），现很少使用；<br />
+对于降低 <span class="arithmatex">\(N\)</span> 造成的偏差，我们可以通过对于一个像素多次进行路径追踪并平均结果得到；</p>
+<figure><br />
+<img alt="Pasted image 20251105193714.png" src="../Pasted%20image%2020251105193714.png" width="400" /><br />
+<br />
+</figure>
+<p>对于射线生成（Ray Generation），有伪代码<br />
+<div class="highlight"><pre><span></span><code><span class="n">ray_generation</span><span class="w"> </span><span class="p">(</span><span class="n">camPos</span><span class="p">,</span><span class="n">pixel</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="n">Uniformly</span><span class="w"> </span><span class="n">choose</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="n">positions</span><span class="w"> </span><span class="n">within</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">pixel</span><span class="w">  </span>
+<span class="w">    </span><span class="n">pixel_radiance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="w">  </span>
+<span class="w">    </span><span class="n">For</span><span class="w"> </span><span class="n">each</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">pixel</span><span class="w">  </span>
+<span class="w">        </span><span class="n">shoot</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">ray</span><span class="w"> </span><span class="n">r</span><span class="p">(</span><span class="n">camPos</span><span class="p">,</span><span class="w"> </span><span class="n">cam_to_sample</span><span class="p">)</span><span class="w">  </span>
+<span class="w">        </span><span class="n">If</span><span class="w"> </span><span class="n">ray</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="n">hit</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">scene</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">p</span><span class="w">  </span>
+<span class="w">            </span><span class="n">pixel_radiance</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">shade</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">sample_to_cam</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="n">Return</span><span class="w"> </span><span class="n">pixel_radiance</span>
+</code></pre></div><br />
+上述 shade 代码存在递归终止条件的问题.<br />
+我们选择轮盘赌策略（Russian Roulette，RR），在满足一定条件时停止递归；</p>
+<p>如果有一个概率 <span class="arithmatex">\(P\)</span> ，我们有 <span class="arithmatex">\(P\)</span> 的概率发出光线，对于得到的 <span class="arithmatex">\(L_o\)</span> 取 <span class="arithmatex">\(L_o/P\)</span> ；有 <span class="arithmatex">\(1-P\)</span> 的概率不发出光线，得到的结果为 0 ；得到的结果期望依然为 <span class="arithmatex">\(L_o\)</span> ；</p>
+<p>也可以通过控制 <span class="arithmatex">\(P_{RR}\)</span> 来控制期望弹射次数（递归深度）为 <span class="arithmatex">\(\frac{1}{1-P_{RR}}\)</span><br />
+此时即为路径追踪；</p>
+<div class="admonition note">
+<p class="admonition-title">如何计算期望弹射次数</p>
+<p>这里提供一种求法<br />
+设期望弹射次数为<span class="arithmatex">\(N\)</span>,在第一次弹射有<span class="arithmatex">\(P_{RR}\)</span>的概率弹射，有<span class="arithmatex">\(1-P_{RR}\)</span>的概率不弹射。因此有：</p>
+<div class="arithmatex">\[N=P_{RR}\cdot (N+1) +(1-P_{RR})\times1\]</div>
+<p>解的：</p>
+<div class="arithmatex">\[N=\frac{1}{1-P_{RR}}\]</div>
+</div>
+<p>在低 SPP（samples per pixel）时，生成速度更快但会产生噪点；下面考虑加速；<br />
+如果光源很小，那么采样线打到光源的概率很低，浪费了很多的计算能力；<br />
+我们考虑对光源采样，将积分从 <span class="arithmatex">\(\mathrm{d}\omega\)</span> 变换为 <span class="arithmatex">\(\mathrm{d}A\)</span> ；</p>
+<figure><br />
+<img alt="Pasted image 20251105195432.png" src="../Pasted%20image%2020251105195432.png" width="400" /><br />
+<br />
+</figure>
+<p>有关系</p>
+<div class="arithmatex">\[\mathrm{d}\omega =\frac{\mathrm{d}A\cos\theta'}{||x'-x||^2}\]</div>
+<p>渲染方程换元有</p>
+<div class="arithmatex">\[L_o(p,\omega_o)=L_e(p,\omega_o)+\int_{A}f_r(p,\omega_i,\omega_o)L_i(p,\omega_i)\frac{\cos\theta\cos\theta'}{||x'-p||^2}\mathrm{d}A\]</div>
+<p>考虑着色点的贡献来自于所有的光源和非光源，来自于光源的部分不需要 RR 策略来加速，来自于非光源的部分采用前述方法；</p>
+<p>有伪代码<br />
+<div class="highlight"><pre><span></span><code>shade(p, wo)  
+    # Contribution from the light source.  
+    Uniformly sample the light at x&#39; ( pdf_light = 1 / A)  
+    Shoot a ray from p to x&#39;  
+    If the ray is not blocked in the middle  
+    L_dir = L_i * f_r * cos theta * cos theta&#39; / |x&#39; - p|^2 / pdf_light  
+
+    # Contribution from other reflectors.  
+    L_indir = 0.0  
+    Test Russian Roulette with probability P_RR  
+    Uniformly sample the hemisphere toward wi (pdf_hemi = 1 / 2pi)  
+    Trace a ray r(p, wi)  
+    If ray r hit a non-emitting object at q  
+    L_indir = shade(q, -wi) * f_r * cos theta / pdf_hemi / P_RR  
+
+    return L_dir + L_indir
+</code></pre></div><br />
+对于点光源的处理比较困难，课程内暂不赘述；</p>
+<p>事实上计算出的 radiance 并不是颜色，需要进行伽马矫正（gamma correction）；</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.top", "navigation.tabs", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
