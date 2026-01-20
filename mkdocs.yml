@@ -36,13 +36,17 @@ extra_css:
   - stylesheets/extra.css
 
 markdown_extensions:
-  # - nl2br
+  - nl2br
   # - pymdownx.extra  # 增强Markdown解析（含块级元素、段落处理）
   - admonition
   - pymdownx.details
   - pymdownx.superfences
   - pymdownx.arithmatex:
       generic: true
+  # 支持图片显示的拓展
+  - attr_list
+  - md_in_html
+  - pymdownx.blocks.caption
 
 
 
@@ -62,6 +66,15 @@ nav:
   - 游戏开发:
     - GAMES101:
       - L3-L4:Transform: 游戏开发\GAMES101\03-04 Transform.md
+      - L5-L6:Rasterization: 游戏开发\GAMES101\05-06 Rasterization.md
+      - L7-L9:Shading: 游戏开发\GAMES101\07-09 Shading.md
+      - L10-L12:Geometry: 游戏开发\GAMES101\10-12 Geometry.md
+      - L13-L16:Ray Tracing: 游戏开发\GAMES101\13-16 Ray Tracing.md
+      - 作业1-画三角形: 游戏开发\GAMES101\作业1-画三角形.md
+      - 作业2-Rasterization: 游戏开发\GAMES101\作业2-Rasterization.md
+      - 作业3-Shading: 游戏开发\GAMES101\作业3-Shading.md
+      - 作业4-BazierCurve: 游戏开发\GAMES101\作业4-Bazier Curve.md
 
 plugins:
-  - obsidian-support
+  # - obsidian-support
+  - obsidian-support-formula

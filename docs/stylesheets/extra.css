@@ -16,3 +16,12 @@
   /* !important 用于确保样式优先级，覆盖默认样式 */
 }
 
+img {
+  /* 核心：转为块级元素（行内元素无法用margin:auto居中） */
+  display: block;
+  /* 水平居中：上下margin为0，左右自动分配（关键） */
+  margin: 0 auto;
+  /* 可选：限制图片最大宽度，避免超出容器（适配响应式） */
+  max-width: 80% !important;
+  
+}

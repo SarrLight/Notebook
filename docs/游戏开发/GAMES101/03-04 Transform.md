@@ -53,14 +53,14 @@ x' = x + ky\quad \\
 $$
 
 将上述切变拓展到xy两个轴上同时进行，得到下列公式
-![[Pasted image 20251021102432.png]]
+![[Pasted image 20251021102432.png|300]]
 符合$x'=x+a_xy,y'=y+a_yx$的切变变换表示为：
 $$\begin{bmatrix} x'\\y'\\\omega' \end{bmatrix} = \begin{bmatrix} 1&a_x&0\\ a_y&1&0\\ 0&0&1 \end{bmatrix} \begin{bmatrix} x\\y\\\omega \end{bmatrix}=\begin{bmatrix} x+a_xy\\y+a_yx\\\omega \end{bmatrix}
 $$
 #### 1.1.1 旋转变换(Rotate Transformation)
 
 旋转变换默认绕$(0,0)$进行，以$x^+$为起始，逆时针为正
-![[Pasted image 20251021102847.png]]
+![[Pasted image 20251021102847.png|300]]
 旋转$\theta$的旋转变换$R_\theta$表示为：
 
 $$\begin{bmatrix}
@@ -322,7 +322,9 @@ $\mathbf{P}_{ortho}=\mathbf{S}\mathbf{M}=\begin{bmatrix} \frac{2}{r-l} & 0 &0 &0
 
 $\mathbf{P}_{persp}=\mathbf{P}_{ortho}\mathbf{T}=\begin{bmatrix} \frac{2}{r-l} &0 &0 & 0\\ 0 &\frac{2}{t-b} &0 & 0\\ 0 &0 &\frac{2}{n-f} & -\frac{n+f}{n-f}\\ 0 &0 &0 &1 \end{bmatrix}\begin{bmatrix} n & 0 & 0 & 0\\ 0 & n & 0 & 0\\ 0 & 0 & n+f & -nf \\0&0&1&0\end{bmatrix} = \begin{bmatrix} \frac{2n}{r-l} &0 & 0 & 0 \\ 0 &\frac{2n}{t-b} & 0 &0 \\ 0 &0 &\frac{n+f}{n-f} & \frac{-2nf}{n-f} \\ 0 &0 &1 &0 \end{bmatrix}$
 #### 3.2.4 使用FOV和Aspect ratio表示投影矩阵
-![[Pasted image 20251021190651.jpg]]
+
+![[Pasted image 20251021190651.jpg|400]]
+
 在图中$\angle T_1OB_1$我们称为Field of View(for Y/for Vertical), 也就是常说的FOV。自然而然$\angle L_1OR_1$是x轴或者水平方向的FOV，我们只需要知道其中一个即可，通常用y轴的。我们设$\angle T_1OB_1=\theta$。
 
 $L_1R_1$的长度（即为宽，设值为w）与$T_1B_1$的长度（即为高，设值为h）比例我们称之为宽高比（**Aspect ratio**），我们假设为该值为 a，即$a=\frac{w}{h}$。
@@ -332,7 +334,7 @@ $$\left\{\begin{matrix} w=r-l\\ h=t-b \end{matrix}\right.$$
 $$P_{persp}=\begin{bmatrix} \frac{2n}{w} &0 & 0 & 0 \\ 0 &\frac{2n}{h} &0 &0 \\ 0 &0 &\frac{n+f}{n-f} & \frac{-2nf}{n-f} \\ 0 &0 &1 &0 \end{bmatrix}$$
 通过上面yz平面的侧面图：
 
-![[Pasted image 20251021193758.png]]
+![[Pasted image 20251021193758.png|400]]
 
 $$
 \begin{align}
