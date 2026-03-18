@@ -1,0 +1,2264 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../17%20Materials%20and%20Appearances/">
+      
+      
+        <link rel="next" href="../19%20Cameras%EF%BC%8CLenses%20and%20Light%20Fields/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>L18 Advanced Topics in Rendering - SarrLight's Notebook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-advanced-light-transport" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="SarrLight&#39;s Notebook" class="md-header__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SarrLight's Notebook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              L18 Advanced Topics in Rendering
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" class="md-tabs__link">
+          
+  
+  
+  课内学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../03-04%20Transform/" class="md-tabs__link">
+          
+  
+  
+  游戏开发
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="SarrLight&#39;s Notebook" class="md-nav__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+
+    </a>
+    SarrLight's Notebook
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课内学习
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    课内学习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    计算机组成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    游戏开发
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    游戏开发
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GAMES101
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    GAMES101
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-04%20Transform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L3-L4:Transform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-06%20Rasterization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L5-L6:Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-09%20Shading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L7-L9:Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-12%20Geometry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L10-L12:Geometry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-16%20Ray%20Tracing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L13-L16:Ray Tracing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17%20Materials%20and%20Appearances/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L17 Materials and Appearances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L18 Advanced Topics in Rendering
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L18 Advanced Topics in Rendering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-advanced-light-transport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 高级光线传播(Advanced Light Transport)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 高级光线传播(Advanced Light Transport)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-unbiased-light-transport-methords" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 无偏光线传播方法(Unbiased light transport methords)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1 无偏光线传播方法(Unbiased light transport methords)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-bidirectional-path-tracingbdpt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.1 双向路径追踪Bidirectional Path Tracing(BDPT)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-metropolis-light-transportmlt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.2 Metropolis Light Transport(MLT)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-biased-light-transport-methord" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 有偏光线传播方法(biased light transport methord)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 有偏光线传播方法(biased light transport methord)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-photon-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.1 光子映射(Photon Mapping)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-vertex-connection-and-merging-vcm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.2 顶点连接和合并(Vertex Connection and Merging, VCM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-instant-radiosity-ir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.3 实时辐射度(Instant Radiosity, IR)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-advanced-appearance-modeling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 高级外观建模(Advanced Appearance Modeling)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 高级外观建模(Advanced Appearance Modeling)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-non-surface-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 非表面模型(Non-surface models)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 非表面模型(Non-surface models)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211-participating-media" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.1 散射介质(Participating Media)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-hair-appearance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.2 Hair Appearance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1.2 Hair Appearance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kajiya-kay-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kajiya-Kay Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#marschner-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Marschner Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#213-fur-appearance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.3 Fur Appearance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1.3 Fur Appearance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#double-cylinder-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Double Cylinder Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#214-granular-matel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.4 颗粒材质（Granular Matel）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-surface-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 表面模型(surface models)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 表面模型(surface models)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221-translucent-meaterial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.1 Translucent Meaterial（透光材质）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.1 Translucent Meaterial（透光材质）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bssrdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BSSRDF（双向表面散射反射分布函数）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dipole-approximation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dipole Approximation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222-cloth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.2 Cloth
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.2 Cloth">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#brdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        当成表面使用BRDF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        当成散射介质
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        当成实际的纤维
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-detailed-appearance-motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Detailed Appearance: Motivation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-recent-trend-wave-optics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 Recent Trend: Wave Optics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-procedural-appearance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 程序化外观(Procedural Appearance)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19%20Cameras%EF%BC%8CLenses%20and%20Light%20Fields/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L19 Cameras，Lenses and Light Fields
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20%20Color%20and%20Perception/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L20 Color and Perception
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21%20Animation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L21 Animation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22%20Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L22 Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A1-%E7%94%BB%E4%B8%89%E8%A7%92%E5%BD%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业1-画三角形
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A2-Rasterization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业2-Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A3-Shading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业3-Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A4-Bazier%20Curve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业4-BazierCurve
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A5-%E5%85%89%E7%BA%BF%E4%B8%8E%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9B%B8%E4%BA%A4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业5-光线与三角形相交
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A6-%E5%8A%A0%E9%80%9F%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业6-加速结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A7-%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业7-光线追踪
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A8-%E8%B4%A8%E7%82%B9%E5%BC%B9%E7%B0%A7%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业8-质点弹簧系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UTILITIES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UTILITIES
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-advanced-light-transport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 高级光线传播(Advanced Light Transport)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 高级光线传播(Advanced Light Transport)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-unbiased-light-transport-methords" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 无偏光线传播方法(Unbiased light transport methords)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1 无偏光线传播方法(Unbiased light transport methords)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-bidirectional-path-tracingbdpt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.1 双向路径追踪Bidirectional Path Tracing(BDPT)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-metropolis-light-transportmlt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.2 Metropolis Light Transport(MLT)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-biased-light-transport-methord" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 有偏光线传播方法(biased light transport methord)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 有偏光线传播方法(biased light transport methord)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-photon-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.1 光子映射(Photon Mapping)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-vertex-connection-and-merging-vcm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.2 顶点连接和合并(Vertex Connection and Merging, VCM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-instant-radiosity-ir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.3 实时辐射度(Instant Radiosity, IR)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-advanced-appearance-modeling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 高级外观建模(Advanced Appearance Modeling)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 高级外观建模(Advanced Appearance Modeling)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-non-surface-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 非表面模型(Non-surface models)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 非表面模型(Non-surface models)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211-participating-media" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.1 散射介质(Participating Media)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-hair-appearance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.2 Hair Appearance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1.2 Hair Appearance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kajiya-kay-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kajiya-Kay Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#marschner-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Marschner Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#213-fur-appearance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.3 Fur Appearance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1.3 Fur Appearance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#double-cylinder-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Double Cylinder Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#214-granular-matel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.4 颗粒材质（Granular Matel）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-surface-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 表面模型(surface models)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 表面模型(surface models)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221-translucent-meaterial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.1 Translucent Meaterial（透光材质）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.1 Translucent Meaterial（透光材质）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bssrdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BSSRDF（双向表面散射反射分布函数）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dipole-approximation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dipole Approximation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222-cloth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.2 Cloth
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.2 Cloth">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#brdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        当成表面使用BRDF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        当成散射介质
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        当成实际的纤维
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-detailed-appearance-motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Detailed Appearance: Motivation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-recent-trend-wave-optics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 Recent Trend: Wave Optics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-procedural-appearance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 程序化外观(Procedural Appearance)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>L18 Advanced Topics in Rendering</h1>
+
+<h2 id="1-advanced-light-transport">1 高级光线传播(Advanced Light Transport)</h2>
+<p>无偏蒙特卡洛方法不存在任何系统误差。无论使用多少样本，无偏估计器的期望值始终等于真实值<br />
+反之则为有偏估计器。<br />
+有一种特殊情况：当样本数量趋于无穷时，其期望值会收敛到真实值，这类估计被称为<strong>一致估计</strong><br />
+这里的“有偏/无偏”和“一致性”与概率论与数理统计中参数估计的“有偏性”和“一致性”类似。</p>
+<h3 id="11-unbiased-light-transport-methords">1.1 无偏光线传播方法(Unbiased light transport methords)</h3>
+<h4 id="111-bidirectional-path-tracingbdpt">1.1.1 双向路径追踪Bidirectional Path Tracing(BDPT)</h4>
+<p>从光源和摄像机分别生成半路径，然后BDPT将这些半路径连接起来。</p>
+<figure><br />
+<img alt="Pasted image 20260127145354.png" src="../Pasted%20image%2020260127145354.png" width="400" /><br />
+<br />
+</figure>
+<p>当场景中大部分光是间接光，从摄像机发出的光线能够打到光源的概率比较小时，从光源发出光线要比从摄像机发出光线便于计算。此时，BDPT效果比单向路径追踪的效果更好。</p>
+<figure><br />
+<img alt="Pasted image 20260127145757.png" src="../Pasted%20image%2020260127145757.png" width="500" /><br />
+<br />
+</figure>
+<p>但是BDPT存在几个缺点<br />
+- 实现难度很高，想做对很不容易。<br />
+- 运行速度相对较慢，甚至慢很多</p>
+<h4 id="112-metropolis-light-transportmlt">1.1.2 Metropolis Light Transport(MLT)</h4>
+<p>Metropolis直译为“大都市”，但在这里是人名。<br />
+MLT是马尔可夫链蒙特卡洛（MCMC）的一种应用。它的核心思想是利用马尔科夫链来优化随机采样的过程。相比于普通的蒙特卡洛方法，使用马尔科夫链产生的样本前后具有相关性。这使得马尔科夫链能够让生成的样本的分布和被积函数的分布相同，从而使得采样计算的结果更精准。</p>
+<p>MLT非常擅长<strong>局部探索</strong>难以追踪的光路。核心思路是对已有路径进行局部扰动（locally perturb），以生成新路径。</p>
+<figure><br />
+<img alt="Pasted image 20260127151019.png" src="../Pasted%20image%2020260127151019.png" width="500" /><br />
+<br />
+</figure>
+<p>MLT非常适合做困难复杂的光线传播，这时因为只要能找到一条路径作为种子，就能找到更多路径。</p>
+<figure><br />
+<img alt="Pasted image 20260127151319.png" src="../Pasted%20image%2020260127151319.png" width="500" /><br />
+<br />
+</figure>
+<p>比如在左图中的场景中，光线都来自于狭小的门缝，光线正常到达光源比较困难。在这种困难的情况下，MLT就能做得更好。<br />
+而在右图中水池中存在焦散现象。光线从摄像机发出，要先经过specular的水面，之后经过diffuse的水底，之后在次经过specular的水面，最后才到光源。这种路径被称为SDS路径，它的难点是：在diffuse的位置光线的反射有非常多的可能性，只有很小的可能最终打到光源，最终形成一条有效的光路。</p>
+<p>MLT方法的缺点是：<br />
+- 很难分析渲染收敛的速度(Difficult to estimate the convergence rate)。<br />
+- 不能保证每个像素有相同的收敛率(Does not guarantee equal convergence rate per pixel)，导致画面有点脏。</p>
+<h3 id="12-biased-light-transport-methord">1.2 有偏光线传播方法(biased light transport methord)</h3>
+<h4 id="121-photon-mapping">1.2.1 光子映射(Photon Mapping)</h4>
+<ul>
+<li>一种有偏方法(biased approach)，同时也是一种两阶段方法(two-stage method)</li>
+<li>非常擅长处理镜面 - 漫反射 - 镜面（SDS）路径，并生成焦散(caustics)效果</li>
+</ul>
+<figure><br />
+<img alt="Pasted image 20260127152520.png" src="../Pasted%20image%2020260127152520.png" width="500" /><br />
+<br />
+</figure>
+<p>Stage1: photon Tracing<br />
+从光源发射光子，让它们在场景中反弹，然后将光子记录在漫反射表面上</p>
+<figure><br />
+<img alt="Pasted image 20260127152943.png" src="../Pasted%20image%2020260127152943.png" width="500" /><br />
+<br />
+</figure>
+<p>Stage2：photon collection (final gathering)<br />
+从相机发射子路径(sub-paths)，让它们在场景中反弹，直到击中漫反射表面</p>
+<p>Calculation-local density estimation<br />
+核心思想是漫反射表面有越多光子的区域应该更亮。<br />
+做法是：对于每个着色点(shading point)，找到距离它最近的 N 个光子，并计算这些光子所覆盖的表面积(take the surface area they over)</p>
+<figure><br />
+<img alt="Pasted image 20260127153353.png" src="../Pasted%20image%2020260127153353.png" width="500" /><br />
+<br />
+</figure>
+<figure><br />
+<img alt="Pasted image 20260127153501.png" src="../Pasted%20image%2020260127153501.png" width="300" /><br />
+<br />
+</figure>
+<p>当N过小的时候，画面会有很多噪点，变得noisy。当N过大的时候，画面会变模糊(blurry)。<br />
+这说明这种估计方法是有偏的(biased)。具体原因是:</p>
+<div class="arithmatex">\[
+\frac{\mathrm{d}N}{\mathrm{d}A}\ne \frac{\Delta N}{\Delta A}
+\]</div>
+<p>等式左边表示的是着色点附近微小的面积。右边表示的我们在计算时通过相距最近的N个光子确定的面积，二者虽然接近，但并不相等。</p>
+<p>但是考虑到极限条件下<br />
+当发生更多的光子时 <span class="arithmatex">\(\rightarrow\)</span> 相同的N个光子覆盖的面积 <span class="arithmatex">\(\Delta A\)</span> 更小 <span class="arithmatex">\(\rightarrow\)</span> <span class="arithmatex">\(\Delta A\)</span> 更接近 <span class="arithmatex">\(\mathrm{d}A\)</span><br />
+所以光子映射(Photon Mapping)这种方法是有偏的(biased)，同时也是一致的(consistent)</p>
+<p><strong>渲染中 “偏差” 的通俗理解</strong><br />
+- 有偏（Biased）== 画面模糊<br />
+- 一致（Consistent）== 当样本数量趋于无穷时，画面不再模糊<br />
+为什么在密度估计中不采用 “固定范围” 搜索？<br />
+这是因为，如果范围固定的话，无论怎样都是有偏且不一致的。如果发射更多的光子只能使 <span class="arithmatex">\(\Delta A\)</span> 中分布更多的光子，而无法使 <span class="arithmatex">\(\Delta A\)</span> 更接近 <span class="arithmatex">\(\mathrm{d}A\)</span>。</p>
+<h4 id="122-vertex-connection-and-merging-vcm">1.2.2 顶点连接和合并(Vertex Connection and Merging, VCM)</h4>
+<p>双向路径追踪（BDPT）与光子映射的结合<br />
+<strong>核心思路</strong><br />
+- 如果 BDPT 中的子路径端点无法直接连接，但可以合并，就不要浪费这些子路径<br />
+- 利用光子映射来处理邻近 “光子” 的合并</p>
+<figure><br />
+<img alt="Pasted image 20260127162354.png" src="../Pasted%20image%2020260127162354.png" width="500" /><br />
+<br />
+</figure>
+<h4 id="123-instant-radiosity-ir">1.2.3 实时辐射度(Instant Radiosity, IR)</h4>
+<p>这类方法有时也被称为多光源方法（many-light approaches）<br />
+<strong>核心思路</strong>是被照亮的表面可以被当作光源来处理<br />
+实现方式：<br />
+- 发射光的子路径，并将每个子路径的端点视为一个<strong>虚拟点光源（VPL）</strong><br />
+- 使用这些虚拟点光源，以常规方式渲染场景</p>
+<figure><br />
+<img alt="Pasted image 20260127164140.png" src="../Pasted%20image%2020260127164140.png" width="500" /><br />
+<br />
+</figure>
+<p><strong>优点</strong>：速度较快，在漫反射场景中通常能生成较好的效果<br />
+<strong>缺点</strong>：<br />
+- 当虚拟点光源（VPL）靠近着色点时，画面会出现 “尖刺状” 噪点.这与平方反比有关。<br />
+- 无法处理光泽材质（glossy materials）的光照计算</p>
+<figure><br />
+<img alt="Pasted image 20260127164315.png" src="../Pasted%20image%2020260127164315.png" width="500" /><br />
+<br />
+</figure>
+<h2 id="2-advanced-appearance-modeling">2 高级外观建模(Advanced Appearance Modeling)</h2>
+<h3 id="21-non-surface-models">2.1 非表面模型(Non-surface models)</h3>
+<h4 id="211-participating-media">2.1.1 散射介质(Participating Media)</h4>
+<p>当光线穿过参与介质(travels through a participating medium)时，在传播路径上的任意一点，它都可能被（部分）吸收和散射((partially) absorbed and scattered)。</p>
+<figure><br />
+<img alt="Pasted image 20260127165218.png" src="../Pasted%20image%2020260127165218.png" width="500" /><br />
+<br />
+</figure>
+<p>使用 相位函数（Phase Function） 来描述参与介质中任意一点 x 处，光线散射的角度分布。</p>
+<figure><br />
+<img alt="Pasted image 20260127171754.png" src="../Pasted%20image%2020260127171754.png" width="500" /><br />
+<br />
+</figure>
+<ul>
+<li>随机选择一个方向进行反弹(bounce)</li>
+<li>随机选择一段距离沿直线传播</li>
+<li>在每个 “着色点” 处，与光源建立连接</li>
+</ul>
+<figure><br />
+<img alt="Pasted image 20260127171900.png" src="../Pasted%20image%2020260127171900.png" width="500" /><br />
+<br />
+</figure>
+<figure><br />
+<img alt="Pasted image 20260127172307.png" src="../Pasted%20image%2020260127172307.png" width="500" /><br />
+<br />
+</figure>
+<figure><br />
+<img alt="Pasted image 20260127172320.png" src="../Pasted%20image%2020260127172320.png" width="500" /><br />
+<br />
+</figure>
+<p>云、雾、甚至巧克力等都属于散射介质</p>
+<h4 id="212-hair-appearance">2.1.2 Hair Appearance</h4>
+<h5 id="kajiya-kay-model">Kajiya-Kay Model</h5>
+<figure><br />
+<img alt="Pasted image 20260127172603.png" src="../Pasted%20image%2020260127172603.png" width="300" /><br />
+<br />
+</figure>
+<p>这种模型认为：光线照射到发丝上，会有圆锥形的镜面反射，同时还会反射到四面八方的漫反射。</p>
+<figure><br />
+<img alt="Pasted image 20260127172902.png" src="../Pasted%20image%2020260127172902.png" width="500" /><br />
+<br />
+</figure>
+<h5 id="marschner-model">Marschner Model</h5>
+<figure><br />
+<img alt="Pasted image 20260127173019.png" src="../Pasted%20image%2020260127173019.png" width="300" /><br />
+<br />
+</figure>
+<p>把光线穿透发丝的表面发生折射记为 T，发生反射记为 R。折射两次记为 TT，以此类推。</p>
+<figure><br />
+<img alt="Pasted image 20260127173320.png" src="../Pasted%20image%2020260127173320.png" width="500" /><br />
+<br />
+</figure>
+<p>把发丝当作类似玻璃的圆柱(Class-like cylinder)<br />
+- 外层叫做cuticle，表皮<br />
+- 里面叫做cortex，含有色素，能够吸收(absorb)光线</p>
+<figure><br />
+<img alt="Pasted image 20260127173639.png" src="../Pasted%20image%2020260127173639.png" width="500" /><br />
+<br />
+</figure>
+<h4 id="213-fur-appearance">2.1.3 Fur Appearance</h4>
+<h5 id="double-cylinder-model">Double Cylinder Model</h5>
+<p>如果使用头发模型去表示动物的毛发(下图左边)，与预期情况(下图右边)不同。</p>
+<figure><br />
+<img alt="Pasted image 20260127174112.png" src="../Pasted%20image%2020260127174112.png" width="500" /><br />
+<br />
+</figure>
+<figure><br />
+<img alt="Pasted image 20260128105122.png" src="../Pasted%20image%2020260128105122.png" width="500" /><br />
+<br />
+</figure>
+<p>最内层叫做Medulla(髓质)，类似于散射介质，能够将光线发散到四面八方。<br />
+人和动物都有Cuticle-Cortex-Medulla的结构，但是与人相比，动物毛的Medulla更大，光线进去之后更容易散射。</p>
+<figure><br />
+<img alt="Pasted image 20260128105623.png" src="../Pasted%20image%2020260128105623.png" width="500" /><br />
+<br />
+</figure>
+<p>随着medulla大小的增大，模拟动物毛发的效果变得更好。</p>
+<figure><br />
+<img alt="Pasted image 20260128105733.png" src="../Pasted%20image%2020260128105733.png" width="500" /><br />
+<br />
+</figure>
+<p>而在人的头发模型中也加入medulla，能够让头发更加透亮。<br />
+因此提出了双层圆柱模型（Double Cylinder Model）</p>
+<figure><br />
+<img alt="Pasted image 20260128105926.png" src="../Pasted%20image%2020260128105926.png" width="500" /><br />
+<br />
+</figure>
+<figure><br />
+<img alt="Pasted image 20260128110011.png" src="../Pasted%20image%2020260128110011.png" width="500" /><br />
+<br />
+</figure>
+<p>在原本的<span class="arithmatex">\(R、TT、TRT\)</span>的基础上加上了<span class="arithmatex">\(TT^{s}、TRT^{s}\)</span>，使得渲染的毛发更加透亮。</p>
+<figure><br />
+<img alt="Pasted image 20260128110359.png" src="../Pasted%20image%2020260128110359.png" width="500" /><br />
+<br />
+</figure>
+<p>电影《猩球崛起》《狮子王》中对毛发的渲染都使用了Double Cylinder Model</p>
+<h4 id="214-granular-matel">2.1.4 颗粒材质（Granular Matel）</h4>
+<figure><br />
+<img alt="Pasted image 20260128110747.png" src="../Pasted%20image%2020260128110747.png" width="500" /><br />
+<br />
+</figure>
+<p><img alt="Pasted image 20260128110855.png" src="../Pasted%20image%2020260128110855.png" /><br />
+我们能否避免对所有颗粒进行显式建模？<br />
+- 可以，通过程序化定义（procedural definition即可实现。</p>
+<h3 id="22-surface-models">2.2 表面模型(surface models)</h3>
+<h4 id="221-translucent-meaterial">2.2.1 Translucent Meaterial（透光材质）</h4>
+<h5 id="bssrdf">BSSRDF（双向表面散射反射分布函数）</h5>
+<figure><br />
+<img alt="Pasted image 20260128111323.png" src="../Pasted%20image%2020260128111323.png" width="500" /><br />
+<br />
+</figure>
+<p>许多表面的视觉特征，源于光线从与入射点不同的位置射出。这种现象被称为次表面散射这违背了 双向反射分布函数（BRDF） 的一个基本假设。</p>
+<figure><br />
+<img alt="Pasted image 20260128111436.png" src="../Pasted%20image%2020260128111436.png" width="300" /><br />
+<br />
+</figure>
+<p>BSSRDF（双向表面散射反射分布函数）：是 BRDF（双向反射分布函数）的推广，描述了 “一个点的入射微分辐照度” 在 “另一个点” 产生的出射辐射度：</p>
+<div class="arithmatex">\[S(x_i, \omega_i, x_o, \omega_o)\]</div>
+<p>渲染方程的推广形式：需要对表面上所有点和所有方向进行积分（重点提示）：</p>
+<div class="arithmatex">\[L(x_o, \omega_o) = \int_A \int_{H^2} S(x_i, \omega_i, x_o, \omega_o)\, L_i(x_i, \omega_i)\, \cos\theta_i\; \mathrm{d}\omega_i\; \mathrm{d}A\]</div>
+<p>在BSSRDF中原本BRDF对于方向的积分变成了既要对方向又要对面积积分。</p>
+<figure><br />
+<img alt="Pasted image 20260128112455.png" src="../Pasted%20image%2020260128112455.png" width="400" /><br />
+<br />
+</figure>
+<h5 id="dipole-approximation">Dipole Approximation</h5>
+<p>当把手机闪光灯放在手上，能够看到手上一部分区域被照亮，就像是在皮肤内部有一个光源。从类似这样的现象中，人们提出了次表面散射的一种近似方法：产生材质内和材质外的两个光源，以及来近似次表面散射的效果。</p>
+<figure><br />
+<img alt="Pasted image 20260128112522.png" src="../Pasted%20image%2020260128112522.png" width="500" /><br />
+<br />
+</figure>
+<p>渲染效果</p>
+<figure><br />
+<img alt="Pasted image 20260128112649.png" src="../Pasted%20image%2020260128112649.png" width="500" /><br />
+<br />
+</figure>
+<figure><br />
+<img alt="Pasted image 20260128112823.png" src="../Pasted%20image%2020260128112823.png" width="500" /><br />
+<br />
+</figure>
+<h4 id="222-cloth">2.2.2 Cloth</h4>
+<p>布料(Cloth)由缠绕的纤维(twited fiber)组成。<br />
+缠绕分为两个层次(Tow levels of twist)</p>
+<div class="arithmatex">\[Fibers(纤维)\rightarrow Ply(股)\rightarrow Yarn(线)\]</div>
+<p><img alt="Pasted image 20260128113308.png" src="../Pasted%20image%2020260128113308.png" /><br />
+Woven or knitted得到布料<br />
+<img alt="Pasted image 20260128113330.png" src="../Pasted%20image%2020260128113330.png" /></p>
+<h5 id="brdf">当成表面使用BRDF</h5>
+<p>给出编织的样式(weaving pattern)就能计算出它的行为(overall behavior)<br />
+在渲染的时候使用BRDF</p>
+<figure><br />
+<img alt="Pasted image 20260128113601.png" src="../Pasted%20image%2020260128113601.png" width="400" /><br />
+<br />
+</figure>
+<figure><br />
+<img alt="Pasted image 20260128113624.png" src="../Pasted%20image%2020260128113624.png" width="500" /><br />
+<br />
+</figure>
+<p>但是使用BRDF存在问题，因为布料可能存在立体结构</p>
+<figure><br />
+<img alt="Pasted image 20260128113756.png" src="../Pasted%20image%2020260128113756.png" width="500" /><br />
+<br />
+</figure>
+<h5 id="_1">当成散射介质</h5>
+<p>为解决这个问题，另一种做法是把织物当作空间中分布的体积，把它划分成细小的块，明确每个小块的性质，将布料当作散射介质来渲染。<br />
+- 单根纤维的属性及其分布(Properties of individual fibers &amp; their distribution) → 推导为散射参数(scattering parameters)<br />
+- 将其作为<strong>散射介质(participating medium)</strong> 进行渲染</p>
+<figure><br />
+<img alt="Pasted image 20260128114005.png" src="../Pasted%20image%2020260128114005.png" width="500" /><br />
+<br />
+</figure>
+<h5 id="_2">当成实际的纤维</h5>
+<p>还有一种方法就是把布料当作实际的纤维进行渲染（Render every fiber explicitly）。</p>
+<figure><br />
+<img alt="Pasted image 20260128114513.png" src="../Pasted%20image%2020260128114513.png" width="500" /><br />
+<br />
+</figure>
+<p>例子</p>
+<figure><br />
+<img alt="Pasted image 20260128114702.png" src="../Pasted%20image%2020260128114702.png" width="500" /><br />
+<br />
+</figure>
+<h3 id="23-detailed-appearance-motivation">2.3 Detailed Appearance: Motivation</h3>
+<p>为什么渲染出来的图片看起来很假，因为没有考虑材质表面划痕之类的细节，即我们没有反映真实的法线分布。</p>
+<figure><br />
+<img alt="Pasted image 20260128115541.png" src="../Pasted%20image%2020260128115541.png" width="500" /><br />
+<br />
+</figure>
+<figure><br />
+<img alt="Pasted image 20260128115547.png" src="../Pasted%20image%2020260128115547.png" width="500" /><br />
+<br />
+</figure>
+<figure><br />
+<img alt="Pasted image 20260128115949.png" src="../Pasted%20image%2020260128115949.png" width="500" /><br />
+<br />
+</figure>
+<figure><br />
+<img alt="Pasted image 20260128120018.png" src="../Pasted%20image%2020260128120018.png" width="500" /><br />
+<br />
+</figure>
+<p>要想完美反映这些细节，即采用微表面进行渲染。这需要在表面覆盖非常高精度的法线贴图。但是这导致渲染速度非常慢，渲染一张图像可能需要一个月之久。</p>
+<figure><br />
+<img alt="Pasted image 20260128120056.png" src="../Pasted%20image%2020260128120056.png" width="500" /><br />
+<br />
+</figure>
+<p>深究其原因，我们发现是因为从摄像机发出的光线经过微表面很难反射到光源，类似的从光源发出的光线经过微表面也很难反射到摄像机。</p>
+<figure><br />
+<img alt="Pasted image 20260128120249.png" src="../Pasted%20image%2020260128120249.png" width="500" /><br />
+<br />
+</figure>
+<p>解决方法是将求解一个像素覆盖区域的BRDF</p>
+<figure><br />
+<img alt="Pasted image 20260128120342.png" src="../Pasted%20image%2020260128120342.png" width="500" /><br />
+<br />
+</figure>
+<p>当这个像素覆盖区域不同时，得到的不同的法线分布(NDF,Normal distribution function)</p>
+<figure><br />
+<img alt="Pasted image 20260128120615.png" src="../Pasted%20image%2020260128120615.png" width="500" /><br />
+<br />
+</figure>
+<p>不同类型的法线贴图也能得到不同的法线分布</p>
+<figure><br />
+<img alt="Pasted image 20260128120658.png" src="../Pasted%20image%2020260128120658.png" width="500" /><br />
+<br />
+</figure>
+<p>这种方法在渲染波光粼粼的海面以及雪的时候，能够发挥很大的作用。</p>
+<figure><br />
+<img alt="Pasted image 20260128121053.png" src="../Pasted%20image%2020260128121053.png" width="500" /><br />
+<br />
+</figure>
+<h2 id="3-recent-trend-wave-optics">3 Recent Trend: Wave Optics</h2>
+<p>使用波动光学得到的BRDF和普通方法得到的BRDF不同，前者具有不连续的特点。<br />
+<img alt="Pasted image 20260128121438.png" src="../Pasted%20image%2020260128121438.png" /><br />
+采用这种方法渲染得到的结果虽然宏观看上去是白光，但是放大之后可以发现白光是由很多小的彩色像素点组成的。<br />
+<img alt="Pasted image 20260128121510.png" src="../Pasted%20image%2020260128121510.png" /></p>
+<h2 id="4-procedural-appearance">4 程序化外观(Procedural Appearance)</h2>
+<p>使用定义在空间中的3D Noise来定义物体的细节。</p>
+<figure><br />
+<img alt="Pasted image 20260128162433.png" src="../Pasted%20image%2020260128162433.png" width="300" /><br />
+<br />
+</figure>
+<p>由于噪波纹理是在3d空间中的，所以可以获得上面的瓷器的截面纹理。<br />
+利用噪波可以表现汽车上的污渍等内容，也可以用来生成地形、水面等</p>
+<figure><br />
+<img alt="Pasted image 20260128162638.png" src="../Pasted%20image%2020260128162638.png" width="500" /><br />
+<br />
+</figure>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.top", "navigation.tabs", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

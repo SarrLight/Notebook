@@ -1,0 +1,1676 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../%E4%BD%9C%E4%B8%9A4-Bazier%20Curve/">
+      
+      
+        <link rel="next" href="../%E4%BD%9C%E4%B8%9A6-%E5%8A%A0%E9%80%9F%E7%BB%93%E6%9E%84/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>作业5-光线与三角形相交 - SarrLight's Notebook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="SarrLight&#39;s Notebook" class="md-header__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SarrLight's Notebook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              作业5-光线与三角形相交
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" class="md-tabs__link">
+          
+  
+  
+  课内学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../03-04%20Transform/" class="md-tabs__link">
+          
+  
+  
+  游戏开发
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="SarrLight&#39;s Notebook" class="md-nav__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+
+    </a>
+    SarrLight's Notebook
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课内学习
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    课内学习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    计算机组成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    游戏开发
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    游戏开发
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GAMES101
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    GAMES101
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-04%20Transform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L3-L4:Transform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-06%20Rasterization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L5-L6:Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-09%20Shading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L7-L9:Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-12%20Geometry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L10-L12:Geometry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-16%20Ray%20Tracing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L13-L16:Ray Tracing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17%20Materials%20and%20Appearances/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L17 Materials and Appearances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18%20Advanced%20Topics%20in%20Rendering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L18 Advanced Topics in Rendering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19%20Cameras%EF%BC%8CLenses%20and%20Light%20Fields/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L19 Cameras，Lenses and Light Fields
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20%20Color%20and%20Perception/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L20 Color and Perception
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21%20Animation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L21 Animation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22%20Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L22 Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A1-%E7%94%BB%E4%B8%89%E8%A7%92%E5%BD%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业1-画三角形
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A2-Rasterization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业2-Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A3-Shading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业3-Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A4-Bazier%20Curve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业4-BazierCurve
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业5-光线与三角形相交
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业5-光线与三角形相交
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 总览
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 项目解读
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 我的实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 我的实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 屏幕坐标到空间坐标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 光线与三角形相交
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 最终结果
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-cpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 Cpp特性
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5 Cpp特性">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-make_unique" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 make_unique
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 成员初始化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-stdmove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 std::move()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-stdoptional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 std::optional&lt;&gt;
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A6-%E5%8A%A0%E9%80%9F%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业6-加速结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A7-%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业7-光线追踪
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A8-%E8%B4%A8%E7%82%B9%E5%BC%B9%E7%B0%A7%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业8-质点弹簧系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UTILITIES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UTILITIES
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 总览
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 项目解读
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 我的实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 我的实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 屏幕坐标到空间坐标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 光线与三角形相交
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 最终结果
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-cpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 Cpp特性
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5 Cpp特性">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-make_unique" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 make_unique
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 成员初始化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-stdmove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 std::move()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-stdoptional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 std::optional&lt;&gt;
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>作业5-光线与三角形相交</h1>
+
+<p>这是我完成作业5时候的笔记，一部分内容来自于GAMES101的作业说明文档。</p>
+<h2 id="1">1 总览</h2>
+<p>在这部分的课程中，我们将专注于使用光线追踪来渲染图像。在光线追踪中最重要的操作之一就是找到光线与物体的交点。一旦找到光线与物体的交点，就可以执行着色并返回像素颜色。在这次作业中，我们需要实现两个部分：光线的生成和光线与三角的相交。本次代码框架的工作流程为：<br />
+1. 从 main 函数开始。我们定义场景的参数，添加物体（球体或三角形）到场景中，并设置其材质，然后将光源添加到场景中。<br />
+2. 调用 Render(scene) 函数。在遍历所有像素的循环里，生成对应的光线并将返回的颜色保存在帧缓冲区（framebuffer）中。在渲染过程结束后，帧缓冲区中的信息将被保存为图像。<br />
+3. 在生成像素对应的光线后，我们调用 CastRay 函数，该函数调用 trace 来查询光线与场景中最近的对象的交点。<br />
+4. 然后，我们在此交点执行着色。我们设置了三种不同的着色情况，并且已经为你提供了代码。<br />
+你需要修改的函数是：<br />
+- Renderer.cpp 中的 Render()：这里你需要为每个像素生成一条对应的光线，然后调用函数 castRay() 来得到颜色，最后将颜色存储在帧缓冲区的相应像素中。<br />
+- Triangle.hpp 中的 rayTriangleIntersect(): v0, v1, v2 是三角形的三个顶点，orig 是光线的起点，dir 是光线单位化的方向向量。tnear, u, v 是你需要使用我们课上推导的 Moller-Trumbore 算法来更新的参数。</p>
+<h2 id="2">2 项目解读</h2>
+<p>现在我们对代码框架中的一些类做一下概括性的介绍：<br />
+- global.hpp：包含了整个框架中会使用的基本函数和变量。<br />
+- Vector.hpp: 由于我们不再使用 Eigen 库，因此我们在此处提供了常见的向量操作，例如：dotProduct，crossProduct，normalize。<br />
+- Object.hpp: 渲染物体的父类。Triangle 和 Sphere 类都是从该类继承的。<br />
+- Scene.hpp: 定义要渲染的场景。包括设置参数，物体以及灯光。<br />
+- Renderer.hpp: 渲染器类，它实现了所有光线追踪的操作。</p>
+<p>运行程序最终会产生一个ppm格式的文件，使用vscode的插件 PBM/PPM/PGM Viewer for Visual Studio Code可以预览ppm文件</p>
+<h2 id="3">3 我的实现</h2>
+<h3 id="31">3.1 屏幕坐标到空间坐标</h3>
+<div class="highlight"><pre><span></span><code><span class="c1">//i表示水平向右的x轴坐标，j表示竖直向下的y轴坐标</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">scene</span><span class="p">.</span><span class="n">height</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">j</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">scene</span><span class="p">.</span><span class="n">width</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// generate primary ray direction</span>
+<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">            </span><span class="c1">// TODO: Find the x and y positions of the current pixel to get the direction</span>
+<span class="w">            </span><span class="c1">// vector that passes through it.</span>
+<span class="w">            </span><span class="c1">// Also, don&#39;t forget to multiply both of them with the variable *scale*, and</span>
+<span class="w">            </span><span class="c1">// x (horizontal) variable with the *imageAspectRatio*            </span>
+<span class="w">            </span><span class="c1">// 需要进行坐标转化，把屏幕坐标转化为空间坐标</span>
+<span class="w">            </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">((</span><span class="kt">float</span><span class="p">)</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">scene</span><span class="p">.</span><span class="n">width</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">scale</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">imageAspectRatio</span><span class="p">;</span>
+<span class="w">            </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">((</span><span class="kt">float</span><span class="p">)</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">scene</span><span class="p">.</span><span class="n">height</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">scale</span><span class="p">;</span>
+
+<span class="w">            </span><span class="c1">//光线的方向向量，向z轴负方向发出光线</span>
+<span class="w">            </span><span class="n">Vector3f</span><span class="w"> </span><span class="n">dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Vector3f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">);</span><span class="w"> </span><span class="c1">// Don&#39;t forget to normalize this direction!</span>
+<span class="w">            </span><span class="c1">// 参数(摄像机位置，光线方向，场景，递归深度)</span>
+<span class="w">            </span><span class="n">framebuffer</span><span class="p">[</span><span class="n">m</span><span class="o">++</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">castRay</span><span class="p">(</span><span class="n">eye_pos</span><span class="p">,</span><span class="w"> </span><span class="n">dir</span><span class="p">,</span><span class="w"> </span><span class="n">scene</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">UpdateProgress</span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">scene</span><span class="p">.</span><span class="n">height</span><span class="p">);</span><span class="w">    </span><span class="c1">//用于显示进度条</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">视角fov</p>
+<p>视角（field-of-view），fovY为垂直视场角，fovX为水平视场角，此课程中fov默认为垂直视场角，即fovY；<br />
+<img alt="Pasted image 20251022130956.jpg" src="../Pasted%20image%2020251022130956.jpg" /></p>
+</div>
+<div class="admonition bug">
+<p class="admonition-title">忘记对dir向量归一化</p>
+<p>上面的代码忘记对dir向量进行归一化，修复前后的渲染结果中玻璃球的边缘不同<br />
+修复前<br />
+<figure markdown="span"></p>
+</div>
+<p><img alt="Pasted image 20260122162423.png" src="../Pasted%20image%2020260122162423.png" width="500" /></p>
+<p></figure markdown><br />
+    修复后<br />
+    <figure markdown="span"><br />
+<img alt="Pasted image 20260122162458.png" src="../Pasted%20image%2020260122162458.png" width="500" /></p>
+<p></figure markdown><br />
+    修复bug的方法是加上一条归一化的语句<br />
+    <div class="highlight"><pre><span></span><code><span class="n">dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">dir</span><span class="p">);</span>
+</code></pre></div></p>
+<h3 id="32">3.2 光线与三角形相交</h3>
+<p>光线与三角形的交点还可以判断光源是否在物体内；</p>
+<p>先判断光线和三角形所在平面是否相交，再判断交点点是否在三角形内；也可以通过重心坐标直接得到（Möller Trumbore Algorithm）；<br />
+对于方程</p>
+<div class="arithmatex">\[O+tD=(1-b_1-b_2)P_0+b_1P_1+b_2P_2\]</div>
+<p>定义</p>
+<div class="arithmatex">\[
+\begin{align}
+E_1=P_1-P_0\\
+E_2=P_2-P_0\\
+S=O-P_0\\
+S_1=D\times E_2\\
+S_2=S\times E_1\\
+\end{align}
+\]</div>
+<p>有解</p>
+<div class="arithmatex">\[\begin{bmatrix}
+t\\
+b_1\\
+b_2
+\end{bmatrix}=
+{\frac 1{S_1\cdot E_1}}
+\begin{bmatrix}
+S_2\cdot E_2\\
+S_1\cdot S\\
+S_2\cdot D
+\end{bmatrix}\]</div>
+<p>光线和三角形所在平面相交需要满足 <span class="arithmatex">\(t&gt;0\)</span><br />
+交点在三角形内需要满足<span class="arithmatex">\(b_1\ge0,\ b_2\ge0,\ b_1+b_2\le 1\)</span></p>
+<div class="admonition bug">
+<p class="admonition-title">格子面上出现蓝色像素点</p>
+<figure markdown="span">
+</div>
+<p><img alt="Pasted image 20260121212431.png" src="../Pasted%20image%2020260121212431.png" width="500" /></p>
+<p></figure markdown><br />
+    可以看到图片中蓝色像素点都位于平面的对角线上，这也印证了出错原因。</p>
+<pre><code>这时因为，当相交判定的条件为$b_1&gt;0,\ b_2&gt;0,\ b_1+b_2&lt; 1$，光线与三角形面的边相交时会被认为与三角面没有交点，所以显示出了背景颜色（即蓝色）
+</code></pre>
+<p>修复BUG之后得到了正确的结果</p>
+<figure><br />
+<img alt="binary1.png" src="../binary1.png" width="500" /><br />
+<br />
+</figure>
+<p>第一次实现代码为<br />
+<div class="highlight"><pre><span></span><code><span class="kt">bool</span><span class="w"> </span><span class="nf">rayTriangleIntersect</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Vector3f</span><span class="o">&amp;</span><span class="w"> </span><span class="n">v0</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Vector3f</span><span class="o">&amp;</span><span class="w"> </span><span class="n">v1</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Vector3f</span><span class="o">&amp;</span><span class="w"> </span><span class="n">v2</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Vector3f</span><span class="o">&amp;</span><span class="w"> </span><span class="n">orig</span><span class="p">,</span>
+<span class="w">                          </span><span class="k">const</span><span class="w"> </span><span class="n">Vector3f</span><span class="o">&amp;</span><span class="w"> </span><span class="n">dir</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">tnear</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">v</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// TODO: Implement this function that tests whether the triangle</span>
+<span class="w">    </span><span class="c1">// that&#39;s specified bt v0, v1 and v2 intersects with the ray (whose</span>
+<span class="w">    </span><span class="c1">// origin is *orig* and direction is *dir*)</span>
+<span class="w">    </span><span class="c1">// Also don&#39;t forget to update tnear, u and v.</span>
+<span class="w">    </span><span class="n">Vector3f</span><span class="w"> </span><span class="n">e1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Vector3f</span><span class="w"> </span><span class="n">e2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Vector3f</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">orig</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Vector3f</span><span class="w"> </span><span class="n">s1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">crossProduct</span><span class="p">(</span><span class="n">dir</span><span class="p">,</span><span class="w"> </span><span class="n">e2</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Vector3f</span><span class="w"> </span><span class="n">s2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">crossProduct</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">e1</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">denominator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dotProduct</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">e1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">tnear</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dotProduct</span><span class="p">(</span><span class="n">s2</span><span class="p">,</span><span class="w"> </span><span class="n">e2</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">denominator</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dotProduct</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">denominator</span><span class="p">;</span>
+<span class="w">    </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dotProduct</span><span class="p">(</span><span class="n">s2</span><span class="p">,</span><span class="w"> </span><span class="n">dir</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">denominator</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// 判断光线和三角形所在平面是否相交，再判断交点点是否在三角形内</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">tnear</span><span class="o">&gt;</span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">u</span><span class="o">&gt;=</span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">v</span><span class="o">&gt;=</span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">u</span><span class="o">+</span><span class="n">v</span><span class="o">&lt;=</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><br />
+这个代码虽然能够正确运行，但是却有很多风险和缺陷。<br />
+更加规范正确的代码应该像下面这样<br />
+<div class="highlight"><pre><span></span><code><span class="kt">bool</span><span class="w"> </span><span class="nf">rayTriangleIntersect</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Vector3f</span><span class="o">&amp;</span><span class="w"> </span><span class="n">v0</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Vector3f</span><span class="o">&amp;</span><span class="w"> </span><span class="n">v1</span><span class="p">,</span>
+<span class="w">                          </span><span class="k">const</span><span class="w"> </span><span class="n">Vector3f</span><span class="o">&amp;</span><span class="w"> </span><span class="n">v2</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Vector3f</span><span class="o">&amp;</span><span class="w"> </span><span class="n">orig</span><span class="p">,</span>
+<span class="w">                          </span><span class="k">const</span><span class="w"> </span><span class="n">Vector3f</span><span class="o">&amp;</span><span class="w"> </span><span class="n">dir</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">tnear</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">v</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Vector3f</span><span class="w"> </span><span class="n">edge1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Vector3f</span><span class="w"> </span><span class="n">edge2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Vector3f</span><span class="w"> </span><span class="n">pvec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">crossProduct</span><span class="p">(</span><span class="n">dir</span><span class="p">,</span><span class="w"> </span><span class="n">edge2</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">det</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dotProduct</span><span class="p">(</span><span class="n">edge1</span><span class="p">,</span><span class="w"> </span><span class="n">pvec</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// 1. 提前检测：det=0表示射线与三角形平面平行；det&lt;0表示射线从三角形背面入射（单面剔除）</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">det</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">det</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">Vector3f</span><span class="w"> </span><span class="n">tvec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">orig</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dotProduct</span><span class="p">(</span><span class="n">tvec</span><span class="p">,</span><span class="w"> </span><span class="n">pvec</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// 2. 延迟除法：先比较未归一化的u（避免除以det放大误差）</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">u</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">det</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">Vector3f</span><span class="w"> </span><span class="n">qvec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">crossProduct</span><span class="p">(</span><span class="n">tvec</span><span class="p">,</span><span class="w"> </span><span class="n">edge1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dotProduct</span><span class="p">(</span><span class="n">dir</span><span class="p">,</span><span class="w"> </span><span class="n">qvec</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// 3. 同样延迟除法，检查v的边界</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">det</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// 4. 最后统一做除法（仅当所有边界都满足时）</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">invDet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">det</span><span class="p">;</span>
+<span class="w">    </span><span class="n">tnear</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dotProduct</span><span class="p">(</span><span class="n">edge2</span><span class="p">,</span><span class="w"> </span><span class="n">qvec</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">invDet</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="n">invDet</span><span class="p">;</span>
+<span class="w">    </span><span class="n">v</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="n">invDet</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">tnear</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div><br />
+这个版本的代码有如下优势<br />
+- 无除零风险：提前检测<code>det==0</code>(射线平行于三角形平面)，直接返回false，避免后续<code>1/det</code>的除零错误<br />
+- 数值精度更高：遵循“延迟除法”原则，先把未归一化的<code>u/v</code>与<code>det</code>比较，最后统一除以<code>det</code>,避免过早除法放大浮点误差，尤其是当<code>det</code>的绝对值极小的时候。<br />
+- 边界条件完整：<br />
+    - <code>det&lt;0</code>实现背面剔除，只检测射线从三角形正面入射的情况<br />
+    - 提前检测<code>u/v</code>的范围，减少无效运算<br />
+- 逻辑严谨：只有当所有相交条件满足时，才更新<code>tnear/u/v</code>,避免返回无效值。</p>
+<div class="admonition note">
+<p class="admonition-title">三角形的背面</p>
+<p>三角形本身是二维面片，没有天然的正反。但是计算机图形学中有一个约定俗成的规定：三角形的正反由定地点排列顺序(绕序)通过右手定则定义。<br />
+直观判断方法是：右手四指绕<code>v0-&gt;v1-&gt;v2</code>的逆时针方向弯曲，大拇指指向的方向就是法向量<code>n</code>（正面）的方面。<br />
+抽象一点的计算步骤为<br />
+- 步骤 1：给定三角形的三个顶点 <code>v0, v1, v2</code>，按<strong>逆时针顺序</strong>（从三角形 “正面” 看过去）排列；<br />
+- 步骤 2：计算两条边向量 <code>edge1 = v1 - v0</code>、<code>edge2 = v2 - v0</code>；<br />
+- 步骤 3：用<strong>叉乘</strong>计算三角形的法向量 <code>n = crossProduct(edge1, edge2)</code>（叉乘结果的方向由右手定则决定）；<br />
+- 这个法向量 <code>n</code> 指向的一侧，就是三角形的<strong>正面</strong>；法向量的反方向（<code>-n</code>）指向的一侧，就是三角形的<strong>背面</strong>。<br />
+<figure markdown="span"></p>
+</div>
+<p><img alt="Pasted image 20260122143211.png" src="../Pasted%20image%2020260122143211.png" width="500" /></p>
+</figure markdown>
+<p>这里进行背面剔除用的表达式是<code>det &lt; 0</code><br />
+这里的 </p>
+<div class="arithmatex">\[det=(dir\times edge2)\cdot edge1=dir\cdot (edge2\times edge1)=dir\cdot (-n)\]</div>
+<p>所以当<code>det &lt; 0</code>时，说明光线的方向向量 <span class="arithmatex">\(dir\)</span> 与 <span class="arithmatex">\(n\)</span> 的方向一致，进而说明光线从三角面的背面穿过。</p>
+<div class="admonition note">
+<p class="admonition-title">三矢量的混合积</p>
+<p><a href="https://zhuanlan.zhihu.com/p/35395605">三矢量的混合积 - 知乎</a><br />
+运算 <span class="arithmatex">\(( \boldsymbol{\mathbf{A}}   \boldsymbol\times   \boldsymbol{\mathbf{B}} )  \boldsymbol\cdot   \boldsymbol{\mathbf{C}}\)</span>被称为矢量 <span class="arithmatex">\(\boldsymbol{\mathbf{A}} ,  \boldsymbol{\mathbf{B}} ,  \boldsymbol{\mathbf{C}}\)</span> 的混合积<br />
+混合积满足</p>
+<div class="arithmatex">\[\begin{align}&amp;( \boldsymbol{\mathbf{A}}   \boldsymbol\times   \boldsymbol{\mathbf{B}} )  \boldsymbol\cdot   \boldsymbol{\mathbf{C}}  = ( \boldsymbol{\mathbf{B}}   \boldsymbol\times   \boldsymbol{\mathbf{C}} )  \boldsymbol\cdot   \boldsymbol{\mathbf{A}}  = ( \boldsymbol{\mathbf{C}}   \boldsymbol\times   \boldsymbol{\mathbf{A}} )  \boldsymbol\cdot   \boldsymbol{\mathbf{B}}\\\end{align}\]</div>
+<p>记忆方法在变换乘积符号的过程中，三个矢量的轮盘相对顺序不变<br />
+<img alt="Pasted image 20260122144338.png" src="../Pasted%20image%2020260122144338.png" /></p>
+</div>
+<h2 id="4">4 最终结果</h2>
+<figure><br />
+<img alt="binary2.png" src="../binary2.png" width="500" /><br />
+<br />
+</figure>
+<h2 id="5-cpp">5 Cpp特性</h2>
+<h3 id="51-make_unique">5.1 <code>make_unique</code></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// 新建了一个球</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">sph1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Sphere</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Vector3f</span><span class="p">(</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">-12</span><span class="p">),</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+</code></pre></div>
+<p><code>std::unique_ptr&lt;Sphere&gt;</code> 表示一种数据类型，叫做独占式智能指针。<br />
+C++11 引入的<strong>独占式智能指针</strong>，负责自动管理动态分配的<code>Sphere</code>对象内存（无需手动<code>delete</code>，超出作用域时自动释放，避免内存泄漏），且同一时间只能有一个<code>unique_ptr</code>指向该对象（独占所有权）。这里<code>Sphere</code>是一个自定义类型。</p>
+<p><code>std::make_unique&lt;Sphere&gt;(...)</code><br />
+C++14 新增的<strong>安全创建智能指针的函数</strong>（替代直接<code>new Sphere(...)</code>），作用是：<br />
+- 动态分配（<code>new</code>）一个<code>Sphere</code>对象；<br />
+- 自动将其包装为<code>std::unique_ptr&lt;Sphere&gt;</code>并返回；<br />
+- 避免 “内存泄漏风险”（比如异常场景下的未释放内存）。</p>
+<h3 id="52">5.2 成员初始化</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Sphere</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Vector3f</span><span class="o">&amp;</span><span class="w"> </span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">r</span><span class="p">)</span>
+<span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">center</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="n">radius</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="n">radius2</span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">r</span><span class="p">)</span>
+<span class="p">{}</span>
+</code></pre></div><br />
+成员初始化列表（冒号后面的部分）的作用是：在构造函数体执行前，直接初始化类的成员变量（比在构造函数体内赋值更高效，尤其对于自定义类型如 <code>Vector3f</code>）；</p>
+<h3 id="53-stdmove">5.3 <code>std::move()</code></h3>
+<p><code>std::move</code> 并不是字面意义上的 “移动” 数据，它的核心作用是：<strong>将一个「左值」强制转换为「右值引用（rvalue reference）」</strong>，让编译器有机会调用「移动构造函数 / 移动赋值运算符」，从而实现资源的 “所有权转移”（而非拷贝），以此提升程序性能。</p>
+<ul>
+<li><strong>左值</strong>：有名字、能取地址的变量（比如 <code>int a = 10;</code> 中的 <code>a</code>）；</li>
+<li><strong>右值</strong>：没有名字、不能取地址的临时对象（比如 <code>10</code>、<code>std::string("hello")</code>）；</li>
+<li>右值引用（<code>T&amp;&amp;</code>）：专门绑定右值的引用类型，是实现移动语义的基础。</li>
+</ul>
+<p>常规的 “拷贝” 操作对大对象（比如 <code>std::vector</code>、<code>std::string</code>）代价极高 —— 需要复制整块内存；而 “移动” 操作只需要转移资源的所有权（比如修改指针指向），几乎无开销。</p>
+<p>但默认情况下，有名字的变量是左值，编译器会优先调用拷贝构造 / 赋值。<code>std::move</code> 的作用就是 “骗” 编译器：把这个左值当成右值处理，启用移动语义。</p>
+<h3 id="54-stdoptional">5.4 <code>std::optional&lt;&gt;</code></h3>
+<p><code>std::optional</code>：C++17 标准库提供的<strong>可选值容器</strong>（头文件 <code>&lt;optional&gt;</code>），用于表示 “可能存在、也可能不存在” 的值（解决传统用 <code>nullptr</code>/ 特殊值表示 “无值” 的问题，类型更安全）。<br />
+常用于 “操作可能失败 / 无结果” 的场景</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.top", "navigation.tabs", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1791 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../19%20Cameras%EF%BC%8CLenses%20and%20Light%20Fields/">
+      
+      
+        <link rel="next" href="../21%20Animation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>L20 Color and Perception - SarrLight's Notebook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-physical-basic-of-color" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="SarrLight&#39;s Notebook" class="md-header__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SarrLight's Notebook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              L20 Color and Perception
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" class="md-tabs__link">
+          
+  
+  
+  课内学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../03-04%20Transform/" class="md-tabs__link">
+          
+  
+  
+  游戏开发
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="SarrLight&#39;s Notebook" class="md-nav__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+
+    </a>
+    SarrLight's Notebook
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课内学习
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    课内学习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    计算机组成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    游戏开发
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    游戏开发
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GAMES101
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    GAMES101
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-04%20Transform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L3-L4:Transform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-06%20Rasterization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L5-L6:Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-09%20Shading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L7-L9:Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-12%20Geometry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L10-L12:Geometry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-16%20Ray%20Tracing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L13-L16:Ray Tracing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17%20Materials%20and%20Appearances/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L17 Materials and Appearances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18%20Advanced%20Topics%20in%20Rendering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L18 Advanced Topics in Rendering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19%20Cameras%EF%BC%8CLenses%20and%20Light%20Fields/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L19 Cameras，Lenses and Light Fields
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L20 Color and Perception
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L20 Color and Perception
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-physical-basic-of-color" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 Physical Basic of Color
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 Physical Basic of Color">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-spectral-power-distribution-spd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 谱功率密度(Spectral Power Distribution, SPD)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-biological-basic-of-color" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 Biological Basic of Color
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 Biological Basic of Color">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-rodscones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 视杆细胞（Rods）与视锥细胞（Cones）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-the-human-visual-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 人类视觉系统(The Human Visual System)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-metamerism" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 同色异谱(Metamerism)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-color-reproductionmatching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 颜色重建/匹配(Color Reproduction/Matching)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 颜色重建/匹配(Color Reproduction/Matching)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-additive-color" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 可加性的颜色(Additive Color)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-cie-rgb-color" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 CIE RGB Color
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-gamutcolor-spaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 色域(Gamut)和色彩空间(Color Spaces)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4 色域(Gamut)和色彩空间(Color Spaces)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-rgbstandardized-rgb-srgb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 标准RGB(Standardized RGB, sRGB)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-a-universal-color-spacecie-xyz" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 A Universal Color Space:CIE XYZ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-separating-luminance-chromaticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 可视化 (通过Separating Luminance, Chromaticity）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-hsv-color-spacehue-saturation-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 HSV Color Space(Hue-Saturation-Value)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-cielab-space-aka-lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 CIELAB Space (AKA L*a*b*)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-cmyk-a-subtractive-color-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 CMYK: A Subtractive Color Space
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21%20Animation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L21 Animation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22%20Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L22 Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A1-%E7%94%BB%E4%B8%89%E8%A7%92%E5%BD%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业1-画三角形
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A2-Rasterization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业2-Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A3-Shading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业3-Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A4-Bazier%20Curve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业4-BazierCurve
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A5-%E5%85%89%E7%BA%BF%E4%B8%8E%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9B%B8%E4%BA%A4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业5-光线与三角形相交
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A6-%E5%8A%A0%E9%80%9F%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业6-加速结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A7-%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业7-光线追踪
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A8-%E8%B4%A8%E7%82%B9%E5%BC%B9%E7%B0%A7%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业8-质点弹簧系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UTILITIES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UTILITIES
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-physical-basic-of-color" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 Physical Basic of Color
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 Physical Basic of Color">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-spectral-power-distribution-spd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 谱功率密度(Spectral Power Distribution, SPD)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-biological-basic-of-color" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 Biological Basic of Color
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 Biological Basic of Color">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-rodscones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 视杆细胞（Rods）与视锥细胞（Cones）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-the-human-visual-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 人类视觉系统(The Human Visual System)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-metamerism" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 同色异谱(Metamerism)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-color-reproductionmatching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 颜色重建/匹配(Color Reproduction/Matching)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 颜色重建/匹配(Color Reproduction/Matching)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-additive-color" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 可加性的颜色(Additive Color)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-cie-rgb-color" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 CIE RGB Color
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-gamutcolor-spaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 色域(Gamut)和色彩空间(Color Spaces)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4 色域(Gamut)和色彩空间(Color Spaces)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-rgbstandardized-rgb-srgb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 标准RGB(Standardized RGB, sRGB)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-a-universal-color-spacecie-xyz" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 A Universal Color Space:CIE XYZ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-separating-luminance-chromaticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 可视化 (通过Separating Luminance, Chromaticity）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-hsv-color-spacehue-saturation-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 HSV Color Space(Hue-Saturation-Value)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-cielab-space-aka-lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 CIELAB Space (AKA L*a*b*)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-cmyk-a-subtractive-color-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 CMYK: A Subtractive Color Space
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>L20 Color and Perception</h1>
+
+<p>Aesthetics(美学)</p>
+<h2 id="1-physical-basic-of-color">1 Physical Basic of Color</h2>
+<figure><br />
+<img alt="Pasted image 20260129170445.png" src="../Pasted%20image%2020260129170445.png" width="500" /><br />
+<br />
+</figure>
+<h3 id="11-spectral-power-distribution-spd">1.1 谱功率密度(Spectral Power Distribution, SPD)</h3>
+<p>谱功率密度(Spectral Power Distribution, SPD)，反映了在不同频率(或波长)上的功率。SPD具有线性的性质，可以做加法。</p>
+<figure><br />
+<img alt="Pasted image 20260129170636.png" src="../Pasted%20image%2020260129170636.png" width="500" /><br />
+<br />
+</figure>
+<h2 id="2-biological-basic-of-color">2 Biological Basic of Color</h2>
+<p>颜色是人的感知的现象(a phenomenon of human perception)，它并不是光的自然属性(a universal property of light)</p>
+<figure><br />
+<img alt="Pasted image 20260129171114.png" src="../Pasted%20image%2020260129171114.png" width="500" /><br />
+<br />
+</figure>
+<h3 id="21-rodscones">2.1 视杆细胞（Rods）与视锥细胞（Cones）</h3>
+<p>视网膜上有感光细胞</p>
+<figure><br />
+<img alt="Pasted image 20260129171320.png" src="../Pasted%20image%2020260129171320.png" width="350" /><br />
+<br />
+</figure>
+<p>上面有视杆细胞(Rod cells)，和视锥细胞(Cone cells)。</p>
+<p>视杆细胞（Rods）<br />
+是极低光环境（“暗视觉” 条件，如昏暗的月光）下的主要感光细胞<br />
+- 人眼约有 1.2 亿个视杆细胞<br />
+- 只能感知明暗层次，<strong>无法感知颜色</strong></p>
+<p>视锥细胞（Cones）<br />
+是正常光照环境（“明视觉” 条件）下的主要感光细胞<br />
+- 人眼约有 600-700 万个视锥细胞<br />
+- 分为三种类型，每种对不同波长的光有不同的敏感度<br />
+- 负责产生<strong>色觉</strong></p>
+<figure><br />
+<img alt="Pasted image 20260129214157.png" src="../Pasted%20image%2020260129214157.png" width="500" /><br />
+<br />
+</figure>
+<p>视锥细胞分为S、M、L三种类型，不同类型的视锥细胞对于不同的波长的光拥有不同的感应(响应)能力。</p>
+<figure><br />
+<img alt="Pasted image 20260129214408.png" src="../Pasted%20image%2020260129214408.png" width="350" /><br />
+<br />
+</figure>
+<p>不同的人视网膜中三种视锥细胞的分布不同。</p>
+<p>现在我们有三种视锥细胞(S,M,L cone cells)，每一种都有不同光线反映曲线(spectral response curve)</p>
+<figure><br />
+<img alt="Pasted image 20260129215002.png" src="../Pasted%20image%2020260129215002.png" width="350" /><br />
+<br />
+</figure>
+<div class="arithmatex">\[
+\begin{align}
+S = \int r_S(\lambda) s(\lambda) \, d\lambda \\
+M = \int r_M(\lambda) s(\lambda) \, d\lambda \\
+L = \int r_L(\lambda) s(\lambda) \, d\lambda
+\end{align}
+\]</div>
+<h3 id="22-the-human-visual-system">2.2 人类视觉系统(The Human Visual System)</h3>
+<figure><br />
+<img alt="Pasted image 20260129215158.png" src="../Pasted%20image%2020260129215158.png" width="500" /><br />
+<br />
+</figure>
+<p>人眼不会测量光的每个波长，大脑也不会接收关于每一个波长的信息(does not receive information about each wavelength of light)<br />
+相反，眼睛 “感知” 到的只有<strong>三种响应值（S、M、L）</strong>，这也是大脑能获取的全部视觉信息</p>
+<h3 id="23-metamerism">2.3 同色异谱(Metamerism)</h3>
+<p>同色异谱色（Metamers）<br />
+同色异谱色是指两种<strong>光谱组成完全不同</strong>（无限维信息）的光线，却能在人眼中产生相同的（S、M、L）三维视锥细胞响应。(two different spectra (∞-dim) that project to the same (S,M,L) (3-dim) response.)<br />
+- 对人类而言，它们看起来是完全相同的颜色<br />
+同色异谱现象的存在是现代颜色重现技术的核心基础<br />
+- 无需重现真实场景的完整光谱，只需匹配人眼的三色响应即可<br />
+- 示例：仅用红、绿、蓝三种颜色像素的显示器，就能通过同色异谱色重现真实场景的感知颜色。即显示器发出的光和原本的光并没有完全相同的光谱，但是却能在人眼中激发相同的信号。</p>
+<figure><br />
+<img alt="Pasted image 20260129215912.png" src="../Pasted%20image%2020260129215912.png" width="500" /><br />
+<br />
+</figure>
+<h2 id="3-color-reproductionmatching">3 颜色重建/匹配(Color Reproduction/Matching)</h2>
+<h3 id="31-additive-color">3.1 可加性的颜色(Additive Color)</h3>
+<p>给定一组基色光（Primary Lights），每种光都有其独特的光谱分布(spectral distribution)（例如 RGB 显示器的像素）：</p>
+<div class="arithmatex">\[s_R(\lambda),\ s_G(\lambda),\ s_B(\lambda)\]</div>
+<p>调整这些基色光的亮度并将它们相加混合：</p>
+<div class="arithmatex">\[R\ s_R(\lambda) + G\ s_G(\lambda) + B\ s_B(\lambda)\]</div>
+<p>最终的颜色由标量值（亮度权重）描述：</p>
+<div class="arithmatex">\[R,\ G,\ B\]</div>
+<p>以此我们可以通过实验，来测定一种颜色的分量值，但是在某些情况下，这些分量的值可能是负数，则在基于加色的实验中是不可能实现的。这时我们可以在目标颜色上加灯光，利用加减运算的特点来实现对负数分量的测量。</p>
+<figure><br />
+<img alt="Pasted image 20260129220823.png" src="../Pasted%20image%2020260129220823.png" width="500" /><br />
+<br />
+</figure>
+<h3 id="32-cie-rgb-color">3.2 CIE RGB Color</h3>
+<p>使用三种波长单一的单色光。</p>
+<figure><br />
+<img alt="Pasted image 20260129220945.png" src="../Pasted%20image%2020260129220945.png" width="500" /><br />
+<br />
+</figure>
+<p>CIE(一个组织)通过实验测得了不同波长的光在这三种单色光上的分量(<span class="arithmatex">\(R,G,B\)</span>)</p>
+<figure><br />
+<img alt="Pasted image 20260129221040.png" src="../Pasted%20image%2020260129221040.png" width="350" /><br />
+<br />
+</figure>
+<p>对于任意光谱 <span class="arithmatex">\(s(\lambda)\)</span>（spectrum），其被感知的颜色(perceived color)可以通过以下缩放 CIE RGB 基色(scaling the CIE RGB primaries)的公式来匹配(matched)：</p>
+<div class="arithmatex">\[
+\begin{align}
+R_{\text{CIE RGB}} = \int_\lambda s(\lambda) \bar{r}(\lambda) \, d\lambda \\
+G_{\text{CIE RGB}} = \int_\lambda s(\lambda) \bar{g}(\lambda) \, d\lambda \\
+B_{\text{CIE RGB}} = \int_\lambda s(\lambda) \bar{b}(\lambda) \, d\lambda
+\end{align}
+\]</div>
+<h2 id="4-gamutcolor-spaces">4 色域(Gamut)和色彩空间(Color Spaces)</h2>
+<h3 id="41-rgbstandardized-rgb-srgb">4.1 标准RGB(Standardized RGB, sRGB)</h3>
+<p>标准RGB(Standardized RGB, sRGB)<br />
+- 将特定显示器的 RGB 色彩方案( particular monitor RGB standard)确立为统一标准<br />
+- 其他色彩设备（如打印机、投影仪）通过校准(calibration)来模拟该标准显示器的色彩表现<br />
+- 目前在消费级领域被广泛采用(widely adopted today)<br />
+- 色域（gamut, 可显示的颜色范围）有限</p>
+<h3 id="42-a-universal-color-spacecie-xyz">4.2 A Universal Color Space:CIE XYZ</h3>
+<figure><br />
+<img alt="Pasted image 20260129222213.png" src="../Pasted%20image%2020260129222213.png" width="350" /><br />
+<br />
+</figure>
+<p>一组虚构的标准色基色 <span class="arithmatex">\(X, Y, Z\)</span><br />
+- 具有这些匹配函数(matching functions)的基色(Primary colors)在物理上<strong>不存在</strong><br />
+- Y 分量代表亮度（Luminance），与颜色无关（亮度）<br />
+设计目标<br />
+- 颜色匹配函数始终为<strong>正值</strong>(Matching functions are<br />
+strictly positive)<br />
+- 能够覆盖所有可观测的颜色(Span all observable colors)</p>
+<h3 id="43-separating-luminance-chromaticity">4.3 可视化 (通过Separating Luminance, Chromaticity）</h3>
+<p><span class="arithmatex">\(X, Y, Z\)</span>是三维的，我们想在一个平面图把它们显示出来的话，可以先做一个归一化，让它们的和为1，相当于在三维空间中做了一个截面。<br />
+亮度(Luminance)：<span class="arithmatex">\(Y\)</span><br />
+色度(Chromaticity)：<span class="arithmatex">\(x, y, z\)</span>，定义为（色度）</p>
+<div class="arithmatex">\[
+\begin{align}
+x = \frac{X}{X+Y+Z} \\
+y = \frac{Y}{X+Y+Z} \\
+z = \frac{Z}{X+Y+Z}
+\end{align}
+\]</div>
+<p>由于 <span class="arithmatex">\(x + y + z = 1\)</span>，我们只需要记录三个值中的两个即可<br />
+通常选择 <span class="arithmatex">\(x\)</span> 和 <span class="arithmatex">\(y\)</span>，从而在特定亮度 <span class="arithmatex">\(Y\)</span> 下，用 <span class="arithmatex">\((x, y)\)</span> 坐标来表示颜色<br />
+于是我们得到了 CIE 1931 色度图，如下图所示：<br />
+弯曲的边界(The curved boundary)<br />
+- 被称为光谱轨迹（spectral locus）<br />
+- 对应单色光（monochromatic light）（每个点代表单一波长的纯颜色）<br />
+边界内的任何颜色纯度都更低(less pure)<br />
+- 即：由多种颜色混合(mixed)而成</p>
+<figure><br />
+<img alt="Pasted image 20260129223239.png" src="../Pasted%20image%2020260129223239.png" width="400" /><br />
+<br />
+</figure>
+<p>色域（Gamut）定义<br />
+色域是由一组 色基（color primaries） 所生成的所有色度的集合。</p>
+<p>颜色空间与色域的关系<br />
+不同的颜色空间代表不同的颜色范围，因此它们具有不同的色域，即：在色度图上覆盖的区域也不同。</p>
+<figure><br />
+<img alt="Pasted image 20260129223434.png" src="../Pasted%20image%2020260129223434.png" width="500" /><br />
+<br />
+</figure>
+<h3 id="44-hsv-color-spacehue-saturation-value">4.4 HSV Color Space(Hue-Saturation-Value)</h3>
+<ul>
+<li>坐标轴对应颜色的<strong>艺术特征</strong>（如色相、饱和度、亮度）</li>
+<li>这种颜色表示方式广泛应用于各类设计软件的 ** 颜色选择器（color picker）** 中</li>
+</ul>
+<figure><br />
+<img alt="Pasted image 20260129223956.png" src="../Pasted%20image%2020260129223956.png" width="500" /><br />
+<br />
+</figure>
+<p>色调（Hue）<br />
+- 颜色的 “种类”，与亮度、饱和度等属性无关<br />
+- 色度学对应：<strong>主波长（dominant wavelength）</strong>（决定颜色的基础色调）<br />
+- 艺术家视角：选定的颜料本色（如纯红、纯蓝）<br />
+饱和度（Saturation）<br />
+- 颜色的 “鲜艳程度”<br />
+- 色度学对应：<strong>纯度（purity）</strong>（颜色中混入的白光比例，比例越低越鲜艳）<br />
+- 艺术家视角：颜料中纯色的占比（占比越高，颜色越饱和）<br />
+亮度（Lightness / Value）<br />
+- 颜色的 “整体明暗程度”<br />
+- 色度学对应：<strong>亮度（luminance）</strong>（人眼感知的光强度）<br />
+- 艺术家视角：加入白色使颜色变浅（tints），加入黑色使颜色变深（shades）</p>
+<h3 id="45-cielab-space-aka-lab">4.5 CIELAB Space (AKA L*a*b*)</h3>
+<figure><br />
+<img alt="Pasted image 20260129224455.png" src="../Pasted%20image%2020260129224455.png" width="300" /><br />
+<br />
+</figure>
+<p>一种追求感知均匀性(strives for perceptual<br />
+uniformity)的常用颜色空间，每一个轴的两端表示两种互补的颜色<br />
+L<em>：亮度（Lightness），表示颜色的明暗程度<br />
+a</em> 和 b<em>：颜色对立轴（color-opponent pairs）<br />
+- a</em>：红 - 绿轴（正值代表红色，负值代表绿色）<br />
+- b*：蓝 - 黄轴（正值代表黄色，负值代表蓝色）</p>
+<p>CIE LAB 颜色空间的维度设计具有坚实的神经学依据<br />
+大脑在早期处理颜色信息时，似乎是通过三个<strong>对立轴</strong>进行编码的：<br />
+- 白 - 黑轴、红 - 绿轴、黄 - 蓝轴<br />
+其中，白 - 黑轴对应亮度（Lightness）；另外两个轴共同决定色调（Hue）与饱和度（Saturation）**</p>
+<p>一条证据是：我们可以感知浅绿、深绿、黄绿或蓝绿，但无法感知 “红绿色”（这在直觉上就不成立）<br />
+- 因此，红色与绿色是一对<strong>对立色</strong><br />
+另一条证据是：后像（afterimage）现象<br />
+这个现象利用了人的视觉暂留能力，在长时间看到一种颜色，之后突然看向白色，在这一瞬间能看到互补色。</p>
+<div class="admonition info">
+<p class="admonition-title"> 颜色是一种感知</p>
+<p>下图中A和B的颜色实际上是相同的<br />
+<figure markdown="span"></p>
+</div>
+<p><img alt="Pasted image 20260129225540.png" src="../Pasted%20image%2020260129225540.png" width="300" /></p>
+<p></figure markdown><br />
+    下图中两个叉的颜色实际上是相同的<br />
+    <figure markdown="span"><br />
+<img alt="Pasted image 20260129225639.png" src="../Pasted%20image%2020260129225639.png" width="300" /></p>
+</figure markdown>
+<h3 id="46-cmyk-a-subtractive-color-space">4.6 CMYK: A Subtractive Color Space</h3>
+<figure><br />
+<img alt="Pasted image 20260129225908.png" src="../Pasted%20image%2020260129225908.png" width="200" /><br />
+<br />
+</figure>
+<p>减色模型（Subtractive color model）<br />
+- 混合的颜色越多，最终颜色就越暗<br />
+- 由青色（Cyan）、品红色（Magenta）、黄色（Yellow）和黑色（Key，即 K）组成（CMYK）<br />
+- 广泛应用于印刷行业<br />
+问题：<br />
+- 如果理论上混合青色（C）、品红色（M）和黄色（Y）可以得到黑色（K），为什么印刷中还需要单独的黑色（K）油墨？<br />
+    答案是为了节约成本</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.top", "navigation.tabs", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

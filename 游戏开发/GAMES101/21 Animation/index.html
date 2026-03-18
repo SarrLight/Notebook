@@ -1,0 +1,1911 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../20%20Color%20and%20Perception/">
+      
+      
+        <link rel="next" href="../22%20Simulation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>L21 Animation - SarrLight's Notebook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-animation" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="SarrLight&#39;s Notebook" class="md-header__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SarrLight's Notebook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              L21 Animation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" class="md-tabs__link">
+          
+  
+  
+  课内学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../03-04%20Transform/" class="md-tabs__link">
+          
+  
+  
+  游戏开发
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="SarrLight&#39;s Notebook" class="md-nav__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+
+    </a>
+    SarrLight's Notebook
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课内学习
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    课内学习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    计算机组成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    游戏开发
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    游戏开发
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GAMES101
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    GAMES101
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-04%20Transform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L3-L4:Transform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-06%20Rasterization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L5-L6:Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-09%20Shading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L7-L9:Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-12%20Geometry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L10-L12:Geometry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-16%20Ray%20Tracing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L13-L16:Ray Tracing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17%20Materials%20and%20Appearances/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L17 Materials and Appearances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18%20Advanced%20Topics%20in%20Rendering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L18 Advanced Topics in Rendering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19%20Cameras%EF%BC%8CLenses%20and%20Light%20Fields/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L19 Cameras，Lenses and Light Fields
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20%20Color%20and%20Perception/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L20 Color and Perception
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L21 Animation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L21 Animation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-animation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 动画(Animation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 动画(Animation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 History
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-keyframe-animation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Keyframe Animation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-physical-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 物理模拟(Physical Simulation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 物理模拟(Physical Simulation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-newtons-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Newton's law
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-mass-spring-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 质点弹簧系统(Mass Spring System)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 质点弹簧系统(Mass Spring System)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221-spring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.1 Spring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222-energy-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.2 Energy Loss
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#223-structures-form-springs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.3 由弹簧形成的结构(Structures form Springs)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-particle-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Particle Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-simulated-flocking-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 模拟集群行为(Simulated Flocking Behavior)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-kinematics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 运动学(Kinematics)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 运动学(Kinematics)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-forward-kinematics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Forward Kinematics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-inverse-kinematics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Inverse Kinematics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 角色动画
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4 角色动画">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-rigging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 角色绑定(Rigging)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-blend-shapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 形态键(Blend Shapes)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-motion-capture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 动作捕捉(Motion Capture)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22%20Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L22 Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A1-%E7%94%BB%E4%B8%89%E8%A7%92%E5%BD%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业1-画三角形
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A2-Rasterization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业2-Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A3-Shading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业3-Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A4-Bazier%20Curve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业4-BazierCurve
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A5-%E5%85%89%E7%BA%BF%E4%B8%8E%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9B%B8%E4%BA%A4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业5-光线与三角形相交
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A6-%E5%8A%A0%E9%80%9F%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业6-加速结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A7-%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业7-光线追踪
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A8-%E8%B4%A8%E7%82%B9%E5%BC%B9%E7%B0%A7%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业8-质点弹簧系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UTILITIES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UTILITIES
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-animation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 动画(Animation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 动画(Animation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 History
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-keyframe-animation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Keyframe Animation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-physical-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 物理模拟(Physical Simulation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 物理模拟(Physical Simulation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-newtons-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Newton's law
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-mass-spring-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 质点弹簧系统(Mass Spring System)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 质点弹簧系统(Mass Spring System)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221-spring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.1 Spring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222-energy-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.2 Energy Loss
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#223-structures-form-springs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.3 由弹簧形成的结构(Structures form Springs)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-particle-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Particle Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-simulated-flocking-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 模拟集群行为(Simulated Flocking Behavior)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-kinematics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 运动学(Kinematics)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 运动学(Kinematics)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-forward-kinematics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Forward Kinematics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-inverse-kinematics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Inverse Kinematics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 角色动画
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4 角色动画">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-rigging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 角色绑定(Rigging)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-blend-shapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 形态键(Blend Shapes)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-motion-capture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 动作捕捉(Motion Capture)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>L21 Animation</h1>
+
+<h2 id="1-animation">1 动画(Animation)</h2>
+<p>“赋予事物生命力”<br />
+- 作为一种<strong>沟通工具</strong><br />
+- 美学问题往往优先于技术问题<br />
+建模的延伸<br />
+- 将场景模型表示为<strong>时间的函数</strong>（即加入时间维度，让静态模型动起来）<br />
+输出：连续播放时能产生运动感的图像序列<br />
+- 电影：24 帧 / 秒（fps）<br />
+- 视频（通用标准）：30 帧 / 秒（fps）<br />
+- 虚拟现实（VR）：90 帧 / 秒（fps）</p>
+<h3 id="11-history">1.1 History</h3>
+<p>First Film</p>
+<figure><br />
+<img alt="Pasted image 20260130154253.png" src="../Pasted%20image%2020260130154253.png" width="350" /><br />
+<br />
+</figure>
+<p>第一步手绘剧场版动画(First Hand-Drawn Feature-Length (&gt;40 mins) Animation)(1937)</p>
+<figure><br />
+<img alt="Pasted image 20260130154315.png" src="../Pasted%20image%2020260130154315.png" width="400" /><br />
+<br />
+</figure>
+<p>第一个电子计算机生成的动画(First Digital-Computer-Generated Animation)(1963)</p>
+<figure><br />
+<img alt="Pasted image 20260130154539.png" src="../Pasted%20image%2020260130154539.png" width="300" /><br />
+<br />
+</figure>
+<p>数字恐龙</p>
+<figure><br />
+<img alt="Pasted image 20260130154636.png" src="../Pasted%20image%2020260130154636.png" width="400" /><br />
+<br />
+</figure>
+<p>第一个纯CG(Computer-Generated)电影(First CG Fearute-Length Film)(1995)</p>
+<figure><br />
+<img alt="Pasted image 20260130154722.png" src="../Pasted%20image%2020260130154722.png" width="400" /><br />
+<br />
+</figure>
+<h3 id="12-keyframe-animation">1.2 Keyframe Animation</h3>
+<figure><br />
+<img alt="Pasted image 20260130155011.png" src="../Pasted%20image%2020260130155011.png" width="500" /><br />
+<br />
+</figure>
+<p>关键帧动画制作流程<br />
+- 动画师（如首席动画师）(Animator (e.g. lead animator))负责创建<strong>关键帧（keyframes）</strong><br />
+- 助理（人工或计算机）(Assistant (person or computer))负责生成<strong>中间帧（in-between frames）</strong>，这个过程称为 “补间（tweening）”<br />
+将每一帧(frame)当作一个参数值的向量(Think of each frame as a vector of parameter values)</p>
+<figure><br />
+<img alt="Pasted image 20260130155252.png" src="../Pasted%20image%2020260130155252.png" width="500" /><br />
+<br />
+</figure>
+<p>线性插值通常不够好。回想(recall)一下用于平滑 / 可控制插值(interpolation)的样条曲线(splines)</p>
+<figure><br />
+<img alt="Pasted image 20260130155246.png" src="../Pasted%20image%2020260130155246.png" width="500" /><br />
+<br />
+</figure>
+<h2 id="2-physical-simulation">2 物理模拟(Physical Simulation)</h2>
+<h3 id="21-newtons-law">2.1 Newton's law</h3>
+<div class="arithmatex">\[\boldsymbol{F} = m\boldsymbol{a}\]</div>
+<p><span class="arithmatex">\(\boldsymbol{F}\)</span>: Force（力，矢量）<br />
+<span class="arithmatex">\(m\)</span>: Mass（质量，标量）<br />
+<span class="arithmatex">\(\boldsymbol{a}\)</span>: Acceleration（加速度，矢量）<br />
+通过数值模拟(numerical simulation)生成物体的运动</p>
+<figure><br />
+<img alt="Pasted image 20260130155713.png" src="../Pasted%20image%2020260130155713.png" width="500" /><br />
+<br />
+</figure>
+<h3 id="22-mass-spring-system">2.2 质点弹簧系统(Mass Spring System)</h3>
+<p>质点弹簧系统可以用来对绳子、头发、布料进行模拟</p>
+<figure><br />
+<img alt="Pasted image 20260130160205.png" src="../Pasted%20image%2020260130160205.png" width="400" /><br />
+<br />
+</figure>
+<h4 id="221-spring">2.2.1 Spring</h4>
+<p>理想弹簧模型(Idealized spring)</p>
+<figure><br />
+<img alt="Pasted image 20260130160748.png" src="../Pasted%20image%2020260130160748.png" width="200" /><br />
+<br />
+</figure>
+<div class="arithmatex">\[
+\begin{align}
+\boldsymbol{f}_{a \to b} &amp;= k_s (\boldsymbol{b} - \boldsymbol{a}) \\
+\boldsymbol{f}_{b \to a} &amp;= -\boldsymbol{f}_{a \to b}
+\end{align}
+\]</div>
+<ul>
+<li>力的作用是将两个点（a 和 b）拉向彼此</li>
+<li>力的大小与两点间的位移成正比（符合胡克定律的核心逻辑）</li>
+<li><span class="arithmatex">\(k_s\)</span> 是弹簧系数：代表弹簧的刚度（stiffness）<br />
+核心问题：这种理想弹簧会趋向于收缩到零长度（与现实物理不符）</li>
+</ul>
+<p>具有非零原长的弹簧模型(Spring with non-zero rest length)</p>
+<div class="arithmatex">\[\boldsymbol{f}_{a \to b} = k_s \frac{\boldsymbol{b} - \boldsymbol{a}}{||\boldsymbol{b} - \boldsymbol{a}||} \left( ||\boldsymbol{b} - \boldsymbol{a}|| - l \right)\]</div>
+<ul>
+<li><span class="arithmatex">\(l\)</span>：原长（Rest length）（弹簧自然松弛状态下的长度）<br />
+核心问题：该模型中的弹簧会永远振荡(oscillates forever)（无能量损耗，与现实物理不符）</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">导数的点记法(Dot Notation for Derivatives)</p>
+<p>如果 <span class="arithmatex">\(x\)</span> 是目标点的位置矢量，我们将用<strong>点表示法</strong>来表示速度和加速度：<br />
+<span class="arithmatex">\(\boldsymbol{x} \quad \text{：位置矢量（Position vector）}\)</span><br />
+<span class="arithmatex">\(\dot{\boldsymbol{x}} = \boldsymbol{v} \quad \text{：一阶导数，速度矢量（Velocity vector）}\)</span><br />
+<span class="arithmatex">\(\ddot{\boldsymbol{x}} = \boldsymbol{a} \quad \text{：二阶导数，加速度矢量（Acceleration vector）}\)</span></p>
+</div>
+<h4 id="222-energy-loss">2.2.2 Energy Loss</h4>
+<p>简单运动阻尼（Simple motion damping）</p>
+<figure><br />
+<img alt="Pasted image 20260130161600.png" src="../Pasted%20image%2020260130161600.png" width="200" /><br />
+<br />
+</figure>
+<div class="arithmatex">\[\boldsymbol{f} = -k_d \dot{\boldsymbol{b}}\]</div>
+<ul>
+<li>表现类似运动中的粘性阻力（viscous drag）</li>
+<li>会在速度的方向上减慢运动（阻力方向与速度方向始终相反）</li>
+<li><span class="arithmatex">\(k_d\)</span> 是阻尼系数（damping coefficient）<br />
+这种阻力无法仅表示弹簧内部的阻力。因为它会影响弹簧整体的运动。<br />
+仅阻尼内部由弹簧驱动的运动</li>
+</ul>
+<div class="arithmatex">\[\boldsymbol{f}_b = -k_d \left( \frac{\boldsymbol{b} - \boldsymbol{a}}{||\boldsymbol{b} - \boldsymbol{a}||} \cdot (\dot{\boldsymbol{b}} - \dot{\boldsymbol{a}}) \right) \frac{\boldsymbol{b} - \boldsymbol{a}}{||\boldsymbol{b} - \boldsymbol{a}||}\]</div>
+<figure><br />
+<img alt="Pasted image 20260130161954.png" src="../Pasted%20image%2020260130161954.png" width="500" /><br />
+<br />
+</figure>
+<p><strong>红框部分</strong>：两点的相对速度在a 到 b 方向上的投影（标量值）。这是因为相对速度在垂直于ab方向上的分量并不会导致阻尼(比如圆周运动)。<br />
+核心特点：<br />
+- 仅对弹簧长度变化的运动施加粘性阻力<br />
+- 不会减慢弹簧系统的整体运动（如整个弹簧组的全局平移或旋转）<br />
+- 注意：这只是阻尼的一种特定类型</p>
+<h4 id="223-structures-form-springs">2.2.3 由弹簧形成的结构(Structures form Springs)</h4>
+<p>我们想用弹簧系统来模拟布料.</p>
+<figure><br />
+<img alt="Pasted image 20260130162832.png" src="../Pasted%20image%2020260130162832.png" width="200" /><br />
+<br />
+</figure>
+<p>这种结构无法抵抗剪切力(not resist shearing)。</p>
+<figure><br />
+<img alt="Pasted image 20260130162936.png" src="../Pasted%20image%2020260130162936.png" width="200" /><br />
+<br />
+</figure>
+<p>这种结构能抵抗剪切力(shearing)，但存在各向异性偏差(anisotropic bias)。</p>
+<figure><br />
+<img alt="Pasted image 20260130163031.png" src="../Pasted%20image%2020260130163031.png" width="200" /><br />
+<br />
+</figure>
+<p>这种结构将能抵抗剪切力(shearing)。方向性偏差(directional bias)更小。<br />
+和前面的结构一样，这种结构也无法抵抗平面外弯曲(out-of-plane bending)。</p>
+<figure><br />
+<img alt="Pasted image 20260130163405.png" src="../Pasted%20image%2020260130163405.png" width="200" /><br />
+<br />
+</figure>
+<p>这种结构将抵抗平面外弯曲(out-of-plane bending)，红色弹簧应该弱得多(much weaker)，一种比较通俗的名称叫(skip connection)。</p>
+<p>其他的方法：有限元法（FEM，Finite Element Method）而非弹簧</p>
+<h3 id="23-particle-systems">2.3 Particle Systems</h3>
+<p>粒子系统基础<br />
+- 将动态系统建模为大量粒子的集合<br />
+- 每个粒子的运动由一组物理（或非物理）(physical or non-physical)力定义<br />
+在图形学与游戏中的应用特点<br />
+- 易于理解与实现：原理直观，开发门槛低<br />
+- 可扩展性强：用更少的粒子追求速度，用更多的粒子实现更高复杂度的效果<br />
+面临的挑战<br />
+- 可能需要海量粒子（如模拟流体、烟雾时）<br />
+- 可能需要加速结构（如用于快速查找邻近粒子以计算相互作用）</p>
+<p>粒子系统动画渲染流程<br />
+在动画的每一帧中执行以下步骤：<br />
+- 【按需执行】创建新粒子（补充生命周期结束的粒子，维持效果连续性）<br />
+- 计算每个粒子所受的力（如重力、风力、碰撞力等）<br />
+- 更新每个粒子的位置和速度（通过积分算法实现运动更新）<br />
+- 【按需执行】移除死亡粒子（清理生命周期结束或超出边界的粒子，优化性能）<br />
+- 渲染粒子（将粒子绘制到屏幕上）</p>
+<p>粒子系统的力与碰撞分类</p>
+<p>吸引与排斥力<br />
+- 重力（Gravity）、电磁力（electromagnetism）等<br />
+- 弹簧力（Springs）、推进力（propulsion）等<br />
+阻尼力<br />
+- 摩擦力（Friction）、空气阻力（air drag）、粘性阻力（viscosity）等<br />
+碰撞<br />
+- 墙壁（Walls）、容器（containers）、固定物体（fixed objects）等<br />
+- 动态物体（Dynamic objects）、角色身体部位（character body parts）等</p>
+<div class="admonition note">
+<p class="admonition-title">模拟与渲染分离</p>
+<p>实际应用中是先模拟再渲染，二者互相并不干扰。</p>
+</div>
+<h3 id="24-simulated-flocking-behavior">2.4 模拟集群行为(Simulated Flocking Behavior)</h3>
+<p>作为常微分方程的模拟群体行为(Simulated Flocking as an ODE)<br />
+群体行为模拟（Flocking Behavior Simulation）<br />
+将每只鸟建模为一个粒子（particle），受以下简单力（forces）的驱动：<br />
+- <strong>吸引（attraction）</strong>：向邻近个体（neighbors）的中心位置聚集<br />
+- <strong>排斥（repulsion）</strong>：与过近的邻近个体保持距离，避免碰撞<br />
+- <strong>对齐（alignment）</strong>：与邻近个体的平均运动轨迹（average trajectory）方向保持一致<br />
+通过数值方法（numerically）模拟大规模粒子系统的演化（evolution）。涌现（Emergent）出复杂的全局群体行为，这一现象也见于鱼群、蜂群等生物群体</p>
+<figure><br />
+<img alt="Pasted image 20260130164920.png" src="../Pasted%20image%2020260130164920.png" width="600" /><br />
+<br />
+</figure>
+<h2 id="3-kinematics">3 运动学(Kinematics)</h2>
+<h3 id="31-forward-kinematics">3.1 Forward Kinematics</h3>
+<p>关节骨骼（Articulated skeleton）<br />
+- <strong>拓扑结构（Topology）</strong>：定义骨骼各部件的连接关系（如 “哪块骨骼连接到哪块骨骼”）<br />
+- 关节的几何关系（Geometric relations from joints）：描述骨骼段的长度、初始角度等空间参数<br />
+- 树状层级结构（Tree structure）：骨骼系统通常为无环路的树状结构（如人体骨骼从脊柱延伸至四肢，避免运动冲突）<br />
+关节类型（Joint types）<br />
+- <strong>销关节（Pin joint）</strong>：1 维旋转（1D rotation），仅能在单一平面内转动（如人的肘关节、膝关节）<br />
+- <strong>球关节（Ball joint）</strong>：2 维 / 3 维旋转（2D/3D rotation），可在多个平面内转动（如人的肩关节、髋关节）<br />
+- <strong>棱柱关节（Prismatic joint）</strong>：平移（translation），沿固定轴线做直线运动（如机械臂的伸缩关节、手指的滑动关节）</p>
+<figure><br />
+<img alt="Pasted image 20260130165946.png" src="../Pasted%20image%2020260130165946.png" width="400" /><br />
+<br />
+</figure>
+<p>我们可以通过 <span class="arithmatex">\(\theta_1\)</span> 和 <span class="arithmatex">\(\theta_2\)</span> 等参数计算出end point <span class="arithmatex">\(p\)</span>的位置</p>
+<div class="arithmatex">\[
+\begin{align*}
+p_z &amp;= l_1 \cos(\theta_1) + l_2 \cos(\theta_1 + \theta_2) \\
+p_x &amp;= l_1 \sin(\theta_1) + l_2 \sin(\theta_1 + \theta_2)
+\end{align*}
+\]</div>
+<figure><br />
+<img alt="Pasted image 20260130170833.png" src="../Pasted%20image%2020260130170833.png" width="400" /><br />
+<br />
+</figure>
+<p>优缺点(Kinematics Pros and Cons)<br />
+优点（Strengths）<br />
+- <strong>直接控制（Direct control）</strong> 便捷：动画师可以直接调整关节角度或关键帧，精准控制角色的每一个动作姿态。<br />
+- <strong>实现（Implementation）</strong> 简单直接：技术门槛低，无需复杂的物理引擎或反向运动学求解器，开发与制作流程清晰。<br />
+缺点（Weaknesses）<br />
+- 动画效果可能与 <strong>物理（physics）</strong> 规律不符：纯手工调整的动作可能出现违反物理直觉的效果（如角色跳跃时的重力感不足、肢体运动过于僵硬）。<br />
+- 对 <strong>动画师（artists）</strong> 来说耗时费力：需要逐帧或逐关键帧调整角色姿态，制作复杂动作（如舞蹈、打斗）时工作量极大，且难以保证动作的连贯性与自然性。</p>
+<h3 id="32-inverse-kinematics">3.2 Inverse Kinematics</h3>
+<p>逆运动学的手要问题是计算复杂。即使是只有两个关节的计算公式就已经非常复杂。</p>
+<div class="arithmatex">\[
+\begin{align*}
+\theta_2 &amp;= \cos^{-1}\left( \frac{p_z^2 + p_x^2 - l_1^2 - l_2^2}{2 l_1 l_2} \right) \\
+\theta_1 &amp;= \frac{-p_z l_2 \sin(\theta_2) + p_x \left( l_1 + l_2 \cos(\theta_2) \right)}{p_x l_2 \sin(\theta_2) + p_z \left( l_1 + l_2 \cos(\theta_2) \right)}
+\end{align*}
+\]</div>
+<p>除此之外，还存在多解、无解的问题。</p>
+<figure><br />
+<img alt="Pasted image 20260130172205.png" src="../Pasted%20image%2020260130172205.png" width="500" /><br />
+<br />
+</figure>
+<p>通用 N 连杆反向运动学（IK, Inverse Kinematics）问题的数值解法<br />
+- <strong>选择初始配置（Choose an initial configuration）</strong>：为所有关节设定初始角度，作为迭代优化的起点（通常可使用当前关节状态或自然姿态）。<br />
+- <strong>定义误差度量（Define an error metric）</strong>：例如目标位置（goal）与当前末端位置（current position）的距离平方，用于量化末端点与目标的偏差程度。<br />
+- <strong>计算误差关于配置的梯度（Compute gradient of error as function of configuration）</strong>：分析每个关节角度变化对误差的影响，得到误差的梯度方向（核心是计算雅可比矩阵（Jacobian Matrix））。<br />
+- <strong>应用梯度下降（或牛顿法等优化算法）（Apply gradient descent (or Newton’s method, or other optimization procedure)）</strong>：沿梯度的反方向迭代调整关节角度，逐步减小误差，直到末端点足够接近目标位置。</p>
+<h2 id="4">4 角色动画</h2>
+<h3 id="41-rigging">4.1 角色绑定(Rigging)</h3>
+<p>角色绑定（Rigging）是为角色创建的一套高级控制（higher level controls）系统，可让动画师更快速、直观地修改角色的姿态（pose）、形变（deformations）、表情（expression）等。<br />
+核心特点（Important）<br />
+- 像木偶上的提线（strings on a puppet）：控制逻辑类似木偶提线，通过上层控制驱动底层骨骼与形变，无需直接调整每个关节。<br />
+- 覆盖所有有意义的角色变化（Captures all meaningful character changes）<br />
+- 因角色而异（Varies from character to character）<br />
+ 制作成本高的原因（Expensive to create）<br />
+- 依赖大量人工操作（Manual effort）<br />
+- 要求兼具艺术与技术能力（Requires both artistic and technical training）</p>
+<figure><br />
+<img alt="Pasted image 20260130173057.png" src="../Pasted%20image%2020260130173057.png" width="300" /><br />
+<br />
+</figure>
+<h3 id="42-blend-shapes">4.2 形态键(Blend Shapes)</h3>
+<p>融合变形（Blend Shape / Morph Target）<br />
+不依赖骨骼（skeleton），直接在不同表面(surfaces)之间进行插值。比如建模一系列面部表情：<br />
+- 最简单的方案：对顶点位置进行线性组合（linear combination）<br />
+- 使用样条曲线（Spline）来控制权重随时间的变化</p>
+<h3 id="43-motion-capture">4.3 动作捕捉(Motion Capture)</h3>
+<p>数据驱动式动画序列生成（Data-driven approach to creating animation sequences）<br />
+- 记录现实世界中的动作表演（Record real-world performances）：例如让演员执行目标动作（如跑步、打斗、表情变化）。<br />
+- 从采集的数据中提取随时间变化的姿态（Extract pose as a function of time from the data collected）</p>
+<p>优点（Strengths）<br />
+- 可快速捕捉大量真实数据（Can capture large amounts of real data quickly）<br />
+- 真实度极高（Realism can be high）<br />
+缺点（Weaknesses）<br />
+- 设备与场景搭建复杂且成本高昂（Complex and costly set-ups）<br />
+- 捕捉的动画可能不符合艺术需求，需要二次修改（Captured animation may not meet artistic needs, requiring alterations）</p>
+<figure><br />
+<img alt="Pasted image 20260130173722.png" src="../Pasted%20image%2020260130173722.png" width="500" /><br />
+<br />
+</figure>
+<p>动捕设备可能通过光学(即视觉)、磁场、机械等方式来采集运动数据。<br />
+最一般的方法就是再运动的人体贴上小球，通过相机甚至更高级的设备记录这些小球的运动信息。<br />
+《阿凡达》是电影史上的一块里程碑，一部分是因为它最先使用了面部动捕。</p>
+<figure><br />
+<img alt="Pasted image 20260130174246.png" src="../Pasted%20image%2020260130174246.png" width="500" /><br />
+<br />
+</figure>
+<p>VFX：Visual Effects，视觉效果，视效</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.top", "navigation.tabs", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

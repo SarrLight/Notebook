@@ -1,0 +1,2062 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../%E4%BD%9C%E4%B8%9A5-%E5%85%89%E7%BA%BF%E4%B8%8E%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9B%B8%E4%BA%A4/">
+      
+      
+        <link rel="next" href="../%E4%BD%9C%E4%B8%9A7-%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>作业6-加速结构 - SarrLight's Notebook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="SarrLight&#39;s Notebook" class="md-header__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SarrLight's Notebook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              作业6-加速结构
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" class="md-tabs__link">
+          
+  
+  
+  课内学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../03-04%20Transform/" class="md-tabs__link">
+          
+  
+  
+  游戏开发
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="SarrLight&#39;s Notebook" class="md-nav__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+
+    </a>
+    SarrLight's Notebook
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课内学习
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    课内学习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    计算机组成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    游戏开发
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    游戏开发
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GAMES101
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    GAMES101
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-04%20Transform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L3-L4:Transform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-06%20Rasterization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L5-L6:Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-09%20Shading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L7-L9:Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-12%20Geometry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L10-L12:Geometry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-16%20Ray%20Tracing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L13-L16:Ray Tracing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17%20Materials%20and%20Appearances/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L17 Materials and Appearances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18%20Advanced%20Topics%20in%20Rendering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L18 Advanced Topics in Rendering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19%20Cameras%EF%BC%8CLenses%20and%20Light%20Fields/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L19 Cameras，Lenses and Light Fields
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20%20Color%20and%20Perception/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L20 Color and Perception
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21%20Animation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L21 Animation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22%20Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L22 Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A1-%E7%94%BB%E4%B8%89%E8%A7%92%E5%BD%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业1-画三角形
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A2-Rasterization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业2-Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A3-Shading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业3-Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A4-Bazier%20Curve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业4-BazierCurve
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A5-%E5%85%89%E7%BA%BF%E4%B8%8E%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9B%B8%E4%BA%A4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业5-光线与三角形相交
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业6-加速结构
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业6-加速结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 总览
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 代码框架
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 知识回顾
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 知识回顾">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-bvhbounding-volume-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 BVH（Bounding Volume Hierarchy）树
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 判断光线与包围盒相交
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 我的实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4 我的实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 迁移光线生成的代码
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 迁移三角形面求交的代码
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-intersectp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 IntersectP判断包围盒与光线相交
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-getintersectionbvh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 getIntersection遍历BVH求交
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 问题与解决方法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5 问题与解决方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 文件读取问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 渲染物体没有显示
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 最终结果
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-cpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7 Cpp特性
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7 Cpp特性">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-emplace_back" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 emplace_back()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-stdsort" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 std::sort()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-stdvectorbeginning-ending" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 std::vector&lt;&gt;(beginning, ending)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-chrono" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 用于计时的标准库&lt;chrono&gt;
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#75-inline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 关键字inline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#76-cmath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.6 数学库cmath
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#77" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.7 浮点数范围
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A7-%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业7-光线追踪
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%9C%E4%B8%9A8-%E8%B4%A8%E7%82%B9%E5%BC%B9%E7%B0%A7%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业8-质点弹簧系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UTILITIES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UTILITIES
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 总览
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 代码框架
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 知识回顾
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 知识回顾">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-bvhbounding-volume-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 BVH（Bounding Volume Hierarchy）树
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 判断光线与包围盒相交
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 我的实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4 我的实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 迁移光线生成的代码
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 迁移三角形面求交的代码
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-intersectp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 IntersectP判断包围盒与光线相交
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-getintersectionbvh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 getIntersection遍历BVH求交
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 问题与解决方法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5 问题与解决方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 文件读取问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 渲染物体没有显示
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 最终结果
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-cpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7 Cpp特性
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7 Cpp特性">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-emplace_back" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 emplace_back()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-stdsort" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 std::sort()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-stdvectorbeginning-ending" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 std::vector&lt;&gt;(beginning, ending)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-chrono" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 用于计时的标准库&lt;chrono&gt;
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#75-inline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 关键字inline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#76-cmath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.6 数学库cmath
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#77" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.7 浮点数范围
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>作业6-加速结构</h1>
+
+<h2 id="1">1 总览</h2>
+<p>在之前的编程练习中，我们实现了基础的光线追踪算法，具体而言是光线传输、光线与三角形求交。我们采用了这样的方法寻找光线与场景的交点：遍历场景中的所有物体，判断光线是否与它相交。在场景中的物体数量不大时，该做法可以取得良好的结果，但当物体数量增多、模型变得更加复杂，该做法将会变得非常低效。因此，我们需要加速结构来加速求交过程。在本次练习中，我们重点关注物体划分算法 Bounding Volume Hierarchy (BVH)。本练习要求你实现 Ray-Bounding Volume 求交与 BVH 查找。</p>
+<p>首先，你需要从上一次编程练习中引用以下函数：<br />
+- Render() in Renderer.cpp: 将你的光线生成过程粘贴到此处，并且按照新框架更新相应调用的格式。<br />
+- Triangle::getIntersection in Triangle.hpp: 将你的光线-三角形相交函数粘贴到此处，并且按照新框架更新相应相交信息的格式。</p>
+<p>在本次编程练习中，你需要实现以下函数：<br />
+- <code>IntersectP(const Ray&amp; ray, const Vector3f&amp; invDir,const std::array&lt;int, 3&gt;&amp; dirIsNeg)</code> in the Bounds3.hpp: 这个函数的作用是判断包围盒 BoundingBox 与光线是否相交，你需要按照课程介绍的算法实现求交过程。<br />
+- <code>getIntersection(BVHBuildNode* node, const Ray ray)</code> in BVH.cpp: 建立 BVH 之后，我们可以用它加速求交过程。该过程递归进行，你将在其中调用你实现的 Bounds3::IntersectP.</p>
+<p>总的来说，本实验只需要实现实现 Ray-Bounding Volume 求交与 BVH 查找，而不需要实现BVH的建立过程。</p>
+<h2 id="2">2 代码框架</h2>
+<p>我们修改了代码框架中的如下内容：<br />
+- Material.hpp：我们从将材质参数拆分到了一个单独的类中，现在每个物体实例都可以拥有自己的材质。<br />
+- Intersection.hpp: 这个数据结构包含了相交相关的信息。<br />
+- Ray.hpp: 光线类，包含一条光的源头、方向、传递时间 t 和范围 range.<br />
+- Bounds3.hpp: 包围盒类，每个包围盒可由 pMin 和 pMax 两点描述（请思考为什么）。Bounds3::Union 函数的作用是将两个包围盒并成更大的包围盒。与材质一样，场景中的每个物体实例都有自己的包围盒。<br />
+- BVH.hpp: BVH 加速类。场景 scene 拥有一个 BVHAccel 实例。从根节点开始，我们可以递归地从物体列表构造场景的 BVH.</p>
+<div class="admonition important">
+<p class="admonition-title">注意</p>
+<p>需要注意的是，原本在<code>Renderer.cpp</code>中实现的<code>trace()</code>和<code>castRay()</code>被搬到了<code>Scene.cpp</code>中</p>
+</div>
+<h2 id="3">3 知识回顾</h2>
+<h3 id="31-bvhbounding-volume-hierarchy">3.1 BVH（Bounding Volume Hierarchy）树</h3>
+<p>BVH树对物体进行划分，如图所示，直至划分至子结点中有足够少的三角形；</p>
+<figure><br />
+<img alt="Pasted image 20251105173115.png" src="../Pasted%20image%2020251105173115.png" width="500" /><br />
+<br />
+</figure>
+<p>BVH树解决了 KD-Tree 的两大问题；</p>
+<div class="admonition note">
+<p class="admonition-title">Oct-Tree和KD-Tree</p>
+<p>八叉树（Oct-Tree）对空间进行轴向划分，将每个节点进行八分割存储在子结点中，划分至子结点中有足够少的物体；</p>
+<p>KD-Tree不同于八叉树，每次只对节点进行一次轴向划分，不对于父子节点进行相同轴向的划分（三维上沿 x ，y ，z 方向上循环），同样直至子结点中有足够少的物体；<br />
+在判断时，先判断与根节点是否存在交点，如果有交点则判断与两子节点是否存在交点；直至叶子节点，如果仍有交点则判断其与节点内部模型是否有交点；<br />
+KD-Tree 的主要问题是难以判断格点与哪些模型相交；此外，如果一个物体与多个叶子节点相交，其会被存储多份；<br />
+<figure markdown="span"></p>
+</div>
+<p><img alt="Pasted image 20251105172617.png" src="../Pasted%20image%2020251105172617.png" width="400" /></p>
+</figure markdown>
+<p>BVH树存在的问题是节点包围盒可能相交，但这个问题的影响有限，因为实际上会保证重叠部分尽量少；</p>
+<p>BVH树是怎么划分节点的呢？<br />
+1. 类似 KD-Tree ，可以循环使用不同的轴向；也可以选择包围盒最长的一条轴进行划分；<br />
+2. 对于如何划分两半，可以将三角形的重心按分割轴向排序，取中位三角形进行分隔，使得两部分三角形数量均匀，降低资源消耗；<br />
+   寻找中位数不需要排序，可以转化为top-k大数问题，通过快速选择算法在线性复杂度内解决；<br />
+在场景变化时，需要重新计算BVH树；</p>
+<p>与 KD-Tree 类似，在中间节点只存储包围盒和子节点指针，只在叶子节点存储分割后的模型；<br />
+光线求交过程也与 KD-Tree 类似，有伪代码<br />
+<div class="highlight"><pre><span></span><code><span class="n">Intersect</span><span class="w"> </span><span class="p">(</span><span class="n">Ray</span><span class="w"> </span><span class="n">ray</span><span class="p">,</span><span class="w"> </span><span class="n">BVH</span><span class="w"> </span><span class="n">node</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ray</span><span class="w"> </span><span class="n">misses</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">bbox</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w">  </span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">node</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">leaf</span><span class="w"> </span><span class="n">node</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="p">{</span><span class="w">  </span>
+<span class="w">    </span><span class="n">test</span><span class="w"> </span><span class="n">intersection</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">objs</span><span class="p">;</span><span class="w">  </span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">closest</span><span class="w"> </span><span class="n">intersection</span><span class="p">;</span><span class="w">  </span>
+<span class="w">    </span><span class="p">}</span><span class="w">  </span>
+
+<span class="w">    </span><span class="n">hit1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Intersect</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">child1</span><span class="p">);</span><span class="w">  </span>
+<span class="w">    </span><span class="n">hit2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Intersect</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">child2</span><span class="p">);</span><span class="w">  </span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">closer</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">hit1</span><span class="p">,</span><span class="w"> </span><span class="n">hit2</span><span class="p">;</span><span class="w">  </span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="32">3.2 判断光线与包围盒相交</h3>
+<p>考虑光线和包围盒求交过程；当光线与三组对面中的任何一个面均有交点时，认为光线进入包围盒，当光线穿过任何的两个平面时，认为光线离开包围盒；</p>
+<figure><br />
+<img alt="Pasted image 20260122193909.png" src="../Pasted%20image%2020260122193909.png" width="600" /><br />
+<br />
+</figure>
+<p>对于每一组对面（对应每个维度），分别计算 <span class="arithmatex">\(t_{min},t_{max}\)</span>（无论正负），光线关于包围盒的进入点有 <span class="arithmatex">\(t_{enter}=\max\{t_{min}\}\)</span> ，离开点有 <span class="arithmatex">\(t_{exit}=\min\{t_{max}\}\)</span> ；<br />
+- 如果 <span class="arithmatex">\(t_{exit}&lt;0\)</span> ，我们认为包围盒在光线后，与光线没有交点；<br />
+- 如果 <span class="arithmatex">\(t_{exit}\geqslant0,t_{enter}&lt;0\)</span> ，我们认为光源在包围盒中；<br />
+总地来说，如果 <span class="arithmatex">\(t_{enter}&lt;t_{exit}，t_{exit}\geqslant0\)</span> ，我们认为光线与包围盒有交点；</p>
+<h2 id="4">4 我的实现</h2>
+<h3 id="41">4.1 迁移光线生成的代码</h3>
+<p>需要修改Render() in Renderer.cpp: 将你的光线生成过程粘贴到此处，并且按照新框架更新相应调用的格式。<br />
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">scene</span><span class="p">.</span><span class="n">height</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">scene</span><span class="p">.</span><span class="n">width</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// generate primary ray direction</span>
+<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.5</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">scene</span><span class="p">.</span><span class="n">width</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span>
+<span class="w">                  </span><span class="n">imageAspectRatio</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">scale</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.5</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">scene</span><span class="p">.</span><span class="n">height</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">scale</span><span class="p">;</span>
+<span class="w">        </span><span class="c1">// TODO: Find the x and y positions of the current pixel to get the</span>
+<span class="w">        </span><span class="c1">// direction</span>
+<span class="w">        </span><span class="c1">//  vector that passes through it.</span>
+<span class="w">        </span><span class="c1">// Also, don&#39;t forget to multiply both of them with the variable</span>
+<span class="w">        </span><span class="c1">// *scale*, and x (horizontal) variable with the *imageAspectRatio*</span>
+
+<span class="w">        </span><span class="c1">// Don&#39;t forget to normalize this direction!</span>
+<span class="w">        </span><span class="n">Vector3f</span><span class="w"> </span><span class="n">dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Vector3f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">dir</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">Ray</span><span class="w"> </span><span class="n">ray</span><span class="o">=</span><span class="w"> </span><span class="n">Ray</span><span class="p">(</span><span class="n">eye_pos</span><span class="p">,</span><span class="w"> </span><span class="n">dir</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// 参数(摄像机位置，光线方向，场景，递归深度)</span>
+<span class="w">        </span><span class="n">framebuffer</span><span class="p">[</span><span class="n">m</span><span class="o">++</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scene</span><span class="p">.</span><span class="n">castRay</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">UpdateProgress</span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">scene</span><span class="p">.</span><span class="n">height</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><br />
+重点在于产生光线ray，并通过scene.castRay函数，根据ray来计算framebuffer中当前的像素点。<br />
+上述代码有一个可以优化的地方<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// 参数(摄像机位置，光线方向，场景，递归深度)</span>
+<span class="n">framebuffer</span><span class="p">[</span><span class="n">m</span><span class="o">++</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scene</span><span class="p">.</span><span class="n">castRay</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">ray</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+</code></pre></div><br />
+那就是在这里使用<code>std::move</code>来传递参数<br />
+<code>std::move</code> 是C++ 移动语义，将 <code>ray</code> 的资源（而非拷贝资源）转移给 <code>castRay</code> 函数，避免拷贝大型对象的性能开销</p>
+<h3 id="42">4.2 迁移三角形面求交的代码</h3>
+<p>需要修改<code>Triangle::getIntersection()</code>in Triangle.hpp。重点在于适配新的架构，将原本返回是否相交的布尔值改成Intersection结构体。<br />
+<div class="highlight"><pre><span></span><code><span class="n">inter</span><span class="p">.</span><span class="n">happened</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="n">inter</span><span class="p">.</span><span class="n">distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t_tmp</span><span class="p">;</span>
+<span class="n">inter</span><span class="p">.</span><span class="n">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="n">inter</span><span class="p">.</span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">m</span><span class="p">;</span>
+<span class="n">inter</span><span class="p">.</span><span class="n">coords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ray</span><span class="p">.</span><span class="n">origin</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ray</span><span class="p">.</span><span class="n">direction</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t_tmp</span><span class="p">;</span>
+<span class="n">inter</span><span class="p">.</span><span class="n">normal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">normal</span><span class="p">;</span>
+</code></pre></div><br />
+上述代码中的 <code>this-&gt;</code> 可加可不加</p>
+<h3 id="43-intersectp">4.3 <code>IntersectP</code>判断包围盒与光线相交</h3>
+<p><div class="highlight"><pre><span></span><code><span class="kr">inline</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">Bounds3::IntersectP</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Ray</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ray</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Vector3f</span><span class="o">&amp;</span><span class="w"> </span><span class="n">invDir</span><span class="p">,</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">dirIsNeg</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+</code></pre></div><br />
+这个属于<code>Bounds</code>类的方法负责判断光线ray是否与包围盒相交，它可以使用<code>Bounds</code>类的属性<code>pMin</code>和<code>pMax</code>，另外根据参数<code>ray</code>来判断是否相交。<br />
+<code>Ray</code>类含有下述属性<br />
+<div class="highlight"><pre><span></span><code><span class="c1">//Destination = origin + t*direction</span>
+<span class="n">Vector3f</span><span class="w"> </span><span class="n">origin</span><span class="p">;</span>
+<span class="n">Vector3f</span><span class="w"> </span><span class="n">direction</span><span class="p">,</span><span class="w"> </span><span class="n">direction_inv</span><span class="p">;</span>
+<span class="kt">double</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="c1">//transportation time,</span>
+<span class="kt">double</span><span class="w"> </span><span class="n">t_min</span><span class="p">,</span><span class="w"> </span><span class="n">t_max</span><span class="p">;</span>
+</code></pre></div><br />
+另外传入的还有两个参数,它们分别反映了光线方向向量坐标的倒数和符号，由函数调用者在外部设置后传入<br />
+- <code>invDir=(1.0/x,1.0/y,1.0/z)</code><br />
+- <code>dirIsNeg=[int(x&gt;0),int(y&gt;0),int(z&gt;0)]</code></p>
+<div class="highlight"><pre><span></span><code><span class="kr">inline</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">Bounds3::IntersectP</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Ray</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ray</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Vector3f</span><span class="o">&amp;</span><span class="w"> </span><span class="n">invDir</span><span class="p">,</span>
+<span class="w">                                </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">dirIsNeg</span><span class="p">)</span><span class="w"> </span><span class="k">const</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// invDir: ray direction(x,y,z), invDir=(1.0/x,1.0/y,1.0/z), use this because Multiply is faster that Division</span>
+<span class="w">    </span><span class="c1">// dirIsNeg: ray direction(x,y,z), dirIsNeg=[int(x&gt;0),int(y&gt;0),int(z&gt;0)], use this to simplify your logic</span>
+<span class="w">    </span><span class="c1">// TODO test if ray bound intersects</span>
+
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">t_enter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">t_exit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">();</span>
+<span class="w">    </span><span class="n">Vector3f</span><span class="w"> </span><span class="n">t_min</span><span class="p">,</span><span class="w"> </span><span class="n">t_max</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">dirIsNeg</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">t_min</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">pMax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ray</span><span class="p">.</span><span class="n">origin</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">invDir</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">            </span><span class="n">t_max</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">pMin</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ray</span><span class="p">.</span><span class="n">origin</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">invDir</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">t_min</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">pMin</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ray</span><span class="p">.</span><span class="n">origin</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">invDir</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">            </span><span class="n">t_max</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">pMax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ray</span><span class="p">.</span><span class="n">origin</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">invDir</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">t_enter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fmax</span><span class="p">(</span><span class="n">t_min</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">t_enter</span><span class="p">);</span>
+<span class="w">        </span><span class="n">t_exit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fmin</span><span class="p">(</span><span class="n">t_max</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">t_exit</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">t_enter</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">t_exit</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">t_exit</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="44-getintersectionbvh">4.4 <code>getIntersection</code>遍历BVH求交</h3>
+<p>这个函数位于文件<code>BVH.cpp</code><br />
+<div class="highlight"><pre><span></span><code><span class="n">Intersection</span><span class="w"> </span><span class="n">BVHAccel</span><span class="o">::</span><span class="n">getIntersection</span><span class="p">(</span><span class="n">BVHBuildNode</span><span class="o">*</span><span class="w"> </span><span class="n">node</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Ray</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ray</span><span class="p">)</span><span class="w"> </span><span class="k">const</span>
+</code></pre></div><br />
+这个函数接受BVH树的节点<code>node</code>和一个光线类<code>ray</code>，功能是从<code>node</code>往下递归，找到光线射中的最前面的物体(object),返回的Intersection信息包括射中的物体，碰撞点的坐标，法线，碰撞的距离。注意找到的物体一定是最前面的，最多只有一个。<br />
+返回值的类型为结构体<code>Intersection</code>，它含有以下属性<br />
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">Intersection</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Intersection</span><span class="p">(){</span>
+<span class="w">        </span><span class="n">happened</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<span class="w">        </span><span class="n">coords</span><span class="o">=</span><span class="n">Vector3f</span><span class="p">();</span>
+<span class="w">        </span><span class="n">normal</span><span class="o">=</span><span class="n">Vector3f</span><span class="p">();</span>
+<span class="w">        </span><span class="n">distance</span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">();</span>
+<span class="w">        </span><span class="n">obj</span><span class="w"> </span><span class="o">=</span><span class="k">nullptr</span><span class="p">;</span>
+<span class="w">        </span><span class="n">m</span><span class="o">=</span><span class="k">nullptr</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">happened</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Vector3f</span><span class="w"> </span><span class="n">coords</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Vector3f</span><span class="w"> </span><span class="n">normal</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">distance</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Object</span><span class="o">*</span><span class="w"> </span><span class="n">obj</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Material</span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div><br />
+结构体<code>BVHBuildNode</code>的定义如下：<br />
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">BVHBuildNode</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Bounds3</span><span class="w"> </span><span class="n">bounds</span><span class="p">;</span>
+<span class="w">    </span><span class="n">BVHBuildNode</span><span class="w"> </span><span class="o">*</span><span class="n">left</span><span class="p">;</span>
+<span class="w">    </span><span class="n">BVHBuildNode</span><span class="w"> </span><span class="o">*</span><span class="n">right</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Object</span><span class="o">*</span><span class="w"> </span><span class="n">object</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">splitAxis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">firstPrimOffset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">nPrimitives</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// splitAxis 表示当前节点的分割轴012分别对应xyz</span>
+<span class="w">    </span><span class="c1">// firstPrimOffset 表示首个元素偏移量，表明要处理的第一个元素在数组中的位置</span>
+<span class="w">    </span><span class="c1">// nPrimitives 表示元素总数</span>
+<span class="w">    </span><span class="c1">// BVHBuildNode Public Methods</span>
+<span class="w">    </span><span class="n">BVHBuildNode</span><span class="p">(){</span>
+<span class="w">        </span><span class="n">bounds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Bounds3</span><span class="p">();</span>
+<span class="w">        </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span>
+<span class="w">        </span><span class="n">object</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div><br />
+由于函数 <code>IntersectP()</code>要用到invDir和dirIsNeg，并且这两个参数是和ray完全绑定的，所以我修改了函数 <code>getIntersection()</code> 的定义，加入了参数invDir和dirIsNeg。最终<code>getIntersection()</code> 的实现代码如下：<br />
+<div class="highlight"><pre><span></span><code><span class="n">Intersection</span><span class="w"> </span><span class="nf">BVHAccel::getIntersection</span><span class="p">(</span><span class="n">BVHBuildNode</span><span class="o">*</span><span class="w"> </span><span class="n">node</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Ray</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ray</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Vector3f</span><span class="o">&amp;</span><span class="w"> </span><span class="n">invDir</span><span class="p">,</span>
+<span class="w">                                </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">dirIsNeg</span><span class="p">)</span><span class="w"> </span><span class="k">const</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Intersection</span><span class="w"> </span><span class="n">isect</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// TODO Traverse the BVH to find intersection</span>
+<span class="w">    </span><span class="c1">//ray和node包围盒没有交点，返回默认isect</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="w"> </span><span class="n">node</span><span class="o">-&gt;</span><span class="n">bounds</span><span class="p">.</span><span class="n">IntersectP</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span><span class="w"> </span><span class="n">invDir</span><span class="p">,</span><span class="w"> </span><span class="n">dirIsNeg</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">isect</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">//ray和node的包围盒有交点</span>
+<span class="w">    </span><span class="c1">//node为叶节点</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">==</span><span class="k">nullptr</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">node</span><span class="o">-&gt;</span><span class="n">right</span><span class="o">==</span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">//调用object类(可能是Triangle或者MeshTriangle)的getIntersection方法,返回相交点的信息</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">node</span><span class="o">-&gt;</span><span class="n">object</span><span class="o">-&gt;</span><span class="n">getIntersection</span><span class="p">(</span><span class="n">ray</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">==</span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">getIntersection</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">,</span><span class="w"> </span><span class="n">ray</span><span class="p">,</span><span class="w"> </span><span class="n">invDir</span><span class="p">,</span><span class="w"> </span><span class="n">dirIsNeg</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">right</span><span class="o">==</span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">getIntersection</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">ray</span><span class="p">,</span><span class="w"> </span><span class="n">invDir</span><span class="p">,</span><span class="w"> </span><span class="n">dirIsNeg</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">//node不是叶节点</span>
+<span class="w">    </span><span class="c1">//分别计算两个孩子节点的相交信息,取最先相交的孩子节点递归下去</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">t_left</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">t_right</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">t_second</span><span class="p">;</span>
+<span class="w">    </span><span class="n">t_left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">-&gt;</span><span class="n">bounds</span><span class="p">.</span><span class="n">IntersectT</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span><span class="w"> </span><span class="n">invDir</span><span class="p">,</span><span class="w"> </span><span class="n">dirIsNeg</span><span class="p">);</span>
+<span class="w">    </span><span class="n">t_right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="o">-&gt;</span><span class="n">right</span><span class="o">-&gt;</span><span class="n">bounds</span><span class="p">.</span><span class="n">IntersectT</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span><span class="w"> </span><span class="n">invDir</span><span class="p">,</span><span class="w"> </span><span class="n">dirIsNeg</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">BVHBuildNode</span><span class="w"> </span><span class="o">*</span><span class="n">first_node</span><span class="p">;</span>
+<span class="w">    </span><span class="n">BVHBuildNode</span><span class="w"> </span><span class="o">*</span><span class="n">second_node</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">t_left</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">t_right</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">first_node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
+<span class="w">        </span><span class="n">second_node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
+<span class="w">        </span><span class="n">t_second</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t_right</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">first_node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
+<span class="w">        </span><span class="n">second_node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
+<span class="w">        </span><span class="n">t_second</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t_left</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">Intersection</span><span class="w"> </span><span class="n">first_isect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getIntersection</span><span class="p">(</span><span class="n">first_node</span><span class="p">,</span><span class="w"> </span><span class="n">ray</span><span class="p">,</span><span class="w"> </span><span class="n">invDir</span><span class="p">,</span><span class="w"> </span><span class="n">dirIsNeg</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">first_isect</span><span class="p">.</span><span class="n">happened</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">first_isect</span><span class="p">.</span><span class="n">distance</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">t_second</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">first_isect</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">Intersection</span><span class="w"> </span><span class="n">second_isect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getIntersection</span><span class="p">(</span><span class="n">second_node</span><span class="p">,</span><span class="w"> </span><span class="n">ray</span><span class="p">,</span><span class="w"> </span><span class="n">invDir</span><span class="p">,</span><span class="w"> </span><span class="n">dirIsNeg</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">first_isect</span><span class="p">.</span><span class="n">happened</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">second_isect</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">second_isect</span><span class="p">.</span><span class="n">happened</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">first_isect</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">first_isect</span><span class="p">.</span><span class="n">distance</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">second_isect</span><span class="p">.</span><span class="n">distance</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">first_isect</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">second_isect</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><br />
+代码这样设计的核心在于优化了满足条件<br />
+<div class="highlight"><pre><span></span><code><span class="n">first_isect</span><span class="p">.</span><span class="n">happened</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">first_isect</span><span class="p">.</span><span class="n">distance</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">t_second</span>
+</code></pre></div><br />
+时的情况，在这种条件下，程序只需计算一个孩子节点的<code>getIntersection()</code>，不需要两个孩子节点都计算。<br />
+由于<code>getIntersection()</code>的参数列表改变了，所以在函数<code>Intersect()</code>中调用它之前要先得到<code>invDir, dirIsNeg</code>，实现代码如下<br />
+<div class="highlight"><pre><span></span><code><span class="n">Intersection</span><span class="w"> </span><span class="nf">BVHAccel::Intersect</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Ray</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ray</span><span class="p">)</span><span class="w"> </span><span class="k">const</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Intersection</span><span class="w"> </span><span class="n">isect</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Vector3f</span><span class="w"> </span><span class="n">invDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ray</span><span class="p">.</span><span class="n">direction_inv</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">dirIsNeg</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">dirIsNeg</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">ray</span><span class="p">.</span><span class="n">direction</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">root</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">isect</span><span class="p">;</span>
+<span class="w">    </span><span class="n">isect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BVHAccel</span><span class="o">::</span><span class="n">getIntersection</span><span class="p">(</span><span class="n">root</span><span class="p">,</span><span class="w"> </span><span class="n">ray</span><span class="p">,</span><span class="w"> </span><span class="n">invDir</span><span class="p">,</span><span class="w"> </span><span class="n">dirIsNeg</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">isect</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h2 id="5">5 问题与解决方法</h2>
+<h3 id="51">5.1 文件读取问题</h3>
+<p>原本读取模型的语句为<br />
+<div class="highlight"><pre><span></span><code><span class="n">MeshTriangle</span><span class="w"> </span><span class="n">bunny</span><span class="p">(</span><span class="s">&quot;../models/bunny/bunny.obj&quot;</span><span class="p">);</span>
+</code></pre></div><br />
+如果在Assignment6目录下执行下述指令<br />
+<div class="highlight"><pre><span></span><code>./build/RayTracing.exe
+</code></pre></div><br />
+会导致读取失败，会有下面的报错<br />
+<div class="highlight"><pre><span></span><code>Assertion failed: loader.LoadedMeshes.size() == 1, file E:\games101\Homework6\Assignment6\Triangle.hpp, line 84 
+</code></pre></div><br />
+这是因为这样的话相对路径会以程序运行时的工作路径为基准，而不是以程序可执行文件所在的路径为基准。<br />
+正确方法是先<br />
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>./build
+</code></pre></div><br />
+再执行<br />
+<div class="highlight"><pre><span></span><code>./RayTracing.exe
+</code></pre></div></p>
+<h3 id="52">5.2 渲染物体没有显示</h3>
+<p>我发现渲染的结果中没有显示物体，全屏都是背景颜色。这很有可能是因为光线碰撞检测出了问题。在一开始我检查了<code>IntersectP()</code> 和 <code>getIntersection()</code>，发现它们都没有问题。最终才发现问题出在<br />
+<div class="highlight"><pre><span></span><code><span class="n">Intersection</span><span class="w"> </span><span class="n">BVHAccel</span><span class="o">::</span><span class="n">Intersect</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Ray</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ray</span><span class="p">)</span><span class="w"> </span><span class="k">const</span>
+</code></pre></div><br />
+这个函数。在计算<code>dirIsNeg</code>时，我原本写的是<code>(int)(ray.direction[i] &gt; 0)</code>,由于把小于号写成了大于号，导致所有的检测都出错了。</p>
+<div class="admonition note">
+<p class="admonition-title">启示</p>
+<p>在出错时一定要先根据错误类型进行垂直检查。</p>
+<p>比如错误为渲染结果中一个三角面都没有显示。先分析错误的特点。这种错误是0(不显示)和1(显示)之间的判断错误，而不是1和2之间这种计算错误。所以检查的重点要放在光线相交的判断逻辑上，围绕这个重点垂直向下进行检查。要检查与光线相交检测有关的判断逻辑。检查的过程不能只停留在表面几个函数，尽量层层向下。</p>
+</div>
+<h2 id="6">6 最终结果</h2>
+<figure><br />
+<img alt="Pasted image 20260127143713.png" src="../Pasted%20image%2020260127143713.png" width="500" /><br />
+<br />
+</figure>
+<h2 id="7-cpp">7 Cpp特性</h2>
+<h3 id="71-emplace_back">7.1 <code>emplace_back()</code></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Triangle</span><span class="o">&gt;</span><span class="w"> </span><span class="n">triangles</span><span class="p">;</span>
+<span class="n">triangles</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">face_vertices</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">face_vertices</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+<span class="w">                         </span><span class="n">face_vertices</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">new_mat</span><span class="p">);</span>
+</code></pre></div><br />
+<code>emplace_back(...)</code>是容器的 “原地构造” 成员函数 —— 直接在容器的内存空间中构造新对象，而非先创建临时对象再拷贝 / 移动到容器中，效率更高；<br />
+逻辑上与下述语句等价<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// 先创建临时三角形对象，再拷贝到 triangles（效率更低）</span>
+<span class="n">triangles</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">三角形类型</span><span class="p">(</span><span class="n">face_vertices</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">face_vertices</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">face_vertices</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">new_mat</span><span class="p">)</span><span class="w"> </span><span class="p">);</span>
+</code></pre></div></p>
+<h3 id="72-stdsort">7.2 <code>std::sort()</code></h3>
+<div class="highlight"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">sort</span><span class="p">(</span><span class="n">objects</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">objects</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="p">[](</span><span class="k">auto</span><span class="w"> </span><span class="n">f1</span><span class="p">,</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">f2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">f1</span><span class="o">-&gt;</span><span class="n">getBounds</span><span class="p">().</span><span class="n">Centroid</span><span class="p">().</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span>
+<span class="w">           </span><span class="n">f2</span><span class="o">-&gt;</span><span class="n">getBounds</span><span class="p">().</span><span class="n">Centroid</span><span class="p">().</span><span class="n">x</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre></div>
+<h3 id="73-stdvectorbeginning-ending">7.3 <code>std::vector&lt;&gt;(beginning, ending)</code></h3>
+<p><div class="highlight"><pre><span></span><code><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">leftshapes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">beginning</span><span class="p">,</span><span class="w"> </span><span class="n">middling</span><span class="p">);</span>
+</code></pre></div><br />
+采用 <code>vector</code> 的 <strong>范围构造函数</strong>：<code>vector(InputIt first, InputIt last)</code>，作用是将 <code>[first, last)</code> 区间内的元素复制到新创建的 <code>vector</code> 中。</p>
+<h3 id="74-chrono">7.4 用于计时的标准库<code>&lt;chrono&gt;</code></h3>
+<div class="highlight"><pre><span></span><code><span class="k">auto</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+<span class="w">    </span><span class="n">r</span><span class="p">.</span><span class="n">Render</span><span class="p">(</span><span class="n">scene</span><span class="p">);</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Render complete: </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Time taken: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration_cast</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">hours</span><span class="o">&gt;</span><span class="p">(</span><span class="n">stop</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="p">).</span><span class="n">count</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; hours</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;          : &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration_cast</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">minutes</span><span class="o">&gt;</span><span class="p">(</span><span class="n">stop</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="p">).</span><span class="n">count</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; minutes</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;          : &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration_cast</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="o">&gt;</span><span class="p">(</span><span class="n">stop</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="p">).</span><span class="n">count</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; seconds</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="75-inline">7.5 关键字<code>inline</code></h3>
+<p><code>inline</code> 是 C/C++ 中的关键字，核心作用是建议编译器将函数调用 “内联展开”（而非常规的函数调用跳转），本质是一种编译优化手段。主要有以下几个特点<br />
+- <strong>建议而非强制</strong>：<code>inline</code> 是编译器的 “优化建议”，不是命令。如果函数体过大（如数百行代码）、有循环 / 递归，或被复杂指针指向，编译器可能忽略 <code>inline</code>，按普通函数处理。<br />
+- <strong>必须在调用前定义</strong>：不同于普通函数（声明和定义可分离），<code>inline</code> 函数的定义需放在头文件中（或调用代码之前），否则编译器无法在调用处展开（链接时可能报错 “未定义引用”）。<br />
+- <strong>避免代码膨胀</strong>：若 <code>inline</code> 函数被频繁调用且函数体较大，展开后会导致目标文件体积增大（代码冗余），可能反而降低性能（缓存命中率下降），因此仅适合<strong>短小、高频调用</strong>的函数（如工具类小函数、getter/setter）。</p>
+<h3 id="76-cmath">7.6 数学库<code>cmath</code></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">fmax</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">),</span><span class="w"> </span><span class="n">fmin</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+</code></pre></div><br />
+这两个函数可以用来求浮点数的最大值和最小值</p>
+<h3 id="77">7.7 浮点数范围</h3>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="cpf">&lt;limits&gt;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">();</span><span class="w">  </span><span class="c1">//float可以表示的最大正数</span>
+<span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;::</span><span class="n">min</span><span class="p">();</span><span class="w">  </span><span class="c1">//float可以表示的最小正数</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.top", "navigation.tabs", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
