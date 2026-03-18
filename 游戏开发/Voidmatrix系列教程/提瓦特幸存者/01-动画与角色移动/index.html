@@ -1,0 +1,3096 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../../GAMES101/UTILITIES/">
+      
+      
+        <link rel="next" href="../02%20%E6%95%8C%E4%BA%BA%E9%9A%8F%E6%9C%BA%E7%94%9F%E6%88%90%E5%92%8C%E7%B4%A2%E6%95%8C%E9%80%BB%E8%BE%91/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>01-动画与角色移动 - SarrLight's Notebook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-easyx" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../.." title="SarrLight&#39;s Notebook" class="md-header__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SarrLight's Notebook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              01-动画与角色移动
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" class="md-tabs__link">
+          
+  
+  
+  课内学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../GAMES101/03-04%20Transform/" class="md-tabs__link">
+          
+  
+  
+  游戏开发
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="SarrLight&#39;s Notebook" class="md-nav__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+
+    </a>
+    SarrLight's Notebook
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课内学习
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    课内学习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    计算机组成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    游戏开发
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    游戏开发
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GAMES101
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    GAMES101
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/03-04%20Transform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L3-L4:Transform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/05-06%20Rasterization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L5-L6:Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/07-09%20Shading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L7-L9:Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/10-12%20Geometry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L10-L12:Geometry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/13-16%20Ray%20Tracing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L13-L16:Ray Tracing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/17%20Materials%20and%20Appearances/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L17 Materials and Appearances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/18%20Advanced%20Topics%20in%20Rendering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L18 Advanced Topics in Rendering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/19%20Cameras%EF%BC%8CLenses%20and%20Light%20Fields/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L19 Cameras，Lenses and Light Fields
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/20%20Color%20and%20Perception/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L20 Color and Perception
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/21%20Animation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L21 Animation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/22%20Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L22 Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/%E4%BD%9C%E4%B8%9A1-%E7%94%BB%E4%B8%89%E8%A7%92%E5%BD%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业1-画三角形
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/%E4%BD%9C%E4%B8%9A2-Rasterization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业2-Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/%E4%BD%9C%E4%B8%9A3-Shading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业3-Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/%E4%BD%9C%E4%B8%9A4-Bazier%20Curve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业4-BazierCurve
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/%E4%BD%9C%E4%B8%9A5-%E5%85%89%E7%BA%BF%E4%B8%8E%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9B%B8%E4%BA%A4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业5-光线与三角形相交
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/%E4%BD%9C%E4%B8%9A6-%E5%8A%A0%E9%80%9F%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业6-加速结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/%E4%BD%9C%E4%B8%9A7-%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业7-光线追踪
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/%E4%BD%9C%E4%B8%9A8-%E8%B4%A8%E7%82%B9%E5%BC%B9%E7%B0%A7%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业8-质点弹簧系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAMES101/UTILITIES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UTILITIES
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Voidmatrix系列教程
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Voidmatrix系列教程
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_1" id="__nav_2_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    提瓦特幸存者
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    提瓦特幸存者
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01-动画与角色移动
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01-动画与角色移动
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-easyx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 EasyX
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 EasyX">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 从文件读取图像
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 渲染图片
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-cleardevice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 cleardevice()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 代码实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 代码实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 显示背景图片
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 显示背景图片">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.1 基本绘图流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-windowsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.2 windows.h
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#213-tcharh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.3 tchar.h
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 显示角色动画
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 显示角色动画">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.1 批量导入图片素材
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.2 显示带透明通道的图片
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#223" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.3 序列帧播放
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 控制角色移动
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02%20%E6%95%8C%E4%BA%BA%E9%9A%8F%E6%9C%BA%E7%94%9F%E6%88%90%E5%92%8C%E7%B4%A2%E6%95%8C%E9%80%BB%E8%BE%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02-敌人随机生成和索敌逻辑
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E4%B8%8E%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03-碰撞检测与音乐播放
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%95%8C%E9%9D%A2%E5%AE%9E%E7%8E%B0%E4%B8%8E%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04-界面实现与设计模式
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%E8%A7%92%E8%89%B2%E7%89%B9%E6%95%88%E4%B8%8E%E5%83%8F%E7%B4%A0%E7%BC%93%E5%86%B2%E5%8C%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05-角色特效与像素缓冲区
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%EF%BC%88vscode%2Bcmake%2BEasyX%2BMSYS2%20MinGW64%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    环境配置（vscode+cmake+EasyX+MSYS2 MinGW64）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_2" id="__nav_2_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    植物明星大乱斗
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    植物明星大乱斗
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%A4%8D%E7%89%A9%E6%98%8E%E6%98%9F%E5%A4%A7%E4%B9%B1%E6%96%97/01-%E5%9C%BA%E6%99%AF%E8%AE%BE%E8%AE%A1%E5%92%8C%E5%A4%B4%E6%96%87%E4%BB%B6%E8%A7%84%E5%88%99%E6%80%AA%E8%B0%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01-场景设计和头文件规则怪谈
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%A4%8D%E7%89%A9%E6%98%8E%E6%98%9F%E5%A4%A7%E4%B9%B1%E6%96%97/02-%E5%9C%BA%E6%99%AF%E7%AE%A1%E7%90%86%E5%92%8C%E5%9B%BE%E9%9B%86%E7%B1%BB%E5%AE%9E%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02-场景管理和图集类实现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%A4%8D%E7%89%A9%E6%98%8E%E6%98%9F%E5%A4%A7%E4%B9%B1%E6%96%97/03-%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E5%92%8C%E5%8A%A8%E7%94%BB%E7%B1%BB%E5%AE%9E%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03-资源加载和动画类实现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%A4%8D%E7%89%A9%E6%98%8E%E6%98%9F%E5%A4%A7%E4%B9%B1%E6%96%97/04-%E6%91%84%E5%83%8F%E6%9C%BA%E5%9F%BA%E7%A1%80%E5%AE%9E%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04-摄像机基础实现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%A4%8D%E7%89%A9%E6%98%8E%E6%98%9F%E5%A4%A7%E4%B9%B1%E6%96%97/05-%E9%80%9A%E7%94%A8%E5%AE%9A%E6%97%B6%E5%99%A8%E4%B8%8E%E6%91%84%E5%83%8F%E6%9C%BA%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05-通用定时器与摄像机特效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%A4%8D%E7%89%A9%E6%98%8E%E6%98%9F%E5%A4%A7%E4%B9%B1%E6%96%97/06-%E4%B8%BB%E8%8F%9C%E5%8D%95%E4%B8%8E%E8%A7%92%E8%89%B2%E9%80%89%E6%8B%A9%E7%95%8C%E9%9D%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06-主菜单与角色选择界面
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%A4%8D%E7%89%A9%E6%98%8E%E6%98%9F%E5%A4%A7%E4%B9%B1%E6%96%97/07-%E9%80%89%E6%8B%A9%E7%95%8C%E9%9D%A2%E7%9A%84%E5%8A%A8%E6%95%88%E5%92%8C%E4%BA%A4%E4%BA%92/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07-选择界面的动效和交互
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%A4%8D%E7%89%A9%E6%98%8E%E6%98%9F%E5%A4%A7%E4%B9%B1%E6%96%97/08-%E5%B1%80%E5%86%85%E5%9C%BA%E6%99%AF%E4%B8%8E%E7%89%A9%E7%90%86%E6%A8%A1%E6%8B%9F%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08-局内场景与物理模拟基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%A4%8D%E7%89%A9%E6%98%8E%E6%98%9F%E5%A4%A7%E4%B9%B1%E6%96%97/09-%E7%8E%A9%E5%AE%B6%E7%B1%BB%E5%AE%9E%E7%8E%B0%E5%92%8C%E8%A7%92%E8%89%B2%E7%A7%BB%E5%8A%A8%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09-玩家类实现和角色移动基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%A4%8D%E7%89%A9%E6%98%8E%E6%98%9F%E5%A4%A7%E4%B9%B1%E6%96%97/10-%E5%8D%95%E5%90%91%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E5%92%8C%E9%87%8D%E5%8A%9B%E6%A8%A1%E6%8B%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10-单向碰撞检测和重力模拟
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%A4%8D%E7%89%A9%E6%98%8E%E6%98%9F%E5%A4%A7%E4%B9%B1%E6%96%97/11-%E8%A7%92%E8%89%B2%E6%8A%80%E8%83%BD%E8%AE%BE%E8%AE%A1%E5%92%8C%E5%AD%90%E5%BC%B9%E5%9F%BA%E7%B1%BB%E5%AE%9E%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11-角色技能设计和子弹基类实现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%A4%8D%E7%89%A9%E6%98%8E%E6%98%9F%E5%A4%A7%E4%B9%B1%E6%96%97/12-%E5%AD%90%E5%BC%B9%E6%B4%BE%E7%94%9F%E7%B1%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12-子弹派生类
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%A4%8D%E7%89%A9%E6%98%8E%E6%98%9F%E5%A4%A7%E4%B9%B1%E6%96%97/13-%E5%AD%90%E5%BC%B9%E5%8F%91%E5%B0%84%E4%B8%8E%E7%8E%A9%E5%AE%B6%E6%8A%80%E8%83%BD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13-子弹发射与玩家技能
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%A4%8D%E7%89%A9%E6%98%8E%E6%98%9F%E5%A4%A7%E4%B9%B1%E6%96%97/14-%E6%97%A0%E6%95%8C%E5%B8%A7%E5%92%8C%E7%8E%A9%E5%AE%B6%E7%8A%B6%E6%80%81%E6%A0%8F%E5%AE%9E%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14-无敌帧和玩家状态栏实现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%A4%8D%E7%89%A9%E6%98%8E%E6%98%9F%E5%A4%A7%E4%B9%B1%E6%96%97/15-%E7%B2%92%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%92%8C%E8%A7%92%E8%89%B2%E7%89%B9%E6%95%88%E5%8A%A8%E7%94%BB%E5%AE%9E%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15-粒子系统和角色特效动画实现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%A4%8D%E7%89%A9%E6%98%8E%E6%98%9F%E5%A4%A7%E4%B9%B1%E6%96%97/16-%E8%83%9C%E8%B4%9F%E6%A3%80%E5%AE%9A%E4%B8%8E%E7%BB%93%E7%AE%97%E5%8A%A8%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16-胜负检定与结算动效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3" id="__nav_2_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    空洞武士
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    空洞武士
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%A9%BA%E6%B4%9E%E6%AD%A6%E5%A3%AB/01-%E6%B8%B8%E6%88%8F%E8%B5%84%E4%BA%A7%E5%A4%84%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E5%8A%A8%E7%94%BB%E6%A1%86%E6%9E%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01-游戏资产处理与程序动画框架
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%A9%BA%E6%B4%9E%E6%AD%A6%E5%A3%AB/02-%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%99%A8%E4%B8%8E%E6%B8%B8%E6%88%8F%E4%B8%BB%E5%BE%AA%E7%8E%AF%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02-资源管理器与游戏主循环优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%A9%BA%E6%B4%9E%E6%AD%A6%E5%A3%AB/03-%E7%A2%B0%E6%92%9E%E7%AE%A1%E7%90%86%E5%99%A8%E5%AE%9E%E7%8E%B0%E4%B8%8E%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03-碰撞管理器实现与工厂方法设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%A9%BA%E6%B4%9E%E6%AD%A6%E5%A3%AB/04-%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA%E4%B8%8E%E6%A8%AA%E7%89%88%E6%B8%B8%E6%88%8F%E8%A7%92%E8%89%B2%E7%B1%BB%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04-有限状态机与横版游戏角色类设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%A9%BA%E6%B4%9E%E6%AD%A6%E5%A3%AB/05-%E6%AD%A6%E5%A3%AB%E9%9B%B6%E7%8E%A9%E5%AE%B6%E8%A7%92%E8%89%B2%E7%B1%BB%E8%AF%A6%E7%BB%86%E5%AE%9E%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05-武士零玩家角色类详细实现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%A9%BA%E6%B4%9E%E6%AD%A6%E5%A3%AB/06-%E6%AD%A6%E5%A3%AB%E9%9B%B6%E7%8A%B6%E6%80%81%E8%8A%82%E7%82%B9%E4%B8%8E%E5%AD%90%E5%BC%B9%E6%97%B6%E9%97%B4%E5%AE%9E%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06-武士零状态节点与子弹时间实现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%A9%BA%E6%B4%9E%E6%AD%A6%E5%A3%AB/07-%E9%BB%84%E8%9C%82%E5%A5%B3%E8%A7%92%E8%89%B2%E7%B1%BB%E5%AE%9E%E7%8E%B0%E4%B8%8E%E6%8A%80%E8%83%BD%E9%81%93%E5%85%B7%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07-黄蜂女角色类实现与技能道具设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%A9%BA%E6%B4%9E%E6%AD%A6%E5%A3%AB/08-%E9%BB%84%E8%9C%82%E5%A5%B3%E7%8A%B6%E6%80%81%E8%8A%82%E7%82%B9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08-黄蜂女状态节点
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_4" id="__nav_2_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    哈基米大冒险
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    哈基米大冒险
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%93%88%E5%9F%BA%E7%B1%B3%E5%A4%A7%E5%86%92%E9%99%A9/01-%E8%81%94%E6%9C%BA%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B8%8EHTTP%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01-联机游戏开发基础与HTTP服务器搭建
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%93%88%E5%9F%BA%E7%B1%B3%E5%A4%A7%E5%86%92%E9%99%A9/02-%E8%81%94%E6%9C%BA%E6%95%B0%E6%8D%AE%E9%80%BB%E8%BE%91%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02-联机数据逻辑需求分析与多线程编程基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%93%88%E5%9F%BA%E7%B1%B3%E5%A4%A7%E5%86%92%E9%99%A9/03-%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E6%90%AD%E5%BB%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03-游戏服务器设计与客户端基础架构搭建
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%93%88%E5%9F%BA%E7%B1%B3%E5%A4%A7%E5%86%92%E9%99%A9/04-%E7%8E%A9%E5%AE%B6%E8%B7%AF%E5%BE%84%E6%9F%A5%E8%AF%A2%E4%B8%8E%E5%B8%A7%E9%97%B4%E5%B9%B3%E6%BB%91%E6%8F%92%E5%80%BC%E7%A7%BB%E5%8A%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04-玩家路径查询与帧间平滑插值移动
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%93%88%E5%9F%BA%E7%B1%B3%E5%A4%A7%E5%86%92%E9%99%A9/05-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E4%B8%8E%E8%81%94%E6%9C%BA%E6%B8%B8%E6%88%8F%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05-多线程网络通信与联机游戏客户端开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%93%88%E5%9F%BA%E7%B1%B3%E5%A4%A7%E5%86%92%E9%99%A9/05.1-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05.1-字符编码
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-easyx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 EasyX
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 EasyX">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 从文件读取图像
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 渲染图片
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-cleardevice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 cleardevice()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 代码实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 代码实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 显示背景图片
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 显示背景图片">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.1 基本绘图流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-windowsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.2 windows.h
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#213-tcharh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.3 tchar.h
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 显示角色动画
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 显示角色动画">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.1 批量导入图片素材
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.2 显示带透明通道的图片
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#223" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.3 序列帧播放
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 控制角色移动
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>01-动画与角色移动</h1>
+
+<h2 id="1-easyx">1 EasyX</h2>
+<h3 id="11">1.1 从文件读取图像</h3>
+<p><a href="https://docs.easyx.cn/zh-cn/loadimage">EasyX 文档 - loadimage</a><br />
+这个函数用于从文件中读取图像。<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// 从图片文件获取图像(bmp/gif/jpg/png/tif/emf/wmf/ico)</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">loadimage</span><span class="p">(</span>
+<span class="w">    </span><span class="n">IMAGE</span><span class="o">*</span><span class="w"> </span><span class="n">pDstImg</span><span class="p">,</span><span class="w">         </span><span class="c1">// 保存图像的 IMAGE 对象指针</span>
+<span class="w">    </span><span class="n">LPCTSTR</span><span class="w"> </span><span class="n">pImgFile</span><span class="p">,</span><span class="w">       </span><span class="c1">// 图片文件名</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">nWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">         </span><span class="c1">// 图片的拉伸宽度</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">nHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">        </span><span class="c1">// 图片的拉伸高度</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">bResize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="w">    </span><span class="c1">// 是否调整 IMAGE 的大小以适应图片</span>
+<span class="p">);</span>
+</code></pre></div><br />
+举例，加载<code>test.jpg</code><br />
+<div class="highlight"><pre><span></span><code><span class="n">IMAGE</span><span class="w"> </span><span class="n">img</span><span class="p">;</span>
+<span class="n">loadimage</span><span class="p">(</span><span class="o">&amp;</span><span class="n">img</span><span class="p">,</span><span class="w"> </span><span class="n">_T</span><span class="p">(</span><span class="s">&quot;test.jpg&quot;</span><span class="p">));</span>
+</code></pre></div></p>
+<div class="admonition note">
+<p>LPCTSTR是Windows编程中使用的数据类型宏，用于表示字符编码的兼容性处理。其名称由"Long Pointer to Constant T Character String"缩写构成，本质为指向常量字符的指针，具体类型由编译环境是否定义_UNICODE宏决定，可自动切换为<a href="https://baike.baidu.com/item/Unicode/750500?fromModule=lemma_inlink">Unicode</a>或ANSI字符串类型。</p>
+<p>该类型包含五个组成部分：L代表历史遗留的32位长指针标识，P表示指针类型，C指代常量属性，T对应适配不同字符集的_T宏，STR声明字符串用途。在代码中通常与CString类通用，得益于CString内置的隐式类型转换运算符，允许直接作为常量字符串指针使用。但向非常量字符串(LPTSTR)转换时需通过GetBuffer/ReleaseBuffer方法安全操作，避免直接强制类型转换导致的内存隐患。</p>
+</div>
+<h3 id="12">1.2 渲染图片</h3>
+<p>这个函数的几个重载用于在当前设备上绘制指定图像。<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// 绘制图像</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">putimage</span><span class="p">(</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">dstX</span><span class="p">,</span><span class="w">               </span><span class="c1">// 绘制位置的 x 坐标</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">dstY</span><span class="p">,</span><span class="w">               </span><span class="c1">// 绘制位置的 y 坐标</span>
+<span class="w">    </span><span class="n">IMAGE</span><span class="w"> </span><span class="o">*</span><span class="n">pSrcImg</span><span class="p">,</span><span class="w">         </span><span class="c1">// 要绘制的 IMAGE 对象指针</span>
+<span class="w">    </span><span class="n">DWORD</span><span class="w"> </span><span class="n">dwRop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SRCCOPY</span><span class="w">   </span><span class="c1">// 三元光栅操作码</span>
+<span class="p">);</span>
+</code></pre></div><br />
+举例，将<code>test.jpg</code>渲染到(100,200)的位置<br />
+<div class="highlight"><pre><span></span><code><span class="n">IMAGE</span><span class="w"> </span><span class="n">img</span><span class="p">;</span>
+<span class="n">loadimage</span><span class="p">(</span><span class="o">&amp;</span><span class="n">img</span><span class="p">,</span><span class="w"> </span><span class="n">_T</span><span class="p">(</span><span class="s">&quot;test.jpg&quot;</span><span class="p">));</span>
+<span class="n">putimage</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">img</span><span class="p">);</span>
+</code></pre></div></p>
+<figure><br />
+<img alt="Pasted image 20260217150802.png" src="../Pasted%20image%2020260217150802.png" width="300" /><br />
+<br />
+</figure>
+<h3 id="13-cleardevice">1.3 cleardevice()</h3>
+<p><code>cleardevice()</code> 是 EasyX 图形库中最基础的函数之一<br />
+- 作用：将当前图形窗口（画布）的所有像素点恢复为<strong>默认背景色</strong>（默认是黑色，也可以通过 <code>setbkcolor()</code> 修改），相当于用背景色 “覆盖” 掉画布上所有已绘制的内容，让画布回到 “干净” 的初始状态。<br />
+- 适用场景：在游戏 / 动画循环中，每一次绘制新内容前清空画布，避免上一帧的图像残留，防止画面重叠、模糊。</p>
+<h2 id="2">2 代码实现</h2>
+<h3 id="21">2.1 显示背景图片</h3>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="cpf">&lt;graphics.h&gt;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">initgraph</span><span class="p">(</span><span class="mi">1280</span><span class="p">,</span><span class="w"> </span><span class="mi">720</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">running</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">ExMessage</span><span class="w"> </span><span class="n">msg</span><span class="p">;</span>
+<span class="w">    </span><span class="n">IMAGE</span><span class="w"> </span><span class="n">img_background</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">loadimage</span><span class="p">(</span><span class="o">&amp;</span><span class="n">img_background</span><span class="p">,</span><span class="w"> </span><span class="n">_T</span><span class="p">(</span><span class="s">&quot;..</span><span class="se">\\</span><span class="s">img</span><span class="se">\\</span><span class="s">background.png&quot;</span><span class="p">));</span>
+
+<span class="w">    </span><span class="n">BeginBatchDraw</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="n">running</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">DWORD</span><span class="w"> </span><span class="n">start_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetTickCount</span><span class="p">();</span>
+
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">peekmessage</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">))</span>
+<span class="w">        </span><span class="p">{</span>
+
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">cleardevice</span><span class="p">();</span>
+
+<span class="w">        </span><span class="n">putimage</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">img_background</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">FlushBatchDraw</span><span class="p">();</span>
+
+<span class="w">        </span><span class="n">DWORD</span><span class="w"> </span><span class="n">end_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetTickCount</span><span class="p">();</span>
+<span class="w">        </span><span class="n">DWORD</span><span class="w"> </span><span class="n">delta_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">delta_time</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1000</span><span class="o">/</span><span class="mi">144</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Sleep</span><span class="p">(</span><span class="mi">1000</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">144</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">delta_time</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">EndBatchDraw</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="211">2.1.1 基本绘图流程</h4>
+<p><code>BeginBatchDraw</code>、<code>EndBatchDraw</code>、<code>FlushBatchDraw</code> 是用来实现<strong>批量绘图</strong>的：先把所有要画的图形 “暂存” 起来，等全部绘制指令执行完，再一次性把所有图形刷新到屏幕上，从而消除闪烁、提升绘图效率。<br />
+BeginBatchDraw()<br />
+- <strong>作用</strong>：开启批量绘图模式。调用后，后续所有的绘图指令都不会立刻显示在窗口上，而是被缓存到内存中。<br />
+- <strong>时机</strong>：在所有批量绘制的代码<strong>之前</strong>调用。</p>
+<p>EndBatchDraw()<br />
+- <strong>作用</strong>：结束批量绘图模式，并立即将缓存中所有未显示的图形一次性刷新到屏幕上。<br />
+- <strong>时机</strong>：在所有批量绘制的代码<strong>之后</strong>调用，是批量绘图的 “收尾” 操作。</p>
+<p>FlushBatchDraw()<br />
+- <strong>作用</strong>：在批量绘图模式中（即 <code>BeginBatchDraw</code> 之后、<code>EndBatchDraw</code> 之前），<strong>手动强制刷新</strong>缓存中的图形到屏幕上（但不会结束批量绘图模式）。<br />
+- <strong>适用场景</strong>：批量绘制过程中，需要 “阶段性显示” 部分图形（比如绘制进度条时，每画一段就刷新一次）。<br />
+三个函数都无参数、无返回值</p>
+<h4 id="212-windowsh">2.1.2 windows.h</h4>
+<p><code>windows.h</code> 是 Windows 系统编程的核心头文件。<br />
+- <code>GetTickCount()</code> 的作用是获取从电脑开机到现在的毫秒数（比如开机后过了 10000 毫秒，就返回 10000）。<br />
+- <code>Sleep()</code> 的作用是让程序 “暂停” 指定的毫秒数（比如 <code>Sleep(10)</code> 就是暂停 10 毫秒）。<br />
+- <code>DWORD</code> 类型本质是 Windows 定义的一个 “别名”，等价于 <code>unsigned long</code>（无符号长整型），用来存储非负的整数（比如时间、内存地址等）。</p>
+<h4 id="213-tcharh">2.1.3 tchar.h</h4>
+<p><code>_T()</code> 宏的核心是 “自动适配编码”：<br />
+- 当程序编译为 “多字节编码” 时，<code>_T("字符串")</code> 等价于普通字符串 <code>"字符串"</code>；<br />
+- 当程序编译为 “Unicode 编码” 时，<code>_T("字符串")</code> 等价于宽字符字符串 <code>L"字符串"</code>。</p>
+<h3 id="22">2.2 显示角色动画</h3>
+<h4 id="221">2.2.1 批量导入图片素材</h4>
+<p><div class="highlight"><pre><span></span><code><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PLAYER_ANIM_NUM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span>
+<span class="n">IMAGE</span><span class="w"> </span><span class="n">img_player_left</span><span class="p">[</span><span class="n">PLAYER_ANIM_NUM</span><span class="p">];</span>
+<span class="n">IMAGE</span><span class="w"> </span><span class="n">img_player_right</span><span class="p">[</span><span class="n">PLAYER_ANIM_NUM</span><span class="p">];</span>
+</code></pre></div><br />
+之后实现<code>loadAnimation()</code>函数，需要注意的是如果直接使用<code>path.c_str()</code>会返回<code>wchar_t *</code>类型。而<code>loadimage()</code>只能接受<code>char *</code>类型，因此需要编写一个函数<code>wstring_to_utf8()</code>实现把utf16转化为utf8的功能。</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">LoadAnimation</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">PLAYER_ANIM_NUM</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">wstring</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sa">L</span><span class="s">&quot;..</span><span class="se">\\</span><span class="s">img</span><span class="se">\\</span><span class="s">player_left_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">to_wstring</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sa">L</span><span class="s">&quot;.png&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">loadimage</span><span class="p">(</span><span class="o">&amp;</span><span class="n">img_player_left</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">wstring_to_utf8</span><span class="p">(</span><span class="n">path</span><span class="p">).</span><span class="n">c_str</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">PLAYER_ANIM_NUM</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">wstring</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sa">L</span><span class="s">&quot;..</span><span class="se">\\</span><span class="s">img</span><span class="se">\\</span><span class="s">player_right_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">to_wstring</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sa">L</span><span class="s">&quot;.png&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">loadimage</span><span class="p">(</span><span class="o">&amp;</span><span class="n">img_player_right</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">wstring_to_utf8</span><span class="p">(</span><span class="n">path</span><span class="p">).</span><span class="n">c_str</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1">// UTF-16 (wstring) 转 UTF-8</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">wstring_to_utf8</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">wstring</span><span class="o">&amp;</span><span class="w"> </span><span class="n">wstr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">wstr</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">{};</span>
+
+<span class="w">    </span><span class="c1">// 先计算需要的字节长度</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WideCharToMultiByte</span><span class="p">(</span><span class="n">CP_UTF8</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">wstr</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">len</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">{};</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">utf8_str</span><span class="p">(</span><span class="n">len</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;\0&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">WideCharToMultiByte</span><span class="p">(</span><span class="n">CP_UTF8</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">wstr</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">utf8_str</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">len</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">utf8_str</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="admonition info">
+<p>loadimage()函数是 EasyX 的图片加载函数，要求传入 UTF-8 编码的 C 风格字符串（<code>const char*</code>）。</p>
+<p>Windows 系统中，中文 / 特殊字符的路径如果用普通 string 存储容易乱码，所以先用 wstring（UTF-16）拼接路径，再转 UTF-8 传给图片加载函数，避免路径乱码导致图片加载失败。</p>
+</div>
+<h4 id="222">2.2.2 显示带透明通道的图片</h4>
+<h4 id="223">2.2.3 序列帧播放</h4>
+<p><div class="highlight"><pre><span></span><code><span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">putimage_alpha</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">IMAGE</span><span class="o">*</span><span class="w"> </span><span class="n">img</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">img</span><span class="o">-&gt;</span><span class="n">getwidth</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">img</span><span class="o">-&gt;</span><span class="n">getheight</span><span class="p">();</span>
+<span class="w">    </span><span class="n">AlphaBlend</span><span class="p">(</span><span class="n">GetImageHDC</span><span class="p">(</span><span class="nb">NULL</span><span class="p">),</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="p">,</span>
+<span class="w">               </span><span class="n">GetImageHDC</span><span class="p">(</span><span class="n">img</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="n">AC_SRC_OVER</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="n">AC_SRC_ALPHA</span><span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div><br />
+<a href="https://learn.microsoft.com/zh-cn/windows/win32/api/wingdi/nf-wingdi-alphablend">alphaBlend 函数 (wingdi.h) - Win32 apps | Microsoft Learn</a><br />
+AlphaBlend 函数显示具有透明或半透明像素的位图。<br />
+<div class="highlight"><pre><span></span><code><span class="n">BOOL</span><span class="w"> </span><span class="nf">AlphaBlend</span><span class="p">(</span>
+<span class="w">  </span><span class="p">[</span><span class="n">in</span><span class="p">]</span><span class="w"> </span><span class="n">HDC</span><span class="w">           </span><span class="n">hdcDest</span><span class="p">,</span>
+<span class="w">  </span><span class="p">[</span><span class="n">in</span><span class="p">]</span><span class="w"> </span><span class="kt">int</span><span class="w">           </span><span class="n">xoriginDest</span><span class="p">,</span>
+<span class="w">  </span><span class="p">[</span><span class="n">in</span><span class="p">]</span><span class="w"> </span><span class="kt">int</span><span class="w">           </span><span class="n">yoriginDest</span><span class="p">,</span>
+<span class="w">  </span><span class="p">[</span><span class="n">in</span><span class="p">]</span><span class="w"> </span><span class="kt">int</span><span class="w">           </span><span class="n">wDest</span><span class="p">,</span>
+<span class="w">  </span><span class="p">[</span><span class="n">in</span><span class="p">]</span><span class="w"> </span><span class="kt">int</span><span class="w">           </span><span class="n">hDest</span><span class="p">,</span>
+<span class="w">  </span><span class="p">[</span><span class="n">in</span><span class="p">]</span><span class="w"> </span><span class="n">HDC</span><span class="w">           </span><span class="n">hdcSrc</span><span class="p">,</span>
+<span class="w">  </span><span class="p">[</span><span class="n">in</span><span class="p">]</span><span class="w"> </span><span class="kt">int</span><span class="w">           </span><span class="n">xoriginSrc</span><span class="p">,</span>
+<span class="w">  </span><span class="p">[</span><span class="n">in</span><span class="p">]</span><span class="w"> </span><span class="kt">int</span><span class="w">           </span><span class="n">yoriginSrc</span><span class="p">,</span>
+<span class="w">  </span><span class="p">[</span><span class="n">in</span><span class="p">]</span><span class="w"> </span><span class="kt">int</span><span class="w">           </span><span class="n">wSrc</span><span class="p">,</span>
+<span class="w">  </span><span class="p">[</span><span class="n">in</span><span class="p">]</span><span class="w"> </span><span class="kt">int</span><span class="w">           </span><span class="n">hSrc</span><span class="p">,</span>
+<span class="w">  </span><span class="p">[</span><span class="n">in</span><span class="p">]</span><span class="w"> </span><span class="n">BLENDFUNCTION</span><span class="w"> </span><span class="n">ftn</span>
+<span class="p">);</span>
+</code></pre></div></p>
+<p><code>[in] ftn</code><br />
+源位图和目标位图的 alpha 混合函数、要应用于整个源位图的全局 alpha 值，以及源位图的格式信息。 源和目标混合函数目前仅限于AC_SRC_OVER。 请参阅 <a href="https://learn.microsoft.com/zh-cn/windows/desktop/api/wingdi/ns-wingdi-blendfunction">BLENDFUNCTION</a> 和 <a href="https://learn.microsoft.com/zh-cn/windows/desktop/api/wingdi/ns-wingdi-emralphablend">EMRALPHABLEND</a> 结构。<br />
+<div class="highlight"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">_BLENDFUNCTION</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">BYTE</span><span class="w"> </span><span class="n">BlendOp</span><span class="p">;</span>
+<span class="w">  </span><span class="n">BYTE</span><span class="w"> </span><span class="n">BlendFlags</span><span class="p">;</span>
+<span class="w">  </span><span class="n">BYTE</span><span class="w"> </span><span class="n">SourceConstantAlpha</span><span class="p">;</span>
+<span class="w">  </span><span class="n">BYTE</span><span class="w"> </span><span class="n">AlphaFormat</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">BLENDFUNCTION</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">PBLENDFUNCTION</span><span class="p">;</span>
+</code></pre></div></p>
+<p><code>BlendOp</code><br />
+源混合操作。 目前，唯一定义的源和目标混合操作是AC_SRC_OVER。 有关详细信息，请参阅以下“备注”部分。</p>
+<p><code>BlendFlags</code><br />
+必须为零。</p>
+<p><code>SourceConstantAlpha</code><br />
+指定要用于整个源位图的 alpha 透明度值。 SourceConstantAlpha 值与源位图中的任何每像素 alpha 值组合在一起。 如果将 SourceConstantAlpha 设置为 0，则假定图像是透明的。 如果只想使用每像素 alpha 值，请将 SourceConstantAlpha 值设置为 255 (不透明) 。</p>
+<p><code>AlphaFormat</code><br />
+此成员控制解释源位图和目标位图的方式。 <strong>AlphaFormat</strong> 具有以下值。</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AC_SRC_ALPHA</td>
+<td>当位图具有 Alpha 通道 (即每像素 alpha) 时，将设置此标志。 请注意，API 使用预乘 alpha，这意味着位图中的红色、绿色和蓝色通道值必须使用 alpha 通道值进行预乘。 例如，如果 alpha 通道值为 x，则红色、绿色和蓝色通道必须在调用之前乘以 x 并除以0xff。</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://docs.easyx.cn/zh-cn/GetImageHDC">EasyX 文档 - GetImageHDC</a><br />
+这个函数用于获取绘图设备句柄(HDC)。<br />
+<div class="highlight"><pre><span></span><code><span class="n">HDC</span><span class="w"> </span><span class="nf">GetImageHDC</span><span class="p">(</span><span class="n">IMAGE</span><span class="o">*</span><span class="w"> </span><span class="n">pImg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+</code></pre></div><br />
+参数pImg: 绘图设备指针。如果为 NULL，表示默认的绘图窗口。<br />
+函数返回绘图设备句柄(HDC)。<br />
+获取到的 HDC 句柄可以用在 Windows GDI 函数中。<br />
+每个 IMAGE 对象都有一个 HDC 句柄，可以通过 HDC 句柄实现对该 IMAGE 的 GDI 函数操作。在同一个 IMAGE 设备中，请勿混用 EasyX 绘图函数和 GDI 绘图函数。</p>
+<div class="admonition note">
+<p class="admonition-title"> HDC(设备上下文句柄)</p>
+<p>​​HDC（Handle to Device Context）​​ 是 Windows 图形设备接口（GDI）中的核心概念，​​并非结构体​​，而是一个指向设备上下文（Device Context, DC）的句柄。设备上下文是操作系统维护的​​绘图环境数据结构​​，封装了图形设备（如显示器、打印机）的属性（如分辨率、调色板、字体、画笔等），开发者通过 HDC 操作这些属性实现跨设备绘图。</p>
+</div>
+<h2 id="3">3 控制角色移动</h2>
+<p>使用bool变量来标记角色移动的方向<br />
+<div class="highlight"><pre><span></span><code><span class="kt">bool</span><span class="w"> </span><span class="n">is_move_up</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">is_move_down</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">is_move_left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">is_move_right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+</code></pre></div></p>
+<p><div class="highlight"><pre><span></span><code><span class="n">ExMessage</span><span class="w"> </span><span class="n">msg</span><span class="p">;</span>
+</code></pre></div><br />
+在主循环中读取键盘输入，按下方向键时，将对应的bool变量设置为true，抬起方向键时将对应的bool变量设置为false。在游戏帧循环中根据bool变量来更新角色的位置。<br />
+<div class="highlight"><pre><span></span><code><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">peekmessage</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">message</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">WM_KEYDOWN</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">vkcode</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">VK_UP</span><span class="p">:</span>
+<span class="w">            </span><span class="n">is_move_up</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">VK_DOWN</span><span class="p">:</span>
+<span class="w">            </span><span class="n">is_move_down</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">VK_LEFT</span><span class="p">:</span>
+<span class="w">            </span><span class="n">is_move_left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">VK_RIGHT</span><span class="p">:</span>
+<span class="w">            </span><span class="n">is_move_right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">message</span><span class="o">==</span><span class="n">WM_KEYUP</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">vkcode</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">VK_UP</span><span class="p">:</span>
+<span class="w">            </span><span class="n">is_move_up</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">VK_DOWN</span><span class="p">:</span>
+<span class="w">            </span><span class="n">is_move_down</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">VK_LEFT</span><span class="p">:</span>
+<span class="w">            </span><span class="n">is_move_left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">VK_RIGHT</span><span class="p">:</span>
+<span class="w">            </span><span class="n">is_move_right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_move_up</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">player_pos</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">PLAYER_SPEED</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_move_down</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">player_pos</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">PLAYER_SPEED</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_move_left</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">player_pos</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">PLAYER_SPEED</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_move_right</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">player_pos</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">PLAYER_SPEED</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div></p>
+<p>如果直接在按键信息处理时更新角色的未知会导致两个问题<br />
+1. 当我们按下按键时，会首先有一个WM_KEYDOWN消息进入到事件队列中，随后保持按下一段时间后，才有连续不断地WM_KEYOWN消息触发。这导致持续按键一小段事件后才开始连续移动。<br />
+2. WM_KEYDOWN消息的产生与游戏主循环是异步进行的。WM_KEYDOWN触发频率受硬件设备和操作系统影响。每个游戏帧中，事件处理部分处理WM_KEYDOWN消息的数量不同。因此可能出现某些帧角色移动的多，某些帧移动少，导致运动不均匀。<br />
+现在的实现方法解决了这两个问题，同时还实现了“左上”这种45度方向的移动。但是还有一些不足，比如角色运动的方向被限制到8个方向上，且没有保证其速度大小恒定。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.top", "navigation.tabs", "search.highlight"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
