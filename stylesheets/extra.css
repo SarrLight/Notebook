@@ -1,3 +1,55 @@
+/* 字体配置 - 微软雅黑 */
+body {
+  font-family: "Microsoft YaHei", "Microsoft YaHei UI", sans-serif;
+}
+
+code, pre, .highlight {
+  font-family: "JetBrains Mono", "Consolas", monospace;
+}
+
+/* KaTeX 公式间距调整 - 减小前后留白 */
+.katex-display {
+  margin: 0.0rem 0 !important;
+  padding: 0 !important;
+}
+
+.katex-display > .katex {
+  font-size: 1.25em !important;
+}
+
+.arithmatex {
+  margin: 0.0rem 0 !important;
+  font-size: 1em !important;
+}
+
+/* inline 公式间距 */
+.katex {
+  margin: 0 0.1rem;
+}
+
+/* KaTeX 公式中的中文文本 */
+.katex .mord.text,
+.katex .mtext,
+.katex .text,
+.katex .mord .text,
+.katex .text > span,
+.katex .mord.text > span,
+.katex .cjk_fallback {
+  font-size: 0.8em !important;
+  font-family: "Microsoft YaHei", "Microsoft YaHei UI", sans-serif !important;
+  line-height: 1.2 !important;
+}
+
+/* 提示块内容字号与正文一致 */
+.admonition,
+.admonition .admonition-title,
+.admonition p,
+.admonition li,
+.admonition dd,
+.admonition dt {
+  font-size: 1em !important;
+}
+
 [data-md-color-scheme="slate"] {
     --md-primary-fg-color: #6392ab;
     --md-primary-bg-color: #bfc1c5;
@@ -24,4 +76,18 @@ img {
   /* 可选：限制图片最大宽度，避免超出容器（适配响应式） */
   max-width: 80% !important;
   
+}
+
+/* 放大顶部 logo */
+.md-header__button.md-logo {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.md-header__button.md-logo img {
+  height: 2.4rem !important;
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }

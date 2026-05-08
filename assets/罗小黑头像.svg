@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_图层_2" data-name="图层 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 155.01 122.4">
+  <g id="_图层_2-2" data-name="图层 2">
+    <g>
+      <path d="M104.01,12.04c4.25-2.5,10.91-5.83,19.62-7.81,9.07-2.06,16.55-3.76,22.1,0,6.22,4.22,6.71,13.07,7.24,25.71.34,8.19-1.16,20.2-4.76,34.67" style="fill: #141712; stroke: #452a20; stroke-miterlimit: 10; stroke-width: 4px;"/>
+      <path d="M128.51,24.99c3.05-8.76,18.08-19.56,18.08-19.56,0,0,13.4,13.85.69,62.42" style="fill: #a5c68d; stroke: #452a20; stroke-miterlimit: 10; stroke-width: 4px;"/>
+    </g>
+    <g>
+      <path d="M50.21,14.17c-4.35-2.33-11.13-5.39-19.91-7.03-9.14-1.7-16.69-3.11-22.08.87-6.04,4.46-6.19,13.33-6.21,25.98-.02,8.2,1.95,20.14,6.13,34.45" style="fill: #141712; stroke: #452a20; stroke-miterlimit: 10; stroke-width: 4px;"/>
+      <path d="M26.24,28.09C22.85,19.45,7.39,9.26,7.39,9.26c0,0-12.84,14.37,1.78,62.4" style="fill: #a5c68d; stroke: #452a20; stroke-miterlimit: 10; stroke-width: 4px;"/>
+    </g>
+    <path d="M79.7,11.3c-17.76.07-35.55.13-50.88,13.46-13.02,11.32-21.3,29.64-19.3,48.76.44,4.22,2.36,20.39,15.24,32.76,13.77,13.24,31.1,13.53,57.14,13.97,23.09.39,34.7.59,46.18-7.87,18.4-13.56,19.92-37.14,20.1-42.41.1-2.87.58-29.7-20.1-46.73-14.65-12.06-31.15-12-48.38-11.94Z" style="fill: #141712; stroke: #452a20; stroke-miterlimit: 10; stroke-width: 4px;"/>
+    <g>
+      <ellipse cx="48.77" cy="61.31" rx="32.38" ry="44.32" style="fill: #f7f8d8; stroke: #452a20; stroke-miterlimit: 10; stroke-width: 4px;"/>
+      <ellipse cx="46.8" cy="58.83" rx="18.97" ry="25.52" style="fill: #231815; stroke: #452a20; stroke-miterlimit: 10; stroke-width: 4px;"/>
+    </g>
+    <g>
+      <ellipse cx="116.02" cy="62.06" rx="31.19" ry="42.82" transform="translate(-4.24 8.67) rotate(-4.2)" style="fill: #f7f8d8; stroke: #452a20; stroke-miterlimit: 10; stroke-width: 4px;"/>
+      <ellipse cx="117.74" cy="59.53" rx="18.27" ry="24.66" transform="translate(-4.05 8.79) rotate(-4.2)" style="fill: #231815; stroke: #452a20; stroke-miterlimit: 10; stroke-width: 4px;"/>
+    </g>
+    <path d="M73.47,106.64c.24.3,2.65,3.2,6.67,3.02,4.03-.18,6.17-3.3,6.38-3.62" style="fill: none; stroke: #452a20; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 4px;"/>
+  </g>
+</svg>
