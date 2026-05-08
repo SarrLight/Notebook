@@ -1,0 +1,1690 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../02-player-character-animation-and-movement-basics/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/luo-xiao-hei-tou-xiang.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>03-场景碰撞与子弹基础 - SarrLight's Notebook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Microsoft+YaHei,+Microsoft+YaHei+UI,+sans-serif:300,300i,400,400i,700,700i%7CJetBrains+Mono,+Consolas:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Microsoft YaHei, Microsoft YaHei UI, sans-serif";--md-code-font:"JetBrains Mono, Consolas"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../.." title="SarrLight's Notebook" class="md-header__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  <img src="../../../../assets/logo.webp" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SarrLight's Notebook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              03-场景碰撞与子弹基础
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SarrLight/Notebook" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    SarrLight/Notebook
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../.." class="md-tabs__link">
+          
+  
+  
+    
+  
+  首页
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../course-notes/computer-organization/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  课内学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  游戏开发
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="SarrLight's Notebook" class="md-nav__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  <img src="../../../../assets/logo.webp" alt="logo">
+
+    </a>
+    SarrLight's Notebook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SarrLight/Notebook" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    SarrLight/Notebook
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../.." class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../../course-notes/computer-organization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课内学习
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked="">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    游戏开发
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    游戏开发
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../GAMES101/03-04%20Transform/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GAMES101
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../voidmatrix-series-tutorials/teyvat-survivor/01-dong-hua-yu-jiao-se-yi-dong/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Voidmatrix系列教程
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Godot教程
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Godot教程
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4_1" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_3_4_1" id="__nav_3_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    冥日芳粥：肿么滴
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_4_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    冥日芳粥：肿么滴
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-engine-installation-and-tile-system-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01-引擎安装与瓦片系统基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-player-character-animation-and-movement-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02-玩家角色动画与移动基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03-场景碰撞与子弹基础
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03-场景碰撞与子弹基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 设置地图碰撞
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 设置地图碰撞">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 为瓦片添加碰撞体
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 调整角色碰撞体大小
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 地图空气墙
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 设计并实现子弹逻辑
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 设计并实现子弹逻辑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-bullet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 新建bullet场景
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 设置碰撞体和纹理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 添加脚本
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 编写脚本
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 设置地图碰撞
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 设置地图碰撞">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 为瓦片添加碰撞体
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 调整角色碰撞体大小
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 地图空气墙
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 设计并实现子弹逻辑
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 设计并实现子弹逻辑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-bullet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 新建bullet场景
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 设置碰撞体和纹理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 添加脚本
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 编写脚本
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+
+  <nav class="md-path" aria-label="导航栏">
+    <ol class="md-path__list">
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    游戏开发
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../01-engine-installation-and-tile-system-basics/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Godot教程
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../01-engine-installation-and-tile-system-basics/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    冥日芳粥：肿么滴
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/SarrLight/Notebook/edit/master/docs/game-development/godot-tutorials/mingri-fangzhou-zomede/03-scene-collision-and-bullet-basics.md" title="编辑此页" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/SarrLight/Notebook/raw/master/docs/game-development/godot-tutorials/mingri-fangzhou-zomede/03-scene-collision-and-bullet-basics.md" title="查看本页的源代码" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"></path></svg>
+    </a>
+  
+
+
+  <h1>03-场景碰撞与子弹基础</h1>
+
+<h2 id="1">1 设置地图碰撞</h2>
+<h3 id="11">1.1 为瓦片添加碰撞体</h3>
+<p>来到game场景，选中左侧场景树的地面瓦片层，在右侧的检查器中点击Tile Set选项，在展开的列表中找到Physics Layers物理碰撞层设置。点击添加元素按钮。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508133654.png" data-desc-position="bottom"><img alt="Pasted image 20260508133654.png" src="../Pasted%20image%2020260508133654.png" width="800"></a><br>
+<br>
+</figure>
+<p>这样我们来到最下方的面板中，在左侧面板中先选中静态瓦片图集，点击“绘制”按钮，然后展开属性编辑器列表，在下面看到“物理层0”这个选项，点击之后进入到物理层的绘制。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508134127.png" data-desc-position="bottom"><img alt="Pasted image 20260508134127.png" src="../Pasted%20image%2020260508134127.png" width="700"></a><br>
+<br>
+</figure>
+<p>直接在右侧的编辑窗口中点选或者框选这几个用作障碍物的瓦片网格，让这些网格变蓝就完成了。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508134306.png" data-desc-position="bottom"><img alt="Pasted image 20260508134306.png" src="../Pasted%20image%2020260508134306.png" width="700"></a><br>
+<br>
+</figure>
+<p>当然动态瓦片也是相似的操作。我们在左侧选中动态瓦片，然后我们一次点选第一列瓦片，动态瓦片的动画是按行使用的，所以我们只需要也只能设置每一行的第一列，后面的动画帧播放时也会使用相同的碰撞外形。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508134333.png" data-desc-position="bottom"><img alt="Pasted image 20260508134333.png" src="../Pasted%20image%2020260508134333.png" width="700"></a><br>
+<br>
+</figure>
+<p>在完成这些内容后，点击右上角的运行按钮，再次在场景中移动的时候就可以与障碍物发生碰撞了，不过我们的装饰瓦片是没有添加碰撞的，所以玩家还是可以从这个地图漏洞中跑出去，这个是意料之中的。<br>
+但是只有一个网格宽的小道好像角色无法进入，这时因为角色默认的碰撞外形太大了。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508134630.png" data-desc-position="bottom"><img alt="Pasted image 20260508134630.png" src="../Pasted%20image%2020260508134630.png" width="400"></a><br>
+<br>
+</figure>
+<h3 id="12">1.2 调整角色碰撞体大小</h3>
+<p>我们来到 player 场景，直接点击这个半透明的碰撞圆形，或者在左侧场景树中点击 CollisionShape2D 节点，在右侧的检查器中点击 Shape 属性的值，就可以看到展开的内容中有一个 radius 半径属性，我们双击把它从默认的 10 改成 6，可以看到预览中的这个圆形碰撞范围明显变小，这时运行场景可以看到玩家可以通过一个网格宽度的小道</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508135035.png" data-desc-position="bottom"><img alt="Pasted image 20260508135035.png" src="../Pasted%20image%2020260508135035.png" width="700"></a><br>
+<br>
+</figure>
+<h3 id="13">1.3 地图空气墙</h3>
+<p>那么接下来还剩下一个需要优化的要点，那就是给地图作为添加空气墙，避免玩家通过这些预留的刷怪入口除去。<br>
+当然如果想更简单一些的话，我们也可以简单粗暴的把整个地图边缘都使用我们刚刚添加了碰撞箱的瓦片来填补起来，并且把我们装饰物层的瓦片也使用相同的方式添加上碰撞。</p>
+<p>但是有一个更通用的思路，在地图上添加空气箱边界的简单做法。<br>
+我们首先在 game 场景添加一个 Node2D 节点，然后把它改名叫做 WorldBounds, 我们在它下面添加地图地图四条边的边界节点，也就是叫做 StaticBody2D 的节点。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508140010.png" data-desc-position="bottom"><img alt="Pasted image 20260508140010.png" src="../Pasted%20image%2020260508140010.png" width="500"></a><br>
+<br>
+</figure>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508140042.png" data-desc-position="bottom"><img alt="Pasted image 20260508140042.png" src="../Pasted%20image%2020260508140042.png" width="700"></a><br>
+<br>
+</figure>
+<p>我们可以注意到下面的描述，StaticBody2D 是用来制作无法被外力移动的 2D 物理物体，手动移动的时候也不会影响路径上的其他物体，所以使用它来制作类似墙壁等物是最合适的，我们把这个节点命名为 TopBoundary, 也就是地图的上边界</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508140130.png" data-desc-position="bottom"><img alt="Pasted image 20260508140130.png" src="../Pasted%20image%2020260508140130.png" width="700"></a><br>
+<br>
+</figure>
+<p>这里还有个感叹号，点一下是说这个节点没有描述形状的节点。这个和我们之前给玩家添加碰照外形的思路是一致的，我们需要在这个节点下方挂载描述它实际碰照外形的节点，我们可以直接在添加节点的左下角这个我最近使用的节点表中找到这个 CollisionShape2D 节点双击添加到场景中。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508140409.png" data-desc-position="bottom"><img alt="Pasted image 20260508140409.png" src="../Pasted%20image%2020260508140409.png" width="700"></a><br>
+<br>
+</figure>
+<p>还有一个感叹号是因为没有设置实际的形状是什么，在右侧检查器中点击 shape, 选择 SegmentShape2D, 把形状设置为直线段，可以看到场景的原点附近有一个蓝色的小线段。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508140503.png" data-desc-position="bottom"><img alt="Pasted image 20260508140503.png" src="../Pasted%20image%2020260508140503.png" width="700"></a><br>
+<br>
+</figure>
+<p>拖拽着其中一个短点向右拉，紧贴地图上边缘。但是这样拖拽不好找对齐，通过编器最上方的按钮打开栅格吸附，再回到场景中拖拽出拽这个端点，可以很轻松的对齐到网格。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508140542.png" data-desc-position="bottom"><img alt="Pasted image 20260508140542.png" src="../Pasted%20image%2020260508140542.png" width="700"></a><br>
+<br>
+</figure>
+<p>同样的道理，我们可以继续使用相同的操作，给地图添加剩下的三个边界，如果偷懒直接复制已有的 static body2D 节点，这样 CollisionShape2D 可能存在相同的引用，导致调整碰撞线条位置时相互干扰。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508141257.png" data-desc-position="bottom"><img alt="Pasted image 20260508141257.png" src="../Pasted%20image%2020260508141257.png" width="700"></a><br>
+<br>
+</figure>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508141347.png" data-desc-position="bottom"><img alt="Pasted image 20260508141347.png" src="../Pasted%20image%2020260508141347.png" width="500"></a><br>
+<br>
+</figure>
+<p>现在，玩家角色无法逃出地图。</p>
+<p>我们就可以在“调试”中找到显示碰撞区的选项，把它打开。这样再次运行调试时就可以清楚地看到这些蓝色的碰撞形状。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508141543.png" data-desc-position="bottom"><img alt="Pasted image 20260508141543.png" src="../Pasted%20image%2020260508141543.png" width="500"></a><br>
+<br>
+</figure>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508141828.png" data-desc-position="bottom"><img alt="Pasted image 20260508141828.png" src="../Pasted%20image%2020260508141828.png" width="500"></a><br>
+<br>
+</figure>
+<h2 id="2">2 设计并实现子弹逻辑</h2>
+<p>我们需要实现以下需求：</p>
+<ul>
+<li>玩家可以按上下左右方向键，向着八个方向设计子弹</li>
+<li>在吃到强化道具之后会向着四周发射螺旋弹幕。</li>
+<li>这些子弹在命中敌人或者墙壁障碍物后会消失。</li>
+</ul>
+<h3 id="21-bullet">2.1 新建bullet场景</h3>
+<p>我们回到godot中在scene目录下右键选择新建场景，根节点类型依然是点选最后一个自定义选项，然后在窗户里面搜索 Area2D。Area2D 是 2D 空间里面的一个区域，能够检测其他的碰照对象的进入或者退出。给这个场景取名bullet。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508143616.png" data-desc-position="bottom"><img alt="Pasted image 20260508143616.png" src="../Pasted%20image%2020260508143616.png" width="500"></a><br>
+<br>
+</figure>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508144037.png" data-desc-position="bottom"><img alt="Pasted image 20260508144037.png" src="../Pasted%20image%2020260508144037.png" width="400"></a><br>
+<br>
+</figure>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508144059.png" data-desc-position="bottom"><img alt="Pasted image 20260508144059.png" src="../Pasted%20image%2020260508144059.png" width="700"></a><br>
+<br>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">几个节点的总结</p>
+<p>截止现在我们已经见到过很多个节点，这里总结一下<br>
+- 首先是制作子弹使用的Area2D<br>
+    - 子弹的功能非常单纯，只需要沿着固定的方向飞出去，在碰到障碍物或者敌人的时候完成一次命中检测，然后销毁自己。它最核心的功能不是去参加复杂的物理模拟，而是去检测碰到了谁。<br>
+    - Area2D 最擅长也是最合适去做的事情，就是这种范围检测和碰撞检测。<br>
+    - 可以把它理解成是一个跟着物体一起移动的检测区域，它不会像角色那样处理碰撞挤压或者阻挡移动，但它可以很方便地来判断进入、离开和重叠的事件。<br>
+    - 所以在我们的游戏中呢，子弹、道具拾取，爆炸范围检定，还有受击检测，这些内容都需要接助 Area2D。<br>
+- Node2D 是一个最基础的二维节点。只有位置、旋转、缩放这些最基本的功能，本身不会对碰撞检测等功能进行特化。<br>
+- CharacterBody2D则具有物理模拟、碰撞挤压、脚本控制等功能。这些功能并不需要被子弹使用。<br>
+- RigidBody2D 适合处理完全交给物理引擎去模拟的物体，比如石头或者被炸飞的杂物，它们本身会反弹，滚动等。它强调的是完全由物理系统来决定怎么移动，而子弹远没有这样物理模拟的需求，只需要固定速度，固定方向。<br>
+- StaticBody2D 则适合不会动的障碍物，墙壁、柱子、地图边界等。<br>
+</p><figure markdown="span"><p></p>
+</figure></div>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508143216.png" data-desc-position="bottom"><img alt="Pasted image 20260508143216.png" src="../Pasted%20image%2020260508143216.png" width="500"></a></p>
+
+<h3 id="22">2.2 设置碰撞体和纹理</h3>
+<p>之后新建一个CollisionShape2D节点和一个Sprite2D节点。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508144314.png" data-desc-position="bottom"><img alt="Pasted image 20260508144314.png" src="../Pasted%20image%2020260508144314.png" width="700"></a><br>
+<br>
+</figure>
+<p>把Sprite2D移动到CollisionShape2D前面方便观察碰撞外形。之后设置Shape为CircleShqpe</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508144445.png" data-desc-position="bottom"><img alt="Pasted image 20260508144445.png" src="../Pasted%20image%2020260508144445.png" width="700"></a><br>
+<br>
+</figure>
+<p>然后我们选中 Sprite2D 节点设置渲染所需要的纹理资源，在右侧的检查器面板中点击 Texture 字段，选择新建 AtlasTexture。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508144628.png" data-desc-position="bottom"><img alt="Pasted image 20260508144628.png" src="../Pasted%20image%2020260508144628.png" width="700"></a><br>
+<br>
+</figure>
+<p>然后点一下这个 AtalTexture 选项，展开更详细的配置面板，点击Atlas字段，点击快速加载，就可以看到我们目录下所有合适的资产都列在这里。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508145208.png" data-desc-position="bottom"><img alt="Pasted image 20260508145208.png" src="../Pasted%20image%2020260508145208.png" width="300"></a><br>
+<br>
+</figure>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508145232.png" data-desc-position="bottom"><img alt="Pasted image 20260508145232.png" src="../Pasted%20image%2020260508145232.png" width="500"></a><br>
+<br>
+</figure>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508145308.png" data-desc-position="bottom"><img alt="Pasted image 20260508145308.png" src="../Pasted%20image%2020260508145308.png" width="500"></a><br>
+<br>
+</figure>
+<p>双击选择道具 UI 这张图片。可以看到整张图片被贴到了场景中，这显然是不合适的。我们只需要截取其中的子弹的一小部分区域就可以了。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508145410.png" data-desc-position="bottom"><img alt="Pasted image 20260508145410.png" src="../Pasted%20image%2020260508145410.png" width="500"></a><br>
+<br>
+</figure>
+<p>所以还是选中 Sprite 节点，在右侧的面板中点击编辑区域按钮。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508145554.png" data-desc-position="bottom"><img alt="Pasted image 20260508145554.png" src="../Pasted%20image%2020260508145554.png" width="700"></a><br>
+<br>
+</figure>
+<p>在左上角吸附模式下拉列表中选择自动裁剪，godot会自动按照透明区域的范围，识别各个素材的区域。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508145650.png" data-desc-position="bottom"><img alt="Pasted image 20260508145650.png" src="../Pasted%20image%2020260508145650.png" width="500"></a><br>
+<br>
+</figure>
+<p>这时就只需要点击选中图中小方块即可，可以看到在右侧的面板中也同步修改成功了。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508145818.png" data-desc-position="bottom"><img alt="Pasted image 20260508145818.png" src="../Pasted%20image%2020260508145818.png" width="700"></a><br>
+<br>
+</figure>
+<p>回到场景编辑器中放大一些，看到这个碰撞圆形的范围远大于实际渲染大小，所以在右侧的检查器中 Shape 字段，把 Radius 半径调小点调到 3 就差不多合适了。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508145953.png" data-desc-position="bottom"><img alt="Pasted image 20260508145953.png" src="../Pasted%20image%2020260508145953.png" width="700"></a><br>
+<br>
+</figure>
+<h3 id="23">2.3 添加脚本</h3>
+<p>在Bullet上右键，选择添加脚本，然后点击创建。</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508150101.png" data-desc-position="bottom"><img alt="Pasted image 20260508150101.png" src="../Pasted%20image%2020260508150101.png" width="400"></a><br>
+<br>
+</figure>
+<p>不过在正式开始变编写代码之前，我们先想想这样几个问题。</p>
+<p>一个是为什么我们需要单独创建一个 bullet 脚本，直接让 player 玩家去管理自己发射子弹不就行了吗？</p>
+<div class="admonition success">
+<p class="admonition-title">好的思维习惯</p>
+<p>这是一个很好的思维习惯，我们不仅要实现某个游戏的功能，还要思考为什么当下最佳实践是这样设计的。</p>
+</div>
+<p>我们把子弹自己的状态和逻辑封成独立的子弹对象类，让他自己维护自己的更新和销毁等生命周期行为。如果依赖外部的场景或者玩家脚本来进行管理，首先这些本身只和子弹有关的代码和其他场景代码交杂在一起之后不容易进行调试。<br>
+以及万一我们的创建和销毁行为全部由外部系统来管理，一旦因为我们的失误导致一调用或者重复调用，也会埋下一些不稳定的隐患。所以最好的思路就是自己单独创建一个 bullet 脚本来管理子弹自己的状态，对外只提供简单的接口，子弹在游戏中的功能由他自己来决定。</p>
+<p>二是我们该让子弹在自己的脚本中实现哪些功能呢？ <br>
+对于子弹的功能，我们肯定需要他能够保持自己诞生的时候的飞行方向和速度持续动，玩家负责射击来创建子弹，然后子弹自己在游戏更新的过程中持续飞行，而当子弹碰到障碍物或者敌人，或者飞行太久还是没有发生碰撞的时候，应该能够自行销毁。（当然这种情况在我们绘制的地图中是不会出现的，因为我们四周都已经围上了空气墙）</p>
+<h2 id="3">3 编写脚本</h2>
+<p>首先定义一个全局可识别的脚本类名<br>
+</p><div class="highlight"><pre><span></span><code><span class="k">class_name</span><span class="w"> </span><span class="n">Bullet</span>
+</code></pre></div><br>
+这样做好处是, 后面在别的脚本里面或者编译器里面想要引用这个脚本类型的时候，就不用总是通过脚本文件路径去识别它.<p></p>
+<p>之后定义一些常量<br>
+</p><div class="highlight"><pre><span></span><code><span class="c1"># 标记子弹碰撞的物理层</span>
+<span class="k">const</span><span class="w"> </span><span class="n">WORLD_COLLISION_MASK</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="c1"># 子弹飞行速度，单位为像素/秒</span>
+<span class="err">@</span><span class="k">export</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">speed</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">320.0</span>
+<span class="c1"># 自当最大存活时间，防止未命中时永久留在场景中</span>
+<span class="err">@</span><span class="k">export</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">max_lifetime</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0</span>
+
+<span class="c1"># 子弹当前的飞行方向</span>
+<span class="k">var</span><span class="w"> </span><span class="n">direction</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Vector2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb nb-Type">Vector2</span><span class="o">.</span><span class="n">RIGHT</span>
+<span class="c1"># 剩余存活时间，递减到 0 后自动销毁</span>
+<span class="k">var</span><span class="w"> </span><span class="n">remaining_lifetime</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span>
+</code></pre></div><p></p>
+<p>第一行定义了子弹碰撞的物理层。</p>
+<div class="admonition note">
+<p class="admonition-title">物理层</p>
+<p>关于物理层相关的概念呢，后面再单独拿出来讲解。可以理解成一个过滤器的作用，方便后面手动进行和场景障碍物的碰撞判断。</p>
+<p>碰照的过滤是按二进制位计算的，这里的一代表的是第一层，而如果我们写 2 就代表的是第二层，写 4 代表的是第三层，写八代表的是第四层，也就是说如果我们想要和第 n 层的物理层发生碰撞，那么这里的数值就要写 <span class="arithmatex">\(2^{n-1}\)</span> 。</p>
+</div>
+<p>之后定义两个函数，<code>_ready</code>和<code>setup</code>这两个与初始化有关的函数。分开写是因为这两个分别是不同的逻辑，也分别在不同的阶段被不同的对象所调用。</p>
+<ul>
+<li><code>_ready()</code> 函数就像是我们绝大多数语言的构造函数，它会在实例化挂载到节点上之后才会被引擎自动调用。</li>
+<li>而 <code>setup</code> 函数则是由实例化子弹对象的对象，譬如玩家角色对象来初始化子弹方向的时候调用的<br>
+<div class="highlight"><pre><span></span><code><span class="c1"># 初始化寿命，并绑定 Area2D 碰撞信号</span>
+<span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">void</span><span class="p">:</span>
+<span class="w">    </span><span class="n">remaining_lifetime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max_lifetime</span>
+<span class="w">    </span><span class="n">area_entered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_area_entered</span><span class="p">)</span>
+
+<span class="c1"># 由外部在生成子弹后调用，注入初始方向</span>
+<span class="k">func</span><span class="w"> </span><span class="n">setup</span><span class="p">(</span><span class="n">initial_direction</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Vector2</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">void</span><span class="p">:</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">initial_direction</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb nb-Type">Vector2</span><span class="o">.</span><span class="n">ZERO</span><span class="p">:</span>
+<span class="w">        </span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">initial_direction</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span>
+
+<span class="w">    </span><span class="n">rotation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">direction</span><span class="o">.</span><span class="n">angle</span><span class="p">()</span>
+</code></pre></div><br>
+大家注意我们写了一个叫做 connect 函数调用，这个是 Godot 中极为重要的信号机制，这里可以简单理解成就是注册了一个回调函数，当我们子弹这个 Area2D 与其他碰撞区域重叠的时候，就会调用我们自己定义的这个 <code>_onarea enter</code> 的函数。我们暂时还没有编写这个函数的实现，我们稍后再来写函数内容，先把入口逻辑框架搭建好。信号相关的内容比较多，我们在这里就暂时不进行展开细讲了。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">函数命名细节</p>
+<p>对于内定的一些函数，以及我们在脚本内部使用的函数都是使用了下滑线开头，而对于像是 <code>setup</code> 这种会暴露到外部提供调的函数呢，就像是我们在 C ++ 中的 public 方法一样，那就直接使用蛇行命名法。</p>
+<p>不使用这样的方式去写代码也不会报错，代码也能运行，但这样的好习惯被我们养成之后，后面我们阅读代码的时候呢会更方便，在代码提示自动补权的时候呢也会更好的经筛选</p>
+</div>
+<p>下一步就是物理更新相关的内容了。<br>
+</p><div class="highlight"><pre><span></span><code><span class="c1"># 每帧先检测飞行路径是否会撞到世界，再更新位置并处理超时回收</span>
+<span class="k">func</span><span class="w"> </span><span class="n">_physics_process</span><span class="p">(</span><span class="n">delta</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">void</span><span class="p">:</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">current_position</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">global_position</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">next_position</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">current_position</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">direction</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">delta</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">_will_hit_world</span><span class="p">(</span><span class="n">current_position</span><span class="p">,</span><span class="w"> </span><span class="n">next_position</span><span class="p">):</span>
+<span class="w">        </span><span class="n">queue_free</span><span class="p">()</span>
+<span class="w">        </span><span class="k">return</span>
+
+<span class="w">    </span><span class="n">global_position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">next_position</span>
+
+<span class="w">    </span><span class="c1"># 没有命中任何对象，也要在超时后自动清理</span>
+<span class="w">    </span><span class="n">remaining_lifetime</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">delta</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">remaining_lifetime</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">:</span>
+<span class="w">        </span><span class="n">queue_free</span><span class="p">()</span>
+</code></pre></div><p></p>
+<ul>
+<li>我们首先获取了 global_position, 也就是全局的世界位置作为初始位置。</li>
+<li>然后先计算了这一帧运动之后的位置，对这个新位置调用了一个 <code>_will_hit_world</code> 的检测，虽然这里我们还没有实现这个函数。但是从函数名的我们就可以看出来，我们需要在这里去检查子弹是否和世界中的边界或者障碍物发生了碰撞，如果发生了碰撞，我们就直接销毁。</li>
+<li>
+<p>注意我们在这里使用的是 queue_free, 而不是直接调用 free, 这个是标记清除策略。我们可以在某一个游戏帧中对同一游戏对象调用多次 queue_free, queue_free 的作用并不是直接把游戏对象从内存里面删除，而是把它标记为需要被清除，然后在这一帧结束之后合适的时候再进行实际的删除工作。<br>
+  这样做的好处有很多，</p>
+<ul>
+<li>一方面能够避免开发者因为函数在这一帧之内调用时区的问题，访问了已经被删除的游戏对象，产生底层的内存错误；</li>
+<li>另一方面呢，方便引擎自己决定实际释放对象内存的时间，从而避免同一帧中同仁释放大量对象内存造成卡顿，可以分帧执行内存回收任务。<br>
+我们在日常在卡过程中如果没有必要，基本上都是使用 QF 的方式来进行对象的删除的。</li>
+</ul>
+</li>
+</ul>
+<p>当然最下面这几行代码是兜底策略，如果子弹没有命中任何对象，也要在超时之后进行清除。</p>
+<p>再往下一步，那就是先来实现我们的 VATW 的函数了。<br>
+</p><div class="highlight"><pre><span></span><code><span class="c1"># 使用射线查询检测当前这一帧的飞行路径，避免子弹穿过零厚度边界或者薄墙体</span>
+<span class="k">func</span><span class="w"> </span><span class="n">_will_hit_world</span><span class="p">(</span><span class="n">from_position</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Vector2</span><span class="p">,</span><span class="w"> </span><span class="n">to_position</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Vector2</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">space_state</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">get_world_2d</span><span class="p">()</span><span class="o">.</span><span class="n">direct_space_state</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">space_state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="p">:</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="bp">false</span>
+
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">PhysicsRayQueryParameters2D</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+<span class="w">        </span><span class="n">from_position</span><span class="p">,</span>
+<span class="w">        </span><span class="n">to_position</span><span class="p">,</span>
+<span class="w">        </span><span class="n">WORLD_COLLISION_MASK</span>
+<span class="w">    </span><span class="p">)</span>
+
+<span class="w">    </span><span class="n">query</span><span class="o">.</span><span class="n">collide_with_bodies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">true</span>
+<span class="w">    </span><span class="n">query</span><span class="o">.</span><span class="n">collide_with_areas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">false</span>
+
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">hit_result</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Dictionary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">space_state</span><span class="o">.</span><span class="n">intersect_ray</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">hit_result</span><span class="o">.</span><span class="n">is_empty</span><span class="p">()</span>
+</code></pre></div><p></p>
+<div class="admonition question">
+<p class="admonition-title">为什么要手动实现与障碍物的碰撞？</p>
+<p>明明有物理引擎，有碰照检测，但是为什么要手动实现子弹和障碍物的碰照呢？</p>
+<p>注意这里我们进行了一个兜底的策略，子弹绝大多数的核心的碰照检测和处理逻辑，我们依然是依靠引擎自带的功能来实现的。</p>
+<p>这里要做的是避免子弹因为自身速度过，穿过了我们的空气墙边线或者很薄的障碍物。</p>
+<p>这里我们使用了射线检测来检查在这一帧之内的移动是否碰撞到了障碍物。把鼠标选填在上面就可以看到这个方法功能的解释说明以及各个参数的含义，我们按住 ctRl 键点击函数名，也可以跳转到 Godot 内置文档，对应的还会代码示例。<br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020260508164911.png" data-desc-position="bottom"><img alt="Pasted image 20260508164911.png" src="../Pasted%20image%2020260508164911.png"></a></p>
+</div>
+<p>回到我们的代码，最后一步就是编写我们刚才注册的信号回调逻辑了。<br>
+</p><div class="highlight"><pre><span></span><code><span class="c1"># 与 Area2D 碰撞后销毁，同时忽略其他子弹</span>
+<span class="k">func</span><span class="w"> </span><span class="n">_on_area_entered</span><span class="p">(</span><span class="n">area</span><span class="p">:</span><span class="w"> </span><span class="n">Area2D</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">void</span><span class="p">:</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">area</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">Bullet</span><span class="p">:</span>
+<span class="w">        </span><span class="k">return</span>
+
+<span class="w">    </span><span class="n">queue_free</span><span class="p">()</span>
+</code></pre></div><br>
+当子弹自身的 Area2D 和和场景中其他的 Area2D 发生碰撞的时候，就会触发这些函数逻辑的调用。在这一部分代码中，<p></p>
+<ul>
+<li>
+<p>我们先检查了合自己发生碰的对象是不是不子弹类型，如果是子弹，我们就直接通过 return 忽略掉，从而避免子弹和子弹发生碰照。<br>
+  尽管这目前的玩法设计中几乎是不会出现这样的情况的，但是为了严谨给大家做个好点示范，我们还是要养成这样的习惯，夺去思考一下可能出现的边界情况。</p>
+</li>
+<li>
+<p>最后还要进行 queue_free ，子弹在撞到墙壁时候的销毁，我们写到了前面的 <code>_physics_process</code> 中，那么当和敌人等其他内容发生碰撞时，要在这里再手动调一下了。</p>
+</li>
+</ul>
+<p>到目前为止，我们的子弹功能基本上全部做好了。<br>
+唯一还剩下一点小问题，便是碰撞层级的设置，这部分内容在后面再讲解。当然我们目前还没有把子弹对象的声入到玩家角色的设计逻辑中，这部分内容在下期视频中讲解。</p>
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="__comments">评论</h2>
+<p>如果你已登录 GitHub，就可以直接在这里评论。</p>
+<script src="https://utteranc.es/client.js" repo="SarrLight/Notebook" issue-term="pathname" label="comment" theme="preferred-color-scheme" crossorigin="anonymous" async="">
+</script>
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚">
+        
+          
+          <a href="../02-player-character-animation-and-movement-basics/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 02-玩家角色动画与移动基础">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                02-玩家角色动画与移动基础
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.copy", "content.code.annotate", "content.footnote.tooltips", "navigation.footer", "navigation.indexes", "navigation.path", "navigation.prune", "navigation.tabs", "navigation.top", "navigation.tracking", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+        <script src="../../../../javascripts/katex-config.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

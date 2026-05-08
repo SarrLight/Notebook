@@ -1,0 +1,2192 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../assignment-1-draw-triangle/">
+      
+      
+        <link rel="next" href="../assignment-3-shading/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/luo-xiao-hei-tou-xiang.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>作业2-Rasterization - SarrLight's Notebook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Microsoft+YaHei,+Microsoft+YaHei+UI,+sans-serif:300,300i,400,400i,700,700i%7CJetBrains+Mono,+Consolas:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Microsoft YaHei, Microsoft YaHei UI, sans-serif";--md-code-font:"JetBrains Mono, Consolas"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="SarrLight's Notebook" class="md-header__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  <img src="../../../assets/logo.webp" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SarrLight's Notebook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              作业2-Rasterization
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SarrLight/Notebook" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    SarrLight/Notebook
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  
+    
+  
+  首页
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../course-notes/computer-organization/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  课内学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  游戏开发
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="SarrLight's Notebook" class="md-nav__button md-logo" aria-label="SarrLight's Notebook" data-md-component="logo">
+      
+  <img src="../../../assets/logo.webp" alt="logo">
+
+    </a>
+    SarrLight's Notebook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SarrLight/Notebook" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    SarrLight/Notebook
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../.." class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../course-notes/computer-organization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课内学习
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked="">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    游戏开发
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    游戏开发
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GAMES101
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    GAMES101
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-04%20Transform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L3-L4:Transform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-06%20Rasterization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L5-L6:Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-09%20Shading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L7-L9:Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-12%20Geometry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L10-L12:Geometry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-16%20Ray%20Tracing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L13-L16:Ray Tracing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17%20Materials%20and%20Appearances/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L17 Materials and Appearances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18%20Advanced%20Topics%20in%20Rendering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L18 Advanced Topics in Rendering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19-cameras-lenses-and-light-fields/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L19 Cameras，Lenses and Light Fields
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20%20Color%20and%20Perception/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L20 Color and Perception
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21%20Animation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L21 Animation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22%20Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L22 Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assignment-1-draw-triangle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业1-画三角形
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业2-Rasterization
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业2-Rasterization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 作业实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 作业实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-insidetriangle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 insideTriangle()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 三角形的光栅化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-ssaasuper-sampling-anti-aliasing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 SSAA(Super Sampling Anti Aliasing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-z" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 z插值算法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 z插值算法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4.1 重心坐标和奔驰定理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4.2 差值原理推导
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#143" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4.3 从矩阵的角度推导
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4.3 从矩阵的角度推导">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        思路一：直接计算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        思路二：先假设后验证
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 第三方库
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 第三方库">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-eigen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Eigen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 Eigen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.1 向量叉乘
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assignment-3-shading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业3-Shading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assignment-4-bazier-curve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业4-BazierCurve
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assignment-5-ray-triangle-intersection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业5-光线与三角形相交
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assignment-6-acceleration-structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业6-加速结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assignment-7-ray-tracing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业7-光线追踪
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assignment-8-mass-spring-system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作业8-质点弹簧系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UTILITIES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UTILITIES
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../voidmatrix-series-tutorials/teyvat-survivor/01-dong-hua-yu-jiao-se-yi-dong/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Voidmatrix系列教程
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../godot-tutorials/mingri-fangzhou-zomede/01-engine-installation-and-tile-system-basics/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Godot教程
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 作业实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 作业实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-insidetriangle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 insideTriangle()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 三角形的光栅化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-ssaasuper-sampling-anti-aliasing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 SSAA(Super Sampling Anti Aliasing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-z" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 z插值算法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 z插值算法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4.1 重心坐标和奔驰定理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4.2 差值原理推导
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#143" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4.3 从矩阵的角度推导
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4.3 从矩阵的角度推导">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        思路一：直接计算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        思路二：先假设后验证
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 第三方库
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 第三方库">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-eigen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Eigen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 Eigen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.1 向量叉乘
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+
+  <nav class="md-path" aria-label="导航栏">
+    <ol class="md-path__list">
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    游戏开发
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../03-04%20Transform/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    GAMES101
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/SarrLight/Notebook/edit/master/docs/game-development/GAMES101/assignment-2-rasterization.md" title="编辑此页" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/SarrLight/Notebook/raw/master/docs/game-development/GAMES101/assignment-2-rasterization.md" title="查看本页的源代码" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"></path></svg>
+    </a>
+  
+
+
+  <h1>作业2-Rasterization</h1>
+
+<h2 id="1">1 作业实现</h2>
+<h3 id="11-insidetriangle">1.1 insideTriangle()</h3>
+<p>这是一个用于判断某个点是否在三角形内部的函数。<br>
+</p><div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">insideTriangle</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Vector3f</span><span class="o">*</span><span class="w"> </span><span class="n">_v</span><span class="p">)</span>
+<span class="p">{</span><span class="w">   </span>
+<span class="w">    </span><span class="c1">// TODO : Implement this function to check if the point (x, y) is inside the triangle represented by _v[0], _v[1], _v[2]</span>
+<span class="w">    </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="w"> </span><span class="n">AP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">_v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="w">    </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="w"> </span><span class="n">BP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">_v</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">    </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="w"> </span><span class="n">CP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">_v</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="w">    </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="w"> </span><span class="n">AB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">_v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="w">    </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="w"> </span><span class="n">BC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_v</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">_v</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">    </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="w"> </span><span class="n">CA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">_v</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">crossAPAB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AP</span><span class="p">.</span><span class="n">cross</span><span class="p">(</span><span class="n">AB</span><span class="p">).</span><span class="n">z</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">crossBPBC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BP</span><span class="p">.</span><span class="n">cross</span><span class="p">(</span><span class="n">BC</span><span class="p">).</span><span class="n">z</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">crossCPCA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CP</span><span class="p">.</span><span class="n">cross</span><span class="p">(</span><span class="n">CA</span><span class="p">).</span><span class="n">z</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">crossAPAB</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">crossBPBC</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">crossCPCA</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">(</span><span class="n">crossAPAB</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">crossBPBC</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">crossCPCA</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><br>
+如果三个叉乘结果的z值都同号，则说明点在三角形内部。<br>
+如果出现异号，则说明点在三角形外部。<br>
+如果出现0，则说明点在三角形边上。<p></p>
+<h3 id="12">1.2 三角形的光栅化</h3>
+<p>使用<code>std::min</code>和<code>std::max</code>获得屏幕三角形的bounding box</p>
+<p>使用<code>floorf()</code>和<code>ceilf()</code>对float类型的值进行向下或向上取整</p>
+<p>遍历bounding box中像素的中心，使用insideTriangle()函数来判断像素中心是否在三角形内部。如果在内部，进行z差值得到z_interpolated，与depth_buf中的值进行比较，如果在前，则把颜色和深度信息写入帧缓冲和深度缓冲。</p>
+<h3 id="13-ssaasuper-sampling-anti-aliasing">1.3 SSAA(Super Sampling Anti Aliasing)</h3>
+<p>在rasterizer中增加更大的帧缓冲和深度缓冲，其中相邻的四个元素对应一个像素的4个采样点。之后按照正常光栅化的思路，进行计算。最后对SSAA的帧缓冲进行取平均，即4个采样点的颜色取平均值，输出到输出的帧缓冲中。<br>
+简而言之，就是渲染一张<span class="arithmatex">\(height\times wight\times 4\)</span>的画面，之后取平均得到<span class="arithmatex">\(height\times wight\)</span>大小的画面<br>
+不使用SSAA和使用SSAA得到的结果如下面两图所示</p>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../image1.png" data-desc-position="bottom"><img alt="image1.png" src="../image1.png" width="400"></a><br>
+<br>
+</figure>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../image0.png" data-desc-position="bottom"><img alt="image0.png" src="../image0.png" width="400"></a><br>
+<br>
+</figure>
+<div class="admonition bug">
+<p class="admonition-title">SSAA后的结果有毛刺</p>
+<p>检查后发现是SSAA中的索引计算出错，并且InsideTriangle()函数的参数类型错误地设定为int。<br>
+纠错后，SSAA结果如下图</p>
+</div>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../output00.png" data-desc-position="bottom"><img alt="output00.png" src="../output00.png" width="400"></a><br>
+<br>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">注意</p>
+<p>在程序中，索引计算和类型定义非常重要！！！</p>
+</div>
+<h3 id="14-z">1.4 z插值算法</h3>
+<p></p><div class="highlight"><pre><span></span><code><span class="c1">// If so, use the following code to get the interpolated z value.</span>
+<span class="k">auto</span><span class="p">[</span><span class="n">alpha</span><span class="p">,</span><span class="w"> </span><span class="n">beta</span><span class="p">,</span><span class="w"> </span><span class="n">gamma</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">computeBarycentric2D</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">v</span><span class="p">);</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">w_reciprocal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">w</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">w</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">gamma</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">w</span><span class="p">());</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">z_interpolated</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">z</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">w</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">z</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">w</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">gamma</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">z</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">w</span><span class="p">();</span>
+<span class="n">z_interpolated</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="n">w_reciprocal</span><span class="p">;</span>
+</code></pre></div><br>
+代码中的computeBarycentric2D()用于计算三角形的2D重心坐标<span class="arithmatex">\((\alpha,\  \beta,\  \gamma)\)</span><br>
+整理一下<code>z_interpolated</code>的计算公式如下<p></p>
+<div class="arithmatex">\[z_{\text{interpolated}} = \frac{ \alpha \cdot \frac{z_0}{w_0} + \beta \cdot \frac{z_1}{w_1} + \gamma \cdot \frac{z_2}{w_2} }{ \alpha \cdot \frac{1}{w_0} + \beta \cdot \frac{1}{w_1} + \gamma \cdot \frac{1}{w_2} }\]</div>
+<p>我对这个公式的感性理解是：</p>
+<div class="arithmatex">\[
+\frac{z_{\text{interpolated}} }{w_{\text{interpolated}}}= \alpha \cdot \frac{z_0}{w_0} + \beta \cdot \frac{z_1}{w_1} + \gamma \cdot \frac{z_2}{w_2} 
+\]</div>
+<div class="arithmatex">\[
+\frac{1}{w_{\text{interpolated}}}= \alpha \cdot \frac{1}{w_0} + \beta \cdot \frac{1}{w_1} + \gamma \cdot \frac{1}{w_2}
+\]</div>
+<p>这段代码其实有问题，那就是在这之前已经进行了归一化操作，因此到这里时，各顶点的<span class="arithmatex">\(w\)</span>坐标都是1，所以这段代码实际的计算公式是下面这样的：</p>
+<div class="arithmatex">\[
+z_{\text{interpolated}} =\alpha \cdot {z_0} + \beta \cdot {z_1} + \gamma \cdot {z_2}
+\]</div>
+<h4 id="141">1.4.1 重心坐标和奔驰定理</h4>
+<div class="admonition note">
+<p class="admonition-title">重心坐标 </p>
+<p>在三角形<span class="arithmatex">\(ABC\)</span>中任意一点<span class="arithmatex">\(P\)</span>,若满足<span class="arithmatex">\(P=c_1A+c_2B+c_3C\)</span>且<span class="arithmatex">\(c_1 + c_2 + c_3 = 1\)</span>，则称<span class="arithmatex">\((c_1, c_2, c_3)\)</span>为<span class="arithmatex">\(P\)</span>在三角形<span class="arithmatex">\(ABC\)</span>的重心坐标</p>
+</div>
+<figure><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020251023105211.png" data-desc-position="bottom"><img alt="Pasted image 20251023105211.png" src="../Pasted%20image%2020251023105211.png" width="400"></a><br>
+<br>
+</figure>
+<p>如何计算重心坐标<br>
+根据重心坐标的定义<span class="arithmatex">\(\overrightarrow{OP}=c_1\overrightarrow{OA}+c_2\overrightarrow{OB}+c_3\overrightarrow{OC}\)</span></p>
+<div class="arithmatex">\[
+\begin{align}
+\overrightarrow{BP}&amp;=\overrightarrow{OP}-\overrightarrow{OB}\\
+&amp;=\overrightarrow{OP}-(
+c_1\overrightarrow{OB}+c_2\overrightarrow{OB}+c_3\overrightarrow{OB})
+\\
+&amp;=
+c_1\overrightarrow{BA}+c_3\overrightarrow{BC}\\
+\end{align}
+\]</div>
+<div class="arithmatex">\[
+\overrightarrow{BP}\times \overrightarrow{BA}=c_3\overrightarrow{BC}\times \overrightarrow{BA}
+\]</div>
+<div class="arithmatex">\[
+c_3=\frac{|\overrightarrow{BP}\times \overrightarrow{BA}|}{|\overrightarrow{BC}\times \overrightarrow{BA}|}
+\]</div>
+<p>以此类推，可以计算出重心坐标<span class="arithmatex">\((c_1,c_2,c_3)\)</span></p>
+<p>根据奔驰定理，也可以得到重心坐标的计算公式，奔驰定理的证明可以用几何法，也可以用上面这种叉乘法。</p>
+<div class="admonition note">
+<p class="admonition-title">奔驰定理</p>
+<p>对于<span class="arithmatex">\(△ABC\)</span>内一点<span class="arithmatex">\(P\)</span>，记<span class="arithmatex">\(S_A=S_{△PBC}\)</span>，<span class="arithmatex">\(S_B=S_{△PAC}\)</span>，<span class="arithmatex">\(S_C=S_{△PAB}\)</span>，则<span class="arithmatex">\(S_A\cdot\overrightarrow{PA}+S_B\cdot\overrightarrow{PB}+S_C\cdot\overrightarrow{PC}=\overrightarrow{0}\)</span></p>
+</div>
+<p><strong>具体实现</strong><br>
+设三角形的三个顶点为<span class="arithmatex">\(\mathbf{v}_0 = (x_0, y_0)\)</span>、<span class="arithmatex">\(\mathbf{v}_1 = (x_1, y_1)\)</span>、<span class="arithmatex">\(\mathbf{v}_2 = (x_2, y_2)\)</span>，待求重心坐标的点为<span class="arithmatex">\(P = (x, y)\)</span>。代码计算的是点<span class="arithmatex">\(P\)</span>相对于该三角形的 2D 重心坐标<span class="arithmatex">\((c_1, c_2, c_3)\)</span>，其数学表达式如下：<br>
+重心坐标公式<br>
+<span class="arithmatex">\(c_1\)</span>的计算公式：</p>
+<div class="arithmatex">\[c_1 = \frac{ x(y_1 - y_2) + (x_2 - x_1)y + x_1y_2 - x_2y_1 }{ x_0(y_1 - y_2) + (x_2 - x_1)y_0 + x_1y_2 - x_2y_1 }\]</div>
+<p><span class="arithmatex">\(c_2\)</span>的计算公式：</p>
+<div class="arithmatex">\[c_2 = \frac{ x(y_2 - y_0) + (x_0 - x_2)y + x_2y_0 - x_0y_2 }{ x_1(y_2 - y_0) + (x_0 - x_2)y_1 + x_2y_0 - x_0y_2 }\]</div>
+<p><span class="arithmatex">\(c_3\)</span>的计算公式：</p>
+<div class="arithmatex">\[c_3 = \frac{ x(y_0 - y_1) + (x_1 - x_0)y + x_0y_1 - x_1y_0 }{ x_2(y_0 - y_1) + (x_1 - x_0)y_2 + x_0y_1 - x_1y_0 }\]</div>
+<p>重心坐标<span class="arithmatex">\((c_1, c_2, c_3)\)</span>的核心意义是面积比值：<br>
+分子部分对应点<span class="arithmatex">\(P\)</span>与三角形两条边组成的小三角形的面积（的 2 倍，因公式中省略了 1/2 系数）；<br>
+分母部分对应原三角形<span class="arithmatex">\(\mathbf{v}_0\mathbf{v}_1\mathbf{v}_2\)</span>的面积（的 2 倍）。<br>
+重心坐标满足<span class="arithmatex">\(c_1 + c_2 + c_3 = 1\)</span></p>
+<h4 id="142">1.4.2 差值原理推导</h4>
+<p><a href="https://zhuanlan.zhihu.com/p/403259571">图形学 - 关于透视矫正插值那些事 - 知乎</a><br>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Pasted%20image%2020251023101923.jpg" data-desc-position="bottom"><img alt="Pasted image 20251023101923.jpg" src="../Pasted%20image%2020251023101923.jpg"></a><br>
+<strong>现在我们的问题是</strong>：已知屏幕上一点P'，且<span class="arithmatex">\(P'=(1-m)A'+mB'\)</span>，还有顶点A和B的世界坐标，<strong>需要求出与P'对应的点P关于AB的表示：</strong><span class="arithmatex">\(P=(1-n)A+nB\)</span>。<br>
+则由相似可得</p>
+<div class="arithmatex">\[\frac{n}{1-n}=\frac{|AG|}{|BK|}=\frac{|A'P'|\frac{Z_1}{c}}{|B'P'|\frac{Z_2}{c}}=\frac{mZ_1}{(1-m)Z_2}\]</div>
+<p>对左右两边取倒数得：</p>
+<div class="arithmatex">\[\begin{aligned} \frac{1}{n}-1&amp;=\frac{(1-m)Z_2}{mZ_1}\\ n&amp;=\frac{mZ_1}{(1-m)Z_2+mZ_1} \end{aligned}\]</div>
+<p>P点的z坐标</p>
+<div class="arithmatex">\[\begin{aligned} Z_n&amp;=(1-n)Z_1+nZ_2\\ &amp;=\frac{(1-m)Z_2}{(1-m)Z_2+mZ_1}Z_1+\frac{mZ_1}{(1-m)Z_2+mZ_1}Z_2 \\ &amp;=\frac{Z_1Z_2}{(1-m)Z_2+mZ_1}\qquad·······················(*)\\ &amp;=\frac{1}{\frac{1-m}{Z_1}+\frac{m}{Z_2}} \end{aligned}\]</div>
+<p>从二维推导出三维空间中z坐标应该为:</p>
+<div class="arithmatex">\[Z_n=\frac{1}{\frac{1-u-v}{Z_1}+\frac{u}{Z_2}+\frac{v}{Z_3}}\]</div>
+<p>其中<span class="arithmatex">\(u,v\)</span> 的含义为：点P可以用下面的公式表示</p>
+<div class="arithmatex">\[P=(1-u-v)A+uB+vC\]</div>
+<p>这里的<span class="arithmatex">\((1-u-v,\ u,\ v)\)</span>其实就是点<span class="arithmatex">\(P\)</span>在<span class="arithmatex">\(\triangle ABC\)</span> 中的重心坐标</p>
+<h4 id="143">1.4.3 从矩阵的角度推导</h4>
+<p>在[[03-04 Transform]]中提到透视变换中，z轴方向上的变化不是线性的，例如原本near和far中点在变换后会更靠近far点。<br>
+让我们回看透视变换中非线性的这一部分，即从视锥体到长方体的变换，变换矩阵如下：</p>
+<div class="arithmatex">\[
+\mathbf{T}=\begin{bmatrix} n &amp; 0 &amp; 0 &amp; 0\\ 0 &amp; n &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; n+f &amp; -nf \\0&amp;0&amp;1&amp;0\end{bmatrix}
+\]</div>
+<p>我们通过下面的计算来探究一下<strong>这个变换的性质</strong><br>
+假设存在点<span class="arithmatex">\(A(x_1,y_1,z_1)\)</span>、点<span class="arithmatex">\(B(x_2,y_2,z_2)\)</span>和点<span class="arithmatex">\(P(x_3,y_3,z_3)\)</span>,它们经过<span class="arithmatex">\(T\)</span>变换之后分别得到<span class="arithmatex">\(A'(x_1',y_1',z_1')\)</span>、点<span class="arithmatex">\(B'(x_2',y_2',z_2')\)</span>和点<span class="arithmatex">\(P'(x_3',y_3',z_3')\)</span>,具体如下所示</p>
+<div class="arithmatex">\[
+\begin{bmatrix}
+x_1\\ y_2\\ z_1\\ 1
+\end{bmatrix}
+\Rightarrow
+\begin{bmatrix}
+x_1'\\ y_2'\\ z_1'\\ 1
+\end{bmatrix}
+=\begin{bmatrix}
+\frac{nx_1}{z_1} \\ \frac{ny_1}{z_1} \\ (n+f)-\frac{nf}{z_1}\\ 1
+\end{bmatrix}
+\]</div>
+<p>我们称变换之前的空间为<span class="arithmatex">\(S\)</span>,变换后的空间为<span class="arithmatex">\(S'\)</span>.<br>
+设在变换前空间<span class="arithmatex">\(S\)</span>中，点<span class="arithmatex">\(P\)</span>在直线<span class="arithmatex">\(AB\)</span>上，即 <span class="arithmatex">\(P=aA+(1-a)B\)</span>,</p>
+<h5 id="_1">思路一：直接计算</h5>
+<p>首先，我们已知</p>
+<div class="arithmatex">\[
+\left\{\begin{matrix}
+x_3=ax_1+(1-a)x_2\\
+y_3=ay_1+(1-a)y_2\\
+z_3=az_1+(1-a)z_2
+\end{matrix}\right.
+\]</div>
+<p>根据，转换公式</p>
+<div class="arithmatex">\[
+\begin{align}
+x_3'&amp;=\frac{nx_3}{z_3}\\
+&amp;=\frac{n}{z_3}\cdot (ax_1+(1-a)x_2)\\
+&amp;=\frac{n}{z_3}\cdot (a\frac{z_1}{n}\cdot x_1'+(1-a)\frac{z_2}{n}\cdot x_2')\\
+&amp;=\frac{az_1}{z_3}\cdot x_1'+\frac{(1-a)z_2}{z_3}\cdot x_2' \\
+同理\quad y_3'&amp;=\frac{az_1}{z_3}\cdot y_1'+\frac{(1-a)z_2}{z_3}\cdot y_2' 
+\end{align} 
+\]</div>
+<p>可以发现</p>
+<div class="arithmatex">\[
+\frac{az_1}{z_3}+\frac{(1-a)z_2}{z_3}=\frac{az_1+(1-a)z_2}{z_3}
+=\frac{z_3}{z_3}=1
+\]</div>
+<div class="arithmatex">\[
+因此取
+\left\{\begin{matrix}
+b=\frac{az_1}{z_3}\\
+1-b=\frac{(1-a)z_2}{z_3}\\
+\end{matrix}\right.
+,则 \
+\left\{\begin{matrix}
+x_3'=bx_1'+(1-b)x_2'\\
+y_3'=by_1'+(1-b)y_2'\\
+\end{matrix}\right.
+\]</div>
+<p>变形可以得到</p>
+<div class="arithmatex">\[
+\frac{a}{z_3}=\frac{b}{z_1}\quad \frac{1-a}{z_3}=\frac{1-b}{z_2}
+\]</div>
+<p>因此</p>
+<div class="arithmatex">\[
+\frac{1}{z_3}= \frac{a}{z_3}+\frac{1-a}{z_3}=\frac{b}{z_1}+\frac{1-b}{z_2}
+\]</div>
+<p>进而说明</p>
+<div class="arithmatex">\[
+\begin{align}
+z_3'&amp;=(n+f)-\frac{nf}{z_3} \\
+&amp;=(n+f)(b+1-b)-nf(\frac{b}{z_1}+\frac{1-b}{z_2}) \\
+&amp;=b(n+f-\frac{nf}{z_1})+(1-b)(n+f-\frac{nf}{z_2}) \\
+&amp;=bz_1'+(1-b)z_2'
+\end{align}
+\]</div>
+<p>综上，</p>
+<div class="arithmatex">\[
+\left\{\begin{matrix}
+x_3'=bx_1'+(1-b)x_2'\\
+y_3'=by_1'+(1-b)y_2'\\
+z_3'=bz_1'+(1-b)z_2'
+\end{matrix}\right.
+\]</div>
+<p>因此，变换后空间<span class="arithmatex">\(S'\)</span>中，点<span class="arithmatex">\(P'\)</span>在直线<span class="arithmatex">\(A'B'\)</span>上，即 <span class="arithmatex">\(\exists b,\ P'=bA'+(1-b)B'\)</span>,</p>
+<h5 id="_2">思路二：先假设后验证</h5>
+<p>我们假设变换后空间<span class="arithmatex">\(S'\)</span>中，点<span class="arithmatex">\(P'\)</span>在直线<span class="arithmatex">\(A'B'\)</span>上，即 <span class="arithmatex">\(\exists b,\ P'=bA'+(1-b)B'\)</span>,</p>
+<div class="arithmatex">\[
+\left\{\begin{matrix}
+x_3=ax_1+(1-a)x_2\\
+y_3=ay_1+(1-a)y_2\\
+z_3=az_1+(1-a)z_2
+\end{matrix}\right.
+\quad
+\left\{\begin{matrix}
+x_3'=bx_1'+(1-b)x_2'\\
+y_3'=by_1'+(1-b)y_2'\\
+z_3'=bz_1'+(1-b)z_2'
+\end{matrix}\right.
+\]</div>
+<div class="arithmatex">\[
+\frac{ax_1+(1-a)x_2}{ay_1+(1-a)y_2}
+=\frac{bx_1'+(1-b)x_2'}{by_1'+(1-b)y_2'}
+\]</div>
+<p>令</p>
+<div class="arithmatex">\[
+\eta_1=\frac{a}{1-a}\quad \eta_2=\frac{b}{1-b}\quad
+\]</div>
+<p>则</p>
+<div class="arithmatex">\[
+\frac{\eta_1 x_1+x_2}{\eta_1 y_1+y_2}
+=\frac{\eta_2 \frac{nx_1}{z_1}+\frac{nx_2}{z_2}}{\eta_2 \frac{ny_1}{z_1}+\frac{ny_2}{z_2}}
+=\frac{\eta_2 \frac{z_2}{z_1}x_1+x_2}{\eta_2 \frac{z_2}{z_1}y_1+{y_2}}
+\]</div>
+<p>因此</p>
+<div class="arithmatex">\[
+\eta_1=\eta_2\cdot\frac{z_2}{z_1}
+\quad \Rightarrow\quad  
+\frac{\eta_1}{\eta_2}=\frac{z_2}
+{z_1}
+\quad \Rightarrow\quad 
+\frac{a}{1-a}=\frac{z_2}{z_1}\cdot \frac{b}{1-b}
+\]</div>
+<p>于是我们可以用<span class="arithmatex">\(a,z_1,z_2\)</span>表示<span class="arithmatex">\(b\)</span>,进而验证</p>
+<div class="arithmatex">\[
+\left\{\begin{matrix}
+x_3'=bx_1'+(1-b)x_2'\\
+y_3'=by_1'+(1-b)y_2'
+\end{matrix}\right.
+\]</div>
+<p>另一方面，我们可以这样表达</p>
+<div class="arithmatex">\[
+\begin{align}
+z_3&amp;=\frac{\frac{z_2}{\cancel{z_1}}\cdot \frac{b}{1-b}}{\frac{z_2}{z_1}\cdot \frac{b}{1-b}+1}\cdot \cancel{z_1}+\frac{1}{\frac{z_2}{z_1}\cdot \frac{b}{1-b}+1}\cdot z_2\\
+&amp;=
+\frac{\frac{z_2}{1-b}}{\frac{z_2}{z_1}\cdot \frac{b}{1-b}+1}\\
+&amp;=
+\frac{z_1z_2}{z_2 b +z_1(1-b)}
+\end{align}
+\]</div>
+<div class="arithmatex">\[
+\frac{1}{z_3}=\frac{b}{z_1}+\frac{1-b}{z_2}
+\]</div>
+<p>进而验证</p>
+<div class="arithmatex">\[
+\begin{align}
+z_3'&amp;=(n+f)-\frac{nf}{z_3} \\
+&amp;=(n+f)(b+1-b)-nf(\frac{b}{z_1}+\frac{1-b}{z_2}) \\
+&amp;=b(n+f-\frac{nf}{z_1})+(1-b)(n+f-\frac{nf}{z_2}) \\
+&amp;=bz_1'+(1-b)z_2'
+\end{align}
+\]</div>
+<h2 id="2">2 第三方库</h2>
+<h3 id="21-eigen">2.1 Eigen</h3>
+<h4 id="211">2.1.1 向量叉乘</h4>
+<div class="highlight"><pre><span></span><code><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="w"> </span><span class="n">AP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">_v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="w"> </span><span class="n">AB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">_v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">crossAPAB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AP</span><span class="p">.</span><span class="n">cross</span><span class="p">(</span><span class="n">AB</span><span class="p">).</span><span class="n">z</span><span class="p">();</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="__comments">评论</h2>
+<p>如果你已登录 GitHub，就可以直接在这里评论。</p>
+<script src="https://utteranc.es/client.js" repo="SarrLight/Notebook" issue-term="pathname" label="comment" theme="preferred-color-scheme" crossorigin="anonymous" async="">
+</script>
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚">
+        
+          
+          <a href="../assignment-1-draw-triangle/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 作业1-画三角形">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                作业1-画三角形
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../assignment-3-shading/" class="md-footer__link md-footer__link--next" aria-label="下一页: 作业3-Shading">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                作业3-Shading
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.copy", "content.code.annotate", "content.footnote.tooltips", "navigation.footer", "navigation.indexes", "navigation.path", "navigation.prune", "navigation.tabs", "navigation.top", "navigation.tracking", "search.share"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+        <script src="../../../javascripts/katex-config.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

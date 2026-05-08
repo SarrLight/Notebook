@@ -78,6 +78,18 @@ img {
   
 }
 
+/* 正文图片阴影 */
+.md-typeset img {
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.md-typeset img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
+}
+
 /* 放大顶部 logo */
 .md-header__button.md-logo {
   padding: 0 !important;
